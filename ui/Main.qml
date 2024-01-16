@@ -18,11 +18,21 @@ Window {
             fillMode: Image.PreserveAspectCrop
 
             Placeholder{
+                id: placeholder
                 width: parent.width - 40
                 height: parent.height / 5
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.top: parent.top
                 anchors.topMargin: 20
+            }
+
+            TaskBar{
+                id: taskBar
+                width: placeholder.width - 5
+                height: 30
+                anchors.top: placeholder.bottom
+                anchors.topMargin: 20
+                anchors.horizontalCenter: placeholder.horizontalCenter
             }
         }
     }

@@ -15,7 +15,8 @@ set(SRC src/main.cpp)
 
 set(UI
     ui/Main.qml
-    ui/Placeholder.qml)
+    ui/Placeholder.qml
+    ui/TaskBar.qml)
 
 set(RES res/res.qrc)
 

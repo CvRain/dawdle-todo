@@ -6,45 +6,51 @@ Item {
     width: 640
     height: 120
     id: root
-    Rectangle{
-        id: mainView
-        color: defaultColor
-        radius: 20
-        anchors.fill: root
 
-        TextInput{
-            id: banner
-            anchors.top: parent.top
-            anchors.centerIn: parent
+    MouseArea {
+        anchors.fill: parent
+        onEntered: banner.color = Qt.darker(defaultColor)
+        onExited: banner.color = defaultFontColor
 
-            color: defaultFontColor
-            text: "Hello world!"
-            font.pixelSize: 24
-            horizontalAlignment: Text.AlignHCenter
+        Rectangle{
+            id: mainView
+            color: defaultColor
+            radius: 20
+            anchors.fill: parent
+
+            TextInput{
+                id: banner
+                anchors.top: parent.top
+                anchors.centerIn: parent
+
+                color: defaultFontColor
+                text: "君子终日乾乾，夕惕若厉，无咎"
+                font.pixelSize: 24
+                horizontalAlignment: Text.AlignHCenter
+            }
+            Text{
+                id: dateView
+                anchors.top: banner.bottom
+                anchors.right: banner.right
+                anchors.rightMargin: -20
+
+                color: defaultFontColor
+                width: parent.width
+                text: "2024-1-14"
+                horizontalAlignment: Text.AlignRight
+            }
+
         }
-        Text{
-            id: dateView
-            anchors.top: banner.bottom
-            anchors.right: banner.right
-            anchors.rightMargin: -20
 
+        Rectangle{
+            id: bannerLine
+            height: 3
+            width: mainView.width
             color: defaultFontColor
-            width: parent.width
-            text: "2024-1-14"
-            horizontalAlignment: Text.AlignRight
+
+            anchors.top: mainView.bottom
+            anchors.topMargin: 5
+            
         }
-
-    }
-
-    Rectangle{
-        height: 3
-        width: mainView.width - 10
-        color: defaultFontColor
-        radius: 25
-
-        anchors.top: mainView.bottom
-        anchors.topMargin: 7
-        anchors.horizontalCenter: mainView.horizontalCenter
-
     }
 }
