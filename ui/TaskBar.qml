@@ -20,8 +20,10 @@ Item{
         border.color: Qt.darker(defaultColor, 100)
         radius: 25
 
-        RadioButton{
+        RadioRectangle{
             id: checkButton
+            width: 25
+            height: 25
             anchors.left: parent.left
             anchors.leftMargin: 10
         }
