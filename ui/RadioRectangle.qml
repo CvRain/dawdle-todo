@@ -17,13 +17,32 @@ Item{
 
         Rectangle{
             id: indicator
-            width: 10
-            height: 10
-            color: strokeColor
-            radius: 45
+            width: parent.width * 0.6
+            height: parent.height * 0.6
+            color: fillColor
+            radius: width / 2
             anchors.centerIn: parent
+            visible: false
         }
 
+        MouseArea{
+            anchors.fill: parent
+            onClicked: {
+                smoothOpacity.start()
+                indicator.visible = !indicator.visible
+            }
+        }
     }
+
+    NumberAnimation {
+        id: smoothOpacity
+        target: indicator
+        property: "opacity"
+        duration: 1000
+        easing.type: Easing.InOutQuad
+        from: indicator.opacity
+        to: indicator.visible ? 0 : 1
+    }
+
 
 }

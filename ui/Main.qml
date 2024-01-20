@@ -26,14 +26,22 @@ Window {
                 anchors.topMargin: 20
             }
 
-            TaskBar{
-                id: taskBar
+            Column{
                 width: placeholder.width - 5
-                height: 30
                 anchors.top: placeholder.bottom
                 anchors.topMargin: 20
                 anchors.horizontalCenter: placeholder.horizontalCenter
+                spacing: 10
+                Repeater{
+                    model: 5
+                    TaskBar{
+                        width: parent.width
+                        height: 30
+                    }
+                }
             }
+
+
         }
     }
 }

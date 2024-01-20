@@ -22,26 +22,45 @@ Item{
 
         RadioRectangle{
             id: checkButton
-            width: 25
-            height: 25
+            width: 20
+            height: 20
             anchors.left: parent.left
             anchors.leftMargin: 10
+            anchors.verticalCenter: parent.verticalCenter
         }
+
 
         TextInput{
             id: taskNameInput
             text: root.taskName
+            readOnly: true
             anchors.left: checkButton.right
             anchors.leftMargin: 10
             anchors.right: parent.right
             anchors.rightMargin: 10
             font.pixelSize: 20
             color: defaultFontColor
-            Keys.onReturnPressed: {
-                root.taskName = taskNameInput.text
-                taskNameInput.forceActiveFocus()
+
+            MouseArea {
+                anchors.fill: parent
+                onDoubleClicked: {
+                    taskNameInput.readOnly = false
+                    taskNameInput.forceActiveFocus()
+                }
+
+                onExited: {
+                    taskNameInput.readOnly = true
+                    taskNameInput.forceActiveFocus()
+                    taskNameInput.textChanged()
+                }
+            }
+
+            Component.onCompleted: {
+                    taskNameInput.forceActiveFocus()
             }
         }
+
+
         
     }
 }
