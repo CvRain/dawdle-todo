@@ -6,11 +6,10 @@ Item{
     width: parent.width
     height: 50
     property string taskName : "啊啊啊啊！好想摆烂啊"
-    property string taskDescription : "Enter a description for this task"
     property color defaultColor: "#771e1e2e"
     property color defaultFontColor: "#DDFFFFFF"
     property bool isCompleted : false
-    
+
     Rectangle{
         id: taskbar
         anchors.fill: parent
@@ -22,8 +21,8 @@ Item{
 
         RadioRectangle{
             id: checkButton
-            width: 20
-            height: 20
+            width: 16
+            height: 16
             anchors.left: parent.left
             anchors.leftMargin: 10
             anchors.verticalCenter: parent.verticalCenter
@@ -40,6 +39,9 @@ Item{
             anchors.rightMargin: 10
             font.pixelSize: 20
             color: defaultFontColor
+            width: taskbar.width - saveDot.width - checkButton
+
+            signal taskInvokeSave
 
             MouseArea {
                 anchors.fill: parent
@@ -47,20 +49,34 @@ Item{
                     taskNameInput.readOnly = false
                     taskNameInput.forceActiveFocus()
                 }
-
-                onExited: {
-                    taskNameInput.readOnly = true
-                    taskNameInput.forceActiveFocus()
-                    taskNameInput.textChanged()
-                }
             }
 
-            Component.onCompleted: {
-                    taskNameInput.forceActiveFocus()
+            Keys.onEnterPressed: {
+                saveDot.visible = false
+                taskInvokeSave()
+            }
+
+            onEditingFinished: {
+                saveDot.visible = false
+                taskInvokeSave()
+            }
+
+            onTextChanged: {
+                saveDot.visible = true
             }
         }
 
+        Rectangle{
+            id: saveDot
+            width: checkButton.width / 2
+            height: checkButton.width / 2
+            radius: checkButton.width / 2
+            color: "#77FFFFFF"
+            anchors.right: taskbar.right
+            anchors.rightMargin: checkButton.width / 2
+            anchors.verticalCenter: parent.verticalCenter
+            visible: true
+        }
 
-        
     }
 }

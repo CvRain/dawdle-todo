@@ -2,11 +2,11 @@ import QtQuick
 import QtQuick.Controls
 
 Item{
-    property color fillColor: "#1e1e2e"
+    property color fillColor: "#881e1e2e"
     property color strokeColor: "#323244"
     width: parent.width
     height: width
-    
+
     Rectangle{
         id: radio
         width: parent.width
@@ -14,6 +14,9 @@ Item{
         anchors.fill: parent
         border.color: strokeColor
         radius: width / 2
+
+        signal radioChanged()
+        signal changeRadioStatus(bool isFinished)
 
         Rectangle{
             id: indicator
@@ -28,21 +31,11 @@ Item{
         MouseArea{
             anchors.fill: parent
             onClicked: {
-                smoothOpacity.start()
                 indicator.visible = !indicator.visible
+                changeRadioStatus(indicator.visible)
+                radioChanged()
             }
         }
     }
-
-    NumberAnimation {
-        id: smoothOpacity
-        target: indicator
-        property: "opacity"
-        duration: 1000
-        easing.type: Easing.InOutQuad
-        from: indicator.opacity
-        to: indicator.visible ? 0 : 1
-    }
-
 
 }
