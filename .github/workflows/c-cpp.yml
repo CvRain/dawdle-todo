@@ -13,7 +13,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: configure
-      run: ./configure
+    - name: creatBuildDir
+    - run : mkdir build
+    - name: cmake
+      run: cmake -G "Ninja" -B build CMakeLists.txt
+    - name: changeDir
+    - run: cd build
     - name: ninja
       run: ninja
