@@ -8,6 +8,7 @@ Window {
     title: qsTr("dawdle-todo")
 
     Rectangle{
+        id: mainContainer
         anchors.fill: parent
         color: "#1E1E2E"
 
@@ -40,8 +41,14 @@ Window {
                     }
                 }
             }
+        }
 
-
+        BottomPanel{
+            id: bottomPanel
+            width: parent.width
+            height: 40
+            anchors.bottom: mainContainer.bottom
         }
     }
+
 }

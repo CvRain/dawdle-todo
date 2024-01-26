@@ -29,6 +29,14 @@ Item{
         }
 
 
+        Connections{
+            target: checkButton
+            function onChangeRadioStatus(){
+                //向后端发送改变todo状态
+            }
+        }
+
+
         TextInput{
             id: taskNameInput
             text: root.taskName

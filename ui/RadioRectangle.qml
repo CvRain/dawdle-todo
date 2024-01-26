@@ -4,8 +4,12 @@ import QtQuick.Controls
 Item{
     property color fillColor: "#881e1e2e"
     property color strokeColor: "#323244"
+    property bool isClicked: false
+    id: root
     width: parent.width
     height: width
+
+    signal changeRadioStatus()
 
     Rectangle{
         id: radio
@@ -14,9 +18,6 @@ Item{
         anchors.fill: parent
         border.color: strokeColor
         radius: width / 2
-
-        signal radioChanged()
-        signal changeRadioStatus(bool isFinished)
 
         Rectangle{
             id: indicator
@@ -32,8 +33,9 @@ Item{
             anchors.fill: parent
             onClicked: {
                 indicator.visible = !indicator.visible
-                changeRadioStatus(indicator.visible)
-                radioChanged()
+                isClicked = indicator.visible
+                changeRadioStatus()
+
             }
         }
     }

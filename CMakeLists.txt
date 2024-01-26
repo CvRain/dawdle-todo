@@ -17,7 +17,8 @@ set(UI
     ui/Main.qml
     ui/Placeholder.qml
     ui/TaskBar.qml
-    ui/RadioRectangle.qml)
+    ui/RadioRectangle.qml
+    ui/BottomPanel.qml)
 
 set(RES res/res.qrc)
 
