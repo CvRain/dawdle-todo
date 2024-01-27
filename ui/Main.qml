@@ -46,7 +46,7 @@ Window {
         BottomPanel{
             id: bottomPanel
             width: parent.width
-            height: 40
+            height: 30
             anchors.bottom: mainContainer.bottom
         }
     }
