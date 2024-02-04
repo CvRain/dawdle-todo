@@ -11,6 +11,8 @@ Item {
     property bool isCompleted: false
     property string taskName: "no task?"
 
+    signal invokeSave(bool isTaskFinish, string taskContent)
+
     Rectangle {
         id: taskbar
         anchors.fill: parent
@@ -31,7 +33,9 @@ Item {
 
         Connections {
             target: checkButton
-            function onChangeRadioStatus() {//向后端发送改变todo状态
+            function onChangeRadioStatus() {
+                invokeSave(checkButton.isClicked, taskNameInput.text)
+                console.log("button state: ", checkButton.isClicked)
             }
         }
 
@@ -47,10 +51,9 @@ Item {
             anchors.rightMargin: 10
             anchors.verticalCenter: parent.verticalCenter
             font.pixelSize: 20
-            color: defaultFontColor
+            color: root.defaultFontColor
             width: taskbar.width - saveDot.width - checkButton
-
-            signal taskInvokeSave
+            focus: false
 
             MouseArea {
                 anchors.fill: parent
@@ -61,19 +64,21 @@ Item {
             }
 
             Keys.onEnterPressed: {
-                saveDot.visible = false
-                taskNameInput.readOnly = true
-                taskNameInput.focus = false
-                taskInvokeSave()
+                taskNameInput.editingFinished()
             }
 
-            onEditingFinished: {
-                saveDot.visible = false
-                taskInvokeSave()
-            }
+            Connections{
+                target: taskNameInput
+                function onTextEdited(){
+                    saveDot.visible = true
+                }
+                function onEditingFinished(){
+                    saveDot.visible = false
+                    saveDot.forceActiveFocus()
+                    taskNameInput.readOnly = true
+                    taskNameInput.focus = false
 
-            onTextChanged: {
-                saveDot.visible = true
+                }
             }
         }
 

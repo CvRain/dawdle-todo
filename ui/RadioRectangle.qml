@@ -23,7 +23,7 @@ Item{
             id: indicator
             width: parent.width * 0.6
             height: parent.height * 0.6
-            color: fillColor
+            color: root.fillColor
             radius: width / 2
             anchors.centerIn: parent
             visible: false

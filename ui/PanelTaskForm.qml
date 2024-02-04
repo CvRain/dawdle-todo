@@ -5,7 +5,7 @@ Item {
     width: parent.width
     height: parent.height
 
-    signal addNewTodo(string taskConent)
+    signal addNewTodo(string taskContent)
 
     Rectangle {
         id: taskForm
@@ -55,7 +55,6 @@ Item {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    //向task表中添加一条记录
                     addNewTodo(taskInput.text)
                 }
             }

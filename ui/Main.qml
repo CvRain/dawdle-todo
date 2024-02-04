@@ -63,10 +63,10 @@ Window {
 
         Connections {
             target: bottomPanel
-            function onAddNewTodo(taskConent) {
-                console.log(taskConent)
+            function onAddNewTodo(taskContent) {
+                console.log(taskContent)
                 taskListModel.append({
-                                         "name": taskConent
+                                         "name": taskContent
                                      })
             }
         }

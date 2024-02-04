@@ -5,13 +5,18 @@ Item {
     width: 50
     height: 50
 
-    signal addNewTodo(string taskConent)
+    signal addNewTodo(string taskContent)
 
     Component {
         id: panelTaskFormComponent
         PanelTaskForm {
-            onAddNewTodo: {
-                root.addNewTodo(taskConent)
+            id: panelTaskComponent
+
+            Connections{
+                target: panelTaskComponent
+                function onAddNewTodo(content){
+                    root.addNewTodo(content)
+                }
             }
         }
     }
