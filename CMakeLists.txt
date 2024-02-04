@@ -18,7 +18,8 @@ set(UI
     ui/Placeholder.qml
     ui/TaskBar.qml
     ui/RadioRectangle.qml
-    ui/BottomPanel.qml)
+    ui/BottomPanel.qml
+    ui/PanelTaskForm.qml)
 
 set(RES res/res.qrc)
 
@@ -30,8 +31,8 @@ qt_add_executable(appdawdle_todo
 qt_add_qml_module(appdawdle_todo
     URI dawdle_todo
     VERSION 1.0
-    QML_FILES ${UI}
     RESOURCES ${RES}
+    QML_FILES ${UI}
 )
 
 set_target_properties(appdawdle_todo PROPERTIES

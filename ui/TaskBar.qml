@@ -1,16 +1,17 @@
 import QtQuick
 import QtQuick.Controls
 
-Item{
+Item {
     id: root
     width: parent.width
     height: 50
-    property string taskName : "啊啊啊啊！好想摆烂啊"
+
     property color defaultColor: "#771e1e2e"
     property color defaultFontColor: "#DDFFFFFF"
-    property bool isCompleted : false
+    property bool isCompleted: false
+    property string taskName: "no task?"
 
-    Rectangle{
+    Rectangle {
         id: taskbar
         anchors.fill: parent
         width: parent.width
@@ -19,7 +20,7 @@ Item{
         border.color: Qt.darker(defaultColor, 100)
         radius: 25
 
-        RadioRectangle{
+        RadioRectangle {
             id: checkButton
             width: 16
             height: 16
@@ -28,23 +29,23 @@ Item{
             anchors.verticalCenter: parent.verticalCenter
         }
 
-
-        Connections{
+        Connections {
             target: checkButton
-            function onChangeRadioStatus(){
-                //向后端发送改变todo状态
+            function onChangeRadioStatus() {//向后端发送改变todo状态
             }
         }
 
-
-        TextInput{
+        TextInput {
             id: taskNameInput
             text: root.taskName
+            horizontalAlignment: Text.AlignLeft
+            verticalAlignment: Text.AlignVCenter
             readOnly: true
             anchors.left: checkButton.right
             anchors.leftMargin: 10
             anchors.right: parent.right
             anchors.rightMargin: 10
+            anchors.verticalCenter: parent.verticalCenter
             font.pixelSize: 20
             color: defaultFontColor
             width: taskbar.width - saveDot.width - checkButton
@@ -61,6 +62,8 @@ Item{
 
             Keys.onEnterPressed: {
                 saveDot.visible = false
+                taskNameInput.readOnly = true
+                taskNameInput.focus = false
                 taskInvokeSave()
             }
 
@@ -74,7 +77,7 @@ Item{
             }
         }
 
-        Rectangle{
+        Rectangle {
             id: saveDot
             width: checkButton.width / 2
             height: checkButton.width / 2
@@ -83,8 +86,7 @@ Item{
             anchors.right: taskbar.right
             anchors.rightMargin: checkButton.width / 2
             anchors.verticalCenter: parent.verticalCenter
-            visible: true
+            visible: false
         }
-
     }
 }
