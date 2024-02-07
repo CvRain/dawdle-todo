@@ -12,6 +12,7 @@ Item {
     property string taskName: "no task?"
 
     signal invokeSave(bool isTaskFinish, string taskContent)
+    signal invokeDelete
 
     Rectangle {
         id: taskbar
@@ -57,9 +58,26 @@ Item {
 
             MouseArea {
                 anchors.fill: parent
+                hoverEnabled: true
                 onDoubleClicked: {
                     taskNameInput.readOnly = false
                     taskNameInput.forceActiveFocus()
+                }
+
+                onPressed: {
+                    var startTime = new Date().getTime()
+                    longTimer.start()
+                }
+                onReleased: {
+                    longTimer.stop()
+                }
+
+                Timer {
+                    id: longTimer
+                    interval: 1000
+                    onTriggered: {
+                        deleteIcon.active = true
+                    }
                 }
             }
 
@@ -67,17 +85,16 @@ Item {
                 taskNameInput.editingFinished()
             }
 
-            Connections{
+            Connections {
                 target: taskNameInput
-                function onTextEdited(){
+                function onTextEdited() {
                     saveDot.visible = true
                 }
-                function onEditingFinished(){
+                function onEditingFinished() {
                     saveDot.visible = false
                     saveDot.forceActiveFocus()
                     taskNameInput.readOnly = true
                     taskNameInput.focus = false
-
                 }
             }
         }
@@ -92,6 +109,19 @@ Item {
             anchors.rightMargin: checkButton.width / 2
             anchors.verticalCenter: parent.verticalCenter
             visible: false
+        }
+    }
+    Loader {
+        id: deleteIcon
+        active: false
+        anchors.right: parent.right
+        sourceComponent: Rectangle {
+            border.color: "red"
+            border.width: 2
+            color: transientParent
+            radius: 15
+            height: root.height
+            width: root.height
         }
     }
 }

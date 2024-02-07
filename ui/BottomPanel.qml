@@ -48,13 +48,23 @@ Item {
             opacity: 0.7
         }
 
+        PropertyAnimation{
+            id: buttonRotation
+            target: addTodo
+            property: "rotation"
+            from: 0
+            to: 360
+            duration: 1000
+        }
+
         MouseArea {
             anchors.fill: parent
+            hoverEnabled: true
             onEntered: {
-                rotationAnimation.start()
+                buttonRotation.start()
             }
             onExited: {
-                rotationAnimation.stop()
+                buttonRotation.stop()
             }
 
             onClicked: {
@@ -63,13 +73,4 @@ Item {
         }
     }
 
-    PropertyAnimation {
-        id: rotationAnimation
-        target: addTodo
-        properties: "rotation"
-        from: 0
-        to: 45
-        duration: 1000
-        running: false
-    }
 }
