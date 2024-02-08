@@ -80,6 +80,7 @@ dkms.conf
 
 ### CMake ###
 CMakeLists.txt.user
+CMakeLists.txt.user.*
 CMakeCache.txt
 CMakeFiles
 CMakeScripts
@@ -138,7 +139,6 @@ CMakeUserPresets.json
 
 # CMake
 cmake-build-*/
-cmake-build
 
 # Mongo Explorer plugin
 .idea/**/mongoSettings.xml
