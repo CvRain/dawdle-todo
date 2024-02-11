@@ -19,7 +19,8 @@ set(UI
     ui/TaskBar.qml
     ui/RadioRectangle.qml
     ui/BottomPanel.qml
-    ui/PanelTaskForm.qml)
+    ui/PanelTaskForm.qml
+    ui/DeleteButton.qml)
 
 set(RES res/res.qrc)
 

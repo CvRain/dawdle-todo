@@ -4,5 +4,6 @@
         <file>banner-main-1.jpg</file>
         <file>upload.svg</file>
         <file>add.svg</file>
+        <file>delete.svg</file>
     </qresource>
 </RCC>

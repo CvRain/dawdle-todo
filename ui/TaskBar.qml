@@ -76,7 +76,7 @@ Item {
                     id: longTimer
                     interval: 1000
                     onTriggered: {
-                        deleteIcon.active = true
+                        deleteButton.active = true
                     }
                 }
             }
@@ -98,30 +98,35 @@ Item {
                 }
             }
         }
-
-        Rectangle {
-            id: saveDot
-            width: checkButton.width / 2
-            height: checkButton.width / 2
-            radius: checkButton.width / 2
-            color: "#77FFFFFF"
-            anchors.right: taskbar.right
-            anchors.rightMargin: checkButton.width / 2
-            anchors.verticalCenter: parent.verticalCenter
-            visible: false
-        }
     }
+
+    Rectangle {
+        id: saveDot
+        width: checkButton.width / 2
+        height: checkButton.width / 2
+        radius: checkButton.width / 2
+        color: "#77FFFFFF"
+        anchors.right: taskbar.right
+        anchors.rightMargin: checkButton.width / 2
+        anchors.verticalCenter: parent.verticalCenter
+        visible: false
+    }
+
     Loader {
-        id: deleteIcon
+        id: deleteButton
         active: false
-        anchors.right: parent.right
-        sourceComponent: Rectangle {
-            border.color: "red"
-            border.width: 2
-            color: transientParent
-            radius: 15
-            height: root.height
-            width: root.height
+        anchors.right: taskbar.right
+        anchors.rightMargin: checkButton.width / 2
+        anchors.verticalCenter: parent.verticalCenter
+        width: taskbar.height / 2
+        height: taskbar.height / 2
+
+        sourceComponent: DeleteButton{
+            width: parent.width
+            height: parent.height
+        }
+        onFocusChanged: {
+            deleteButton.active = false
         }
     }
 }
