@@ -8,19 +8,28 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# if(WIN32)
+#     set(CMAKE_PREFIX_PATH D:/DevKit/Qt/6.5.3/mingw_64)
+# endif()
+
 find_package(Qt6 6.2 REQUIRED COMPONENTS Quick)
 
 
-set(SRC src/main.cpp)
+set(SRC src/main.cpp
+    src/catppuccin_latte.h
+        src/random_value.hpp
+        src/random_value.cpp)
 
 set(UI
-    ui/Main.qml
-    ui/Placeholder.qml
-    ui/TaskBar.qml
-    ui/RadioRectangle.qml
-    ui/BottomPanel.qml
-    ui/PanelTaskForm.qml
-    ui/DeleteButton.qml)
+    component/Main.qml
+    component/TaskOverviewBar.qml
+    component/TodoSideBar.qml
+    component/TodoDetailBar.qml
+    component/CheckButton.qml
+    component/WindowTitle.qml
+    component/TitleButton.qml
+
+)
 
 set(RES res/res.qrc)
 

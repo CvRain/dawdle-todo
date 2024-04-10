@@ -79,6 +79,7 @@ dkms.conf
 # Executables
 
 ### CMake ###
+CMakeLists.text.*
 CMakeLists.txt.user
 CMakeLists.txt.user.*
 CMakeCache.txt
@@ -92,7 +93,8 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 CMakeUserPresets.json
-
+Build
+build
 ### CMake Patch ###
 # External projects
 *-prefix/
@@ -187,6 +189,7 @@ modules.xml
 .idea/sonarlint
 
 ### VisualStudioCode ###
+.vscode
 .vscode/*
 !.vscode/tasks.json
 !.vscode/launch.json

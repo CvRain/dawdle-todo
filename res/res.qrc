@@ -1,9 +1,12 @@
 <RCC>
     <qresource prefix="/img">
-        <file>banner-main-2.jpg</file>
-        <file>banner-main-1.jpg</file>
         <file>upload.svg</file>
         <file>add.svg</file>
         <file>delete.svg</file>
+        <file>home.svg</file>
+        <file>max.svg</file>
+        <file>min.svg</file>
+        <file>refresh.svg</file>
+        <file>exit.svg</file>
     </qresource>
 </RCC>
