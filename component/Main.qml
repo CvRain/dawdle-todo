@@ -5,8 +5,8 @@ import Catppunccin
 
 Window {
     id: root
-    width: 450
-    height: 330
+    width: 740
+    height: 440
     visible: true
     title: qsTr("dawdle-todo")
     color: latteTheme.Base
@@ -52,10 +52,21 @@ Window {
                 //     describle: RandomValue.generate_string(15)
                 // }
                 Component.onCompleted: {
-
+                    append()
                 }
             }
         }
+    }
+
+    TodoSideBar {
+        width: root.width / 3
+        height: root.height - windowTitle.height
+        anchors.left: root.left
+        anchors.leftMargin: 0
+        anchors.top: windowTitle.bottom
+        anchors.topMargin: 0
+        minWidth: 64
+        maxWidth: 200
     }
 
     Latte {

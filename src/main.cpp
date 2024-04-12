@@ -5,17 +5,16 @@
 #include "catppuccin_latte.h"
 #include "random_value.hpp"
 
-#include <memory>
-
 int main(int argc, char *argv[])
 {
     const QGuiApplication app(argc, argv);
 
-    qmlRegisterType<Theme::Catppuccin::Latte>("Catppunccin",1,0,"Latte");
+
 
     QQmlApplicationEngine engine;
 
-    engine.rootContext()->setContextProperty("RandomValue",Tools::Debug::RandomValue::get_instance().get());
+    qmlRegisterType<Theme::Catppuccin::Latte>("Catppunccin",1,0,"Latte");
+    qmlRegisterType<Tools::Debug::RandomValue>("Tools.Debug",1,0,"RandomValue");
 
     const QUrl url(u"qrc:/dawdle_todo/component/Main.qml"_qs);
     QObject::connect(

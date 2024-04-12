@@ -6,10 +6,7 @@
 #include <QDebug>
 
 namespace Tools::Debug {
-    Q_GLOBAL_STATIC(QSharedPointer<RandomValue>, randomValueInstance)
-    QMutex RandomValue::mutex;
-
-    int RandomValue::generate_number(int min, int max) {
+        int RandomValue::generate_number(int min, int max) {
         std::random_device rd;
         std::mt19937 gen(rd());
         std::uniform_int_distribution<> dis(min, max);
@@ -23,13 +20,5 @@ namespace Tools::Debug {
         }
         qDebug() << ss.str().data();
         return QString::fromStdString(ss.str());
-    }
-
-    QSharedPointer<RandomValue> RandomValue::get_instance(QObject *parent) {
-        QMutexLocker locker(&RandomValue::mutex);
-        if (!*randomValueInstance) {
-            *randomValueInstance = QSharedPointer<RandomValue>(new RandomValue(parent), &QObject::deleteLater);
-        }
-        return *randomValueInstance;
     }
 }

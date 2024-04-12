@@ -4,7 +4,6 @@
 #include <QObject>
 #include <QSharedPointer>
 #include <QMutex>
-#include <random>
 #include <QString>
 #include <QDebug>
 
@@ -13,21 +12,11 @@ namespace Tools::Debug {
     Q_OBJECT
 
     public:
-        static QSharedPointer<RandomValue> get_instance(QObject *parent = nullptr);
-
-        RandomValue(const RandomValue &) = delete;
-
-        RandomValue &operator=(const RandomValue &) = delete;
+        explicit RandomValue(QObject *parent = nullptr) : QObject(parent) {}
 
         Q_INVOKABLE int generate_number(int min, int max);
 
         Q_INVOKABLE QString generate_string(int length);
-
-    private:
-        explicit RandomValue(QObject *parent = nullptr) : QObject(parent) {}
-
-        static QSharedPointer<RandomValue> instance;
-        static QMutex mutex;
     };
 }
 

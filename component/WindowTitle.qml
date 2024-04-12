@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import Catppunccin
+import Tools.Debug
 
 Item {
     property string titleText: "dawdle todo"
@@ -80,7 +81,12 @@ Item {
         target: iconContainer
         function onIconClicked() {
             titleIconClicked()
+            console.log(randomValue.generate_string(10))
         }
+    }
+
+    RandomValue {
+        id: randomValue
     }
 
     Connections {
