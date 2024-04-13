@@ -1,7 +1,6 @@
 import QtQuick
 import QtQuick.Window
 import QtQuick.Controls
-import Catppunccin
 
 Window {
     id: root
@@ -9,7 +8,6 @@ Window {
     height: 440
     visible: true
     title: qsTr("dawdle-todo")
-    color: latteTheme.Base
     flags: Qt.FramelessWindowHint | Qt.Window
 
     WindowTitle {
@@ -17,7 +15,39 @@ Window {
         width: parent.width
         height: 40
         anchors.top: parent.top
-        distWindow: root
+
+        // MouseArea to handle dragging
+        MouseArea {
+            id: dragArea
+            anchors.fill: parent
+            onPressed: {
+                // 记录点击时鼠标位置相对于窗口的位置
+                dragArea.mouseXOffset = mouse.x
+                dragArea.mouseYOffset = mouse.y
+                dragArea.dragging = true
+            }
+            onPositionChanged: {
+                // 如果鼠标已按下，则根据鼠标的移动来移动窗口
+                if (dragArea.dragging) {
+                    root.x += mouse.x - dragArea.mouseXOffset
+                    root.y += mouse.y - dragArea.mouseYOffset
+                }
+            }
+            onClicked: {
+                console.log("clicked!")
+            }
+            onReleased: {
+                // 鼠标释放后停止拖动
+                dragArea.dragging = false
+            }
+
+            // 自定义属性来存储鼠标相对于窗口的偏移
+            property int mouseXOffset: 0
+            property int mouseYOffset: 0
+
+            // 标记是否正在拖动
+            property bool dragging: false
+        }
     }
 
     Rectangle {
@@ -46,15 +76,7 @@ Window {
                 todoDescribe: describle
             }
 
-            model: ListModel {
-                // ListElement {
-                //     title: RandomValue.generate_string(10)
-                //     describle: RandomValue.generate_string(15)
-                // }
-                Component.onCompleted: {
-                    append()
-                }
-            }
+            model: ListModel {}
         }
     }
 
@@ -67,9 +89,5 @@ Window {
         anchors.topMargin: 0
         minWidth: 64
         maxWidth: 200
-    }
-
-    Latte {
-        id: latteTheme
     }
 }

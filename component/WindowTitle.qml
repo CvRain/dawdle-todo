@@ -27,9 +27,9 @@ Item {
             id: iconContainer
             height: titleBar.height * 0.6
             width: titleBar.height * 0.6
-            anchors.left: parent.left
+            anchors.left: titleBar.left
             anchors.leftMargin: 5
-            anchors.verticalCenter: parent.verticalCenter
+            anchors.verticalCenter: titleBar.verticalCenter
             iconPath: "qrc:/img/home.svg"
         }
 
@@ -100,7 +100,6 @@ Item {
 
     Connections {
         target: maxWindow
-        //TODO 好难啊，写不出来
         function onIconClicked() {
             maxButtonClicked()
             if (distWindow.Maximized) {
