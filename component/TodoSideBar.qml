@@ -8,28 +8,21 @@ import Catppunccin
 //import QtGraphicalEffects 1.0
 Item {
     property bool unfold: false
-    property real minWidth: 64
-    property real maxWidth: 240
-    id: root
-    width: 480
-    height: 640
+    property real minWidth: 24
+    property real maxWidth: 220
+
+    signal expandButtonClick
 
     Rectangle {
         id: barRect
         width: unfold ? maxWidth : minWidth
         height: parent.height
-        //radius: 10
+        radius: 5
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
         color: latte.Mantle
         border.color: latte.Peach
         clip: true
-
-        Behavior on width {
-            NumberAnimation {
-                duration: 300
-            }
-        }
 
         ListModel {
             id: appModel
@@ -74,13 +67,13 @@ Item {
                     height: 24
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
-                    anchors.leftMargin: 18
+                    anchors.leftMargin: 15
                     source: icon
                 }
                 //显示APP文字
                 Text {
                     anchors.left: imageIcon.right
-                    anchors.leftMargin: 20
+                    anchors.leftMargin: 10
                     anchors.verticalCenter: imageIcon.verticalCenter
                     color: latte.Subtext1
                     text: name
@@ -115,6 +108,7 @@ Item {
 
     // 展开/收回按钮
     Rectangle {
+        id: expandButton
         width: 34
         height: width
         radius: width / 2
@@ -125,20 +119,42 @@ Item {
         anchors.leftMargin: -width / 2
         anchors.bottom: barRect.bottom
         Image {
+            id: expandButtonIcon
             width: 24
             height: 24
             anchors.centerIn: parent
-            //此处使用旋转1180度实现展开按钮图标和收回按钮图标
-            rotation: unfold ? 180 : 0
-            source: "qrc:/img/add.svg"
+            //此处使用旋转180度实现展开按钮图标和收回按钮图标
+            //rotation: unfold ? 180 : 0
+            source: "qrc:/img/toggle-right.svg"
         }
 
         MouseArea {
             anchors.fill: parent
             onClicked: {
                 unfold = !unfold
+                expandButtonRotation.start()
+                barWidthAnimation.start()
+                expandButtonClick()
             }
         }
+    }
+
+    NumberAnimation {
+        id: barWidthAnimation
+        target: barRect
+        property: "width"
+        duration: 300
+        easing.type: Easing.InOutQuad
+        from: unfold ? minWidth : maxWidth
+        to: unfold ? maxWidth : minWidth
+    }
+
+    RotationAnimation {
+        id: expandButtonRotation
+        target: expandButton
+        duration: 300
+        from: unfold ? 0 : 180
+        to: unfold ? 180 : 0
     }
 
     Latte {

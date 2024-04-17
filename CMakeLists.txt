@@ -18,7 +18,9 @@ find_package(Qt6 6.2 REQUIRED COMPONENTS Quick)
 set(SRC src/main.cpp
     src/catppuccin_latte.h
         src/random_value.hpp
-        src/random_value.cpp)
+        src/random_value.cpp
+        src/main_window.cpp
+        src/main_window.hpp)
 
 set(UI
     component/Main.qml
@@ -62,3 +64,5 @@ install(TARGETS appdawdle_todo
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
+
+target_compile_features(appdawdle_todo PRIVATE cxx_std_20)
