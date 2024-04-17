@@ -42,6 +42,7 @@ Window {
         anchors.top: windowTitle.bottom
         anchors.left: todoSideBar.right
         anchors.leftMargin: 10
+        anchors.right: windowTitle.right
         color: latte.Base
 
         ListView {
@@ -65,21 +66,26 @@ Window {
                 }
             }
         }
+    }
 
-        // NumberAnimation {
-        //     id: taskGroupdBgWidthAnimation
-        //     target: taskGroupdBackground
-        //     property: "width"
-        //     duration: 200
-        //     easing.type: Easing.InOutQuad
-        // }
+    NumberAnimation {
+        id: taskGroupdBgWidthAnimation
+        property bool unfold: todoSideBar.unfold
 
-        // Connections {
-        //     target: todoSideBar
-        //     function onExpandButtonClick() {
-        //         taskGroupdBgWidthAnimation.start()
-        //     }
-        // }
+        target: taskGroupdBackground
+        property: "width"
+        duration: 500
+        easing.type: Easing.InOutQuad
+
+        from: taskGroupdBackground.width
+        to: unfold ? root.width - todoSideBar.maxWidth : root.width - todoSideBar.minWidth
+    }
+
+    Connections {
+        target: todoSideBar
+        function onExpandButtonClick(unfold) {
+            taskGroupdBgWidthAnimation.start()
+        }
     }
 
     Latte {

@@ -21,15 +21,12 @@ Item {
         id: titleBar
         width: parent.width
         height: parent.height
-        anchors.fill: parent
         color: latteTheme.Surface0
 
         Row {
             id: leftPart
             width: parent.width / 2
             height: parent.height
-            anchors.left: titleBar.left
-            anchors.leftMargin: 5
             spacing: 5
 
             TitleButton {
@@ -38,6 +35,7 @@ Item {
                 width: titleBar.height * 0.6
                 iconPath: "qrc:/img/home.svg"
                 anchors.verticalCenter: parent.verticalCenter
+                onIconClicked: titleIconClicked()
             }
 
             Text {
@@ -50,39 +48,33 @@ Item {
                 verticalAlignment: Text.AlignVCenter
                 clip: true
                 horizontalAlignment: Text.AlignLeft
-
-                // MouseArea to handle dragging
                 MouseArea {
                     id: dragArea
                     anchors.fill: parent
-
-                    // 自定义属性来存储鼠标相对于窗口的偏移
                     property int mouseXOffset: 0
                     property int mouseYOffset: 0
-
-                    // 标记是否正在拖动
                     property bool dragging: false
                 }
             }
         }
 
-        Row {
+        RowLayout {
             id: rightPart
-            width: parent.width / 2
+            width: titleBar.height * 0.4 * 3
             height: parent.height
-            //TODO
+            spacing: 5
             anchors.right: titleBar.right
             anchors.rightMargin: 10
             layoutDirection: Qt.RightToLeft
-
-            spacing: 5
+            Layout.alignment: Qt.RightToLeft
 
             TitleButton {
                 id: exitWindow
                 width: titleBar.height * 0.4
                 height: titleBar.height * 0.4
                 iconPath: "qrc:/img/exit.svg"
-                anchors.verticalCenter: parent.verticalCenter
+                //anchors.verticalCenter: parent.verticalCenter
+                onIconClicked: closeButtonClicked()
             }
 
             TitleButton {
@@ -90,7 +82,8 @@ Item {
                 width: titleBar.height * 0.4
                 height: titleBar.height * 0.4
                 iconPath: "qrc:/img/max.svg"
-                anchors.verticalCenter: parent.verticalCenter
+                //anchors.verticalCenter: parent.verticalCenter
+                onIconClicked: maxButtonClicked()
             }
 
             TitleButton {
@@ -98,21 +91,26 @@ Item {
                 width: titleBar.height * 0.4
                 height: titleBar.height * 0.4
                 iconPath: "qrc:/img/min.svg"
-                anchors.verticalCenter: parent.verticalCenter
+                //anchors.verticalCenter: parent.verticalCenter
+                onIconClicked: minButtonClicked()
             }
         }
     }
 
-    Connections {
-        target: iconContainer
-        function onIconClicked() {
-            titleIconClicked()
-            console.log(randomValue.generate_string(10))
-        }
+    Latte {
+        id: latteTheme
     }
 
     RandomValue {
         id: randomValue
+    }
+
+    Connections {
+        target: iconContainer
+        function titleIconClicked() {
+            console.log(randomValue.generate_string(10))
+            titleIconClicked()
+        }
     }
 
     Connections {
@@ -127,6 +125,7 @@ Item {
     Connections {
         target: maxWindow
         function onIconClicked() {
+            console.log("WindowTitle::MaxButton::clicked")
             maxButtonClicked()
             if (distWindow.Maximized) {
                 distWindow.Maximized = false
@@ -171,9 +170,5 @@ Item {
             // 鼠标释放后停止拖动
             dragArea.dragging = false
         }
-    }
-
-    Latte {
-        id: latteTheme
     }
 }

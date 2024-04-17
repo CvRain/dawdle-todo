@@ -11,7 +11,10 @@ Item {
     property real minWidth: 24
     property real maxWidth: 220
 
-    signal expandButtonClick
+    signal expandButtonClick(bool isExpand)
+
+    width: unfold ? maxWidth : minWidth
+    height: parent.height
 
     Rectangle {
         id: barRect
@@ -134,7 +137,7 @@ Item {
                 unfold = !unfold
                 expandButtonRotation.start()
                 barWidthAnimation.start()
-                expandButtonClick()
+                expandButtonClick(unfold)
             }
         }
     }
