@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Window
 import QtQuick.Controls
-import Catppunccin
+import Theme.Catppunccin.Latte
 
 Window {
     id: root
@@ -37,12 +37,12 @@ Window {
     Rectangle {
         id: taskGroupdBackground
 
-        width: parent.width - todoSideBar.width
+        width: root.width - todoSideBar.width - 15
         height: parent.height - windowTitle.height
         anchors.top: windowTitle.bottom
-        anchors.left: todoSideBar.right
-        anchors.leftMargin: 10
+        anchors.topMargin: 10
         anchors.right: windowTitle.right
+        anchors.rightMargin: 10
         color: latte.Base
 
         ListView {
@@ -70,20 +70,28 @@ Window {
 
     NumberAnimation {
         id: taskGroupdBgWidthAnimation
-        property bool unfold: todoSideBar.unfold
+
+        property real newWidth
 
         target: taskGroupdBackground
         property: "width"
         duration: 500
         easing.type: Easing.InOutQuad
-
         from: taskGroupdBackground.width
-        to: unfold ? root.width - todoSideBar.maxWidth : root.width - todoSideBar.minWidth
+
+        onRunningChanged: {
+            if (running) {
+                // 获取动画开始时的目标宽度
+                to = root.width - newWidth - 15
+            }
+        }
     }
 
     Connections {
         target: todoSideBar
         function onExpandButtonClick(unfold) {
+            taskGroupdBgWidthAnimation.newWidth
+                    = unfold ? todoSideBar.minWidth : todoSideBar.maxWidth
             taskGroupdBgWidthAnimation.start()
         }
     }

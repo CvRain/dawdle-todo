@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls
-import Catppunccin
+import Theme.Catppunccin.Latte
 
 Item {
     id: root

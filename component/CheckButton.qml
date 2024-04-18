@@ -1,5 +1,5 @@
 import QtQuick 2.0
-import Catppunccin
+import Theme.Catppunccin.Latte
 
 Item {
     property real radius: 20

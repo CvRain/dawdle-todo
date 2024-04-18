@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Catppunccin
+import Theme.Catppunccin.Latte
 import Tools.Debug
 
 Item {

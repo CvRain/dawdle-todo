@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
-    qmlRegisterType<Theme::Catppuccin::Latte>("Catppunccin",1,0,"Latte");
+    qmlRegisterType<Theme::Catppuccin::Latte>("Theme.Catppunccin.Latte",1,0,"Latte");
     qmlRegisterType<Tools::Debug::RandomValue>("Tools.Debug",1,0,"RandomValue");
 
     const QUrl url(u"qrc:/dawdle_todo/component/Main.qml"_qs);
@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
 
         // 使用mainWindow进行接下来的操作，比如移动窗口
         // 这里你可以调用你的移动窗口函数，传入mainWindow的位置参数
-        main_window = std::make_shared<Widgets::MainWindow>(quick_window, nullptr);
+        main_window = std::make_shared<Widgets::MainWindow>(quick_window, nuttllptr);
 
     } catch (const std::exception& exception) {
         qDebug() << exception.what();

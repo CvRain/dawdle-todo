@@ -3,7 +3,7 @@ import QtQuick
 import QtQuick 2.8
 import QtQuick.Window 2.2
 import QtQuick.Controls 2.1
-import Catppunccin
+import Theme.Catppunccin.Latte
 
 //import QtGraphicalEffects 1.0
 Item {
@@ -12,6 +12,7 @@ Item {
     property real maxWidth: 220
 
     signal expandButtonClick(bool isExpand)
+    signal expandWidthChanged(real newWidth)
 
     width: unfold ? maxWidth : minWidth
     height: parent.height
@@ -138,6 +139,7 @@ Item {
                 expandButtonRotation.start()
                 barWidthAnimation.start()
                 expandButtonClick(unfold)
+                expandWidthChanged(barRect.width)
             }
         }
     }
