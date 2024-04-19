@@ -20,7 +20,9 @@ set(SRC src/main.cpp
         src/random_value.hpp
         src/random_value.cpp
         src/main_window.cpp
-        src/main_window.hpp)
+        src/main_window.hpp
+        src/todo_title_model.cpp
+        src/todo_title_model.hpp)
 
 set(UI
     component/Main.qml

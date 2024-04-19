@@ -9,64 +9,66 @@
 #include "catppuccin_latte.h"
 #include "random_value.hpp"
 #include "main_window.hpp"
+#include "todo_title_model.hpp"
 
-int main(int argc, char *argv[])
-{
+template<typename T>
+concept is_widget = std::is_base_of_v<QQuickItem, T>
+                    || std::is_base_of_v<QWindow, T>
+                    || std::is_same_v<T, QQuickItem>;
+
+template<is_widget T>
+T *get_widget_object(QQmlApplicationEngine &engine, const QString &widget_name);
+
+int main(int argc, char *argv[]) {
     const QGuiApplication app(argc, argv);
-
 
 
     QQmlApplicationEngine engine;
 
-    qmlRegisterType<Theme::Catppuccin::Latte>("Theme.Catppunccin.Latte",1,0,"Latte");
-    qmlRegisterType<Tools::Debug::RandomValue>("Tools.Debug",1,0,"RandomValue");
+    qmlRegisterType<Theme::Catppuccin::Latte>("Theme.Catppunccin.Latte", 1, 0, "Latte");
+    qmlRegisterType<Tools::Debug::RandomValue>("Tools.Debug", 1, 0, "RandomValue");
+    qmlRegisterType<Model::TodoTitleModel>("Model.TodoTitle",1,0,"TodoTitle");
 
     const QUrl url(u"qrc:/dawdle_todo/component/Main.qml"_qs);
     QObject::connect(
-        &engine,
-        &QQmlApplicationEngine::objectCreated,
-        &app,
-        [url](const QObject *obj, const QUrl &objUrl) {
-            if (!obj && url == objUrl)
-                QCoreApplication::exit(-1);
-        },
-        Qt::QueuedConnection);
+            &engine,
+            &QQmlApplicationEngine::objectCreated,
+            &app,
+            [url](const QObject *obj, const QUrl &objUrl) {
+                if (!obj && url == objUrl)
+                    QCoreApplication::exit(-1);
+            },
+            Qt::QueuedConnection);
     engine.load(url);
 
-    std::shared_ptr<Widgets::MainWindow> main_window;
-
-    try {
-        // 获取QML引擎中的根对象
-        auto rootObjects = engine.rootObjects();
-
-        // 在根对象中查找名为"mainWindow"的对象
-        auto main_window_iter = std::find_if(rootObjects.begin(), rootObjects.end(), [](QObject *object) {
-            return object->objectName() == "mainWindow";
-        });
-
-        // 检查是否找到了窗口对象
-        if (main_window_iter == rootObjects.end()) {
-            qWarning("Failed to find main window object");
-            throw std::runtime_error("Failed to find main window object");
-        }
-
-        // 将QObject转换为QQuickWindow
-        auto quick_window = qobject_cast<QQuickWindow*>(*main_window_iter);
-
-        // 检查转换是否成功
-        if (!quick_window) {
-            qWarning("Failed to cast main window object to QQuickWindow");
-            throw std::runtime_error("Failed to cast main window object to QQuickWindow");
-        }
-
-        // 使用mainWindow进行接下来的操作，比如移动窗口
-        // 这里你可以调用你的移动窗口函数，传入mainWindow的位置参数
-        main_window = std::make_shared<Widgets::MainWindow>(quick_window, nuttllptr);
-
-    } catch (const std::exception& exception) {
-        qDebug() << exception.what();
-    }
-
+    auto main_window = std::make_shared<Widgets::MainWindow>(
+            get_widget_object<QQuickWindow>(engine, "mainWindow"), nullptr);
 
     return QGuiApplication::exec();
+}
+
+template<is_widget T>
+T *get_widget_object(QQmlApplicationEngine &engine, const QString &widget_name) {
+    try {
+        auto rootObjects = engine.rootObjects();
+        auto widget_iter = std::find_if(rootObjects.begin(), rootObjects.end(), [&](QObject *object) {
+            return object->objectName() == widget_name;
+        });
+
+        if (widget_iter == rootObjects.end()) {
+            qWarning("Failed to find main window object");
+            throw std::runtime_error("Failed to find " + widget_name.toLocal8Bit());
+        }
+
+        auto widget = qobject_cast<T *>(*widget_iter);
+        if (!widget) {
+            throw std::runtime_error("Exception::Failed to cast widget to *" + widget_name.toLocal8Bit());
+        }
+
+        return widget;
+
+    } catch (const std::exception &exception) {
+        qDebug() << exception.what();
+        return nullptr;
+    }
 }

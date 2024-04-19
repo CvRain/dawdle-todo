@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Window
 import QtQuick.Controls
 import Theme.Catppunccin.Latte
+import Model.TodoTitle
 
 Window {
     id: root
@@ -31,7 +32,7 @@ Window {
         anchors.top: windowTitle.bottom
         anchors.topMargin: 0
         minWidth: 48
-        maxWidth: 200
+        maxWidth: 160
     }
 
     Rectangle {
@@ -52,19 +53,15 @@ Window {
             anchors.fill: parent
             spacing: 15
             clip: true
+
             delegate: TaskOverviewBar {
                 width: taskGroup.width
-                height: 40
-                todoTitle: title
-                todoDescribe: describle
+                height: 50
+                todoTitle: model.theme
+                todoDescribe: model.describe
             }
 
-            model: ListModel {
-                ListElement {
-                    title: "hello"
-                    describle: "test"
-                }
-            }
+            model: TodoTitle {}
         }
     }
 

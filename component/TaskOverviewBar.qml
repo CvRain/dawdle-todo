@@ -1,5 +1,6 @@
 import QtQuick
 import Theme.Catppunccin.Latte
+import QtQuick.Controls
 
 Item {
     id: root
@@ -43,13 +44,23 @@ Item {
             width: parent.width / 2
             text: todoTitle
             color: latteTheme.DefaultText
-            font.pixelSize: 12
+            font.pixelSize: 14
             font.bold: true
             anchors.fill: parent
             anchors.left: checkButton.right
             anchors.leftMargin: 25
             horizontalAlignment: Text.AlignLeft
             verticalAlignment: Text.AlignVCenter
+
+            MouseArea {
+                anchors.fill: parent
+                hoverEnabled: true
+
+                // Show the tooltip when the mouse hovers over the text
+                ToolTip.visible: containsMouse
+                ToolTip.text: todoDescribe
+                ToolTip.delay: 1000 // Delay in milliseconds before showing the tooltip
+            }
         }
     }
     Latte {

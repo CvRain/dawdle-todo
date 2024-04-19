@@ -61,7 +61,7 @@ Item {
             Rectangle {
                 id: delegateBackground
                 width: barRect.width
-                height: 48
+                height: 40
                 radius: 5
                 color: "#00000000"
                 //显示图标
@@ -79,10 +79,10 @@ Item {
                     anchors.left: imageIcon.right
                     anchors.leftMargin: 10
                     anchors.verticalCenter: imageIcon.verticalCenter
-                    color: latte.Subtext1
+                    color: latte.DefaultText
                     text: name
                     font {
-                        pixelSize: 20
+                        pixelSize: 14
                     }
                 }
                 //鼠标处理
