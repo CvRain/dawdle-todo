@@ -55,14 +55,62 @@ Item {
             MouseArea {
                 anchors.fill: parent
                 hoverEnabled: true
+                acceptedButtons: Qt.RightButton
 
-                // Show the tooltip when the mouse hovers over the text
-                ToolTip.visible: containsMouse
-                ToolTip.text: todoDescribe
-                ToolTip.delay: 1000 // Delay in milliseconds before showing the tooltip
+                onPressed: function (mouse) {
+                    if (mouse.button === Qt.RightButton) {
+                        popupMenu.x = mouse.x
+                        popupMenu.y = mouse.y
+                        popupMenu.open()
+                    }
+                }
             }
         }
     }
+
+    Popup {
+        id: popupMenu
+        width: 100
+        height: 120
+        padding: 10
+        modal: true
+        focus: true
+        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
+        contentItem: Rectangle {
+            width: parent.width
+            height: parent.height
+            color: "#f0f0f0"
+            radius: 5
+            border.color: latteTheme.Flamingo
+            border.width: 1
+
+            Column {
+                spacing: 5
+                Button {
+                    text: "Open"
+                    onClicked: {
+                        console.log("Open clicked!")
+                        popupMenu.close()
+                    }
+                }
+                Button {
+                    text: "Edit"
+                    onClicked: {
+                        console.log("Edit clicked!")
+                        popupMenu.close()
+                    }
+                }
+                Button {
+                    text: "Delete"
+                    onClicked: {
+                        console.log("Delete clicked!")
+                        popupMenu.close()
+                    }
+                }
+            }
+        }
+    }
+
     Latte {
         id: latteTheme
     }
