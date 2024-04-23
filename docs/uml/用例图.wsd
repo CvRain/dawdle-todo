@@ -1,0 +1,45 @@
+@startuml 用例图
+left to right direction
+actor 用户 as U
+
+rectangle "dawdle-todo" {
+    usecase "查看任务" as ViewTasks
+    usecase "添加任务" as AddTask
+    usecase "编辑任务" as EditTask
+    usecase "删除任务" as DeleteTask
+    usecase "查看循环" as ViewCycles
+    usecase "添加循环" as AddCycle
+    usecase "编辑循环" as EditCycle
+    usecase "删除循环" as DeleteCycle
+    usecase "查看每日计划" as ViewDailyPlans
+    usecase "添加每日计划" as AddDailyPlan
+    usecase "编辑每日计划" as EditDailyPlan
+    usecase "删除每日计划" as DeleteDailyPlan
+
+    U --> ViewTasks
+    U --> AddTask
+    U --> EditTask
+    U --> DeleteTask
+    U --> ViewCycles
+    U --> AddCycle
+    U --> EditCycle
+    U --> DeleteCycle
+    U --> ViewDailyPlans
+    U --> AddDailyPlan
+    U --> EditDailyPlan
+    U --> DeleteDailyPlan
+
+    ViewTasks --> (显示任务)
+    AddTask --> (创建任务)
+    EditTask --> (修改任务)
+    DeleteTask --> (删除任务)
+    ViewCycles --> (显示循环)
+    AddCycle --> (创建循环)
+    EditCycle --> (修改循环)
+    DeleteCycle --> (删除循环)
+    ViewDailyPlans --> (显示每日计划)
+    AddDailyPlan --> (创建每日计划)
+    EditDailyPlan --> (修改每日计划)
+    DeleteDailyPlan --> (删除每日计划)
+}
+@enduml
