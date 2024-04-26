@@ -32,6 +32,7 @@ set(UI
     component/CheckButton.qml
     component/WindowTitle.qml
     component/TitleButton.qml
+    component/TaskOverviewGroup.qml
 
 )
 

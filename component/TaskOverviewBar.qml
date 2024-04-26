@@ -17,7 +17,7 @@ Item {
         anchors.fill: parent
         color: latteTheme.Mantle
         border.color: latteTheme.Flamingo
-        radius: 35
+        radius: 25
 
         CheckButton {
             id: checkButton
