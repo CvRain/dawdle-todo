@@ -24,6 +24,8 @@ namespace Model {
 
         [[nodiscard]] QHash<int, QByteArray>  roleNames() const override;
 
+        void remove(int index);
+
     private:
         struct TodoTitleItem {
             QString theme;
