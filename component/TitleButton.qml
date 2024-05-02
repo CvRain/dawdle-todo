@@ -37,32 +37,6 @@ Item {
             id: mouseArea
             anchors.fill: parent
             hoverEnabled: true
-
-            onEntered: {
-                colorAnimation.from = iconContainer.color
-                colorAnimation.to = hoverColor
-                colorAnimation.start()
-                iconEntered()
-            }
-
-            onExited: {
-                // Start the timer to reset the color after a short delay
-                colorResetTimer.restart()
-                iconExited()
-            }
-
-            onCanceled: {
-                colorResetTimer.restart()
-                iconExited()
-            }
-
-            onClicked: {
-                colorAnimation.from = iconContainer.color
-                colorAnimation.to = pressedColor
-                colorAnimation.start()
-                iconClicked()
-                console.log("TitleButton::clicked")
-            }
         }
 
         ColorAnimation {
@@ -81,6 +55,36 @@ Item {
                 colorAnimation.to = "transparent"
                 colorAnimation.start()
             }
+        }
+    }
+
+    Connections {
+        target: mouseArea
+
+        function onEntered() {
+            colorAnimation.from = iconContainer.color
+            colorAnimation.to = hoverColor
+            colorAnimation.start()
+            iconEntered()
+        }
+
+        function onExited() {
+            // Start the timer to reset the color after a short delay
+            colorResetTimer.restart()
+            iconExited()
+        }
+
+        function onCanceled() {
+            colorResetTimer.restart()
+            iconExited()
+        }
+
+        function onClicked() {
+            colorAnimation.from = iconContainer.color
+            colorAnimation.to = pressedColor
+            colorAnimation.start()
+            iconClicked()
+            console.log("TitleButton::clicked")
         }
     }
 

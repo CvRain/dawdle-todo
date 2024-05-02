@@ -2,12 +2,9 @@
 
 namespace Model {
     TodoTitleModel::TodoTitleModel(QObject *object) : QAbstractListModel(object) {
-        todo_items.append(TodoTitleItem{"some assignment, group 1", "daily task"});
-        todo_items.append(TodoTitleItem{"some assignment, group 2", "once assignment"});
-        todo_items.append(TodoTitleItem{"some assignment, group 3", "do task one by one"});
-        todo_items.append(TodoTitleItem{"some assignment, group 4", "do task one by one"});
-        todo_items.append(TodoTitleItem{"some assignment, group 5", "do task one by one"});
-        todo_items.append(TodoTitleItem{"some assignment, group 6", "do task one by one"});
+        //TODO
+        //link core lib
+        //init load taskgroup
     }
 
     int TodoTitleModel::rowCount(const QModelIndex &parent) const {
@@ -40,10 +37,13 @@ namespace Model {
 
     void TodoTitleModel::remove(int index)
     {
-        if(index <0 || todo_items.length() < index){
+        if (index < 0 || index >= todo_items.size())
             return;
-        }
+
+        beginRemoveRows(QModelIndex(), index, index); // 开始删除操作
         todo_items.removeAt(index);
+        endRemoveRows(); // 结束删除操作
     }
+
 
 } // Model

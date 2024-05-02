@@ -35,24 +35,36 @@ Window {
         maxWidth: 160
     }
 
-    StackView {}
-
-    TaskOverviewGroup {
-        id: taskOverviewGroup
+    StackView {
+        id: pagesView
         width: parent.width - todoSideBar.width
         height: parent.height - windowTitle.height
         anchors.top: windowTitle.bottom
         anchors.topMargin: 10
         anchors.left: todoSideBar.right
         anchors.leftMargin: 5
+        initialItem: taskOverview
     }
 
-    Connections {
-        target: todoSideBar
-        function onExpandButtonClick(unfold) {//TODO expand animation
-            // taskOverviewGroup.taskGroupdBgWidthAnimation.newWidth
-            //         = todoSideBar.unfold ? todoSideBar.minWidth : todoSideBar.maxWidth
-            // taskOverviewGroup.taskGroupdBgWidthAnimation.start()
+    Component {
+        id: taskOverview
+        TaskOverviewGroup {}
+    }
+
+    Component {
+        id: taskBaseDetail
+        TaskDetailBase {
+            width: pagesView.width
+            height: pagesView.height
+        }
+    }
+
+    Popup {
+        id: popup
+        TaskCreationPopup {}
+
+        Component.onCompleted: {
+            popup.visible = true
         }
     }
 

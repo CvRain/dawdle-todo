@@ -33,6 +33,8 @@ set(UI
     component/WindowTitle.qml
     component/TitleButton.qml
     component/TaskOverviewGroup.qml
+    component/TaskDetailBase.qml
+    component/TaskCreationPopup.qml
 
 )
 

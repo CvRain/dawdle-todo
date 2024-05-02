@@ -5,6 +5,10 @@ import Model.TodoTitle
 
 Item {
     id: root
+
+    signal itemDelete
+    signal itemClicked
+
     Rectangle {
         id: taskGroupdBackground
         color: latte.Base
@@ -15,7 +19,9 @@ Item {
             anchors.fill: parent
             spacing: 15
             clip: true
-            model: TodoTitle {}
+            model: TodoTitle {
+                id: todoTitleModel
+            }
 
             delegate: Item {
                 width: taskListView.width
@@ -31,6 +37,7 @@ Item {
                         width: parent.width
                         height: parent.height
                     }
+
                     contentItem: Item {
                         TaskOverviewBar {
                             width: swipeDel.width
@@ -40,48 +47,34 @@ Item {
                             anchors.centerIn: parent
                         }
                     }
-                    swipe.left: Rectangle {
+
+                    swipe.left: Button {
                         width: swipeDel.width / 10
                         height: swipeDel.height
-                        color: latte.Rosewater
-                        border.color: latte.Flamingo
-                        radius: 15
+                        text: "Delete"
 
-                        Text {
-                            width: parent.width
-                            height: parent.height
-                            anchors.fill: parent
-                            text: "Delete"
-                            font.pixelSize: 12
-                            font.bold: true
-                            color: latte.Mantle
-                            verticalAlignment: Text.AlignVCenter
-                            horizontalAlignment: Text.AlignHCenter
+                        background: Rectangle {
+                            color: latte.Rosewater
+                            border.color: latte.Flamingo
+                            radius: 15
                         }
-                        MouseArea {
-                            anchors.fill: parent
+
+                        function onClicked(mouse) {
+                            removeAnimation.start()
+                        }
+
+                        NumberAnimation {
+                            id: removeAnimation
+                            target: swipeDel.contentItem
+                            property: "opacity"
+                            to: 0
+                            duration: 200 // milliseconds
+                            onStopped: {
+                                todoTitleModel.remove(index)
+                            }
                         }
                     }
                 }
-            }
-        }
-    }
-
-    NumberAnimation {
-        id: taskGroupdBgWidthAnimation
-
-        property real newWidth
-
-        target: taskGroupdBackground
-        property: "width"
-        duration: 500
-        easing.type: Easing.InOutQuad
-        from: taskGroupdBackground.width
-
-        onRunningChanged: {
-            if (running) {
-                // 获取动画开始时的目标宽度
-                to = root.width - newWidth - 15
             }
         }
     }

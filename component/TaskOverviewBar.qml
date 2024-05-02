@@ -25,17 +25,6 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
             anchors.leftMargin: 5
-
-            Connections {
-                target: checkButton
-                function onCheckedChanged(checked) {
-                    if (checked) {
-                        console.log("Checked!")
-                    } else {
-                        console.log("Unchecked!")
-                    }
-                }
-            }
         }
 
         Text {
@@ -56,6 +45,17 @@ Item {
                 anchors.fill: parent
                 hoverEnabled: true
                 acceptedButtons: Qt.RightButton
+            }
+        }
+    }
+
+    Connections {
+        target: checkButton
+        function onCheckedChanged(checked) {
+            if (checked) {
+                console.log("Checked!")
+            } else {
+                console.log("Unchecked!")
             }
         }
     }
