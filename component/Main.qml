@@ -61,7 +61,21 @@ Window {
 
     Popup {
         id: popup
-        TaskCreationPopup {}
+        anchors.centerIn: parent
+        width: 300
+        height: 200
+
+        background: Rectangle {
+            color: latte.Mantle
+            radius: 15
+            border.color: latte.Peach
+        }
+
+        TaskCreationPopup {
+            anchors.fill: parent
+            width: parent.width
+            height: parent.height
+        }
 
         Component.onCompleted: {
             popup.visible = true
