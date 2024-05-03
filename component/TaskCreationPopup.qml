@@ -94,18 +94,24 @@ Item {
                 highlighted: highlighted
                 padding: 10
                 font.bold: true
+                background: Rectangle {
+                    anchors.fill: parent
+                    color: latte.Crust
+                    border.color: latte.Mantle
+                }
             }
             background: Rectangle {
                 implicitWidth: 100
                 implicitHeight: 20
-                color: "#ffffff"
-                border.color: "#000000"
+                color: latte.Crust
+                border.color: latte.Peach
                 border.width: 1
                 radius: 5
             }
             contentItem: Text {
-                text: typeComboBox.currentText // 修改此处
-                font.pixelSize: 16
+                text: typeComboBox.currentText
+                font.pixelSize: 14
+                color: latte.Subtext1
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
                 elide: Text.ElideRight
@@ -127,8 +133,12 @@ Item {
             }
 
             onClicked: {
-                if (nameInput.text.length > 0 && nameInput.error === "") {
+                if (nameInput.displayText.length > 0
+                        && nameInput.error === "") {
                     todoCreated(nameInput.text, todoType)
+                    console.log(nameInput.displayText)
+                } else {
+                    console.log("123")
                 }
             }
         }

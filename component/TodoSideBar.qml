@@ -69,9 +69,11 @@ Item {
                     id: imageIcon
                     width: 24
                     height: 24
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left: parent.left
-                    anchors.leftMargin: 15
+                    anchors {
+                        verticalCenter: parent.verticalCenter
+                        left: parent.left
+                        leftMargin: 15
+                    }
                     source: icon
                 }
                 //显示APP文字
@@ -99,9 +101,11 @@ Item {
             id: appGrid
             width: 160
             height: parent.height
-            anchors.left: parent.left
-            anchors.top: parent.top
-            anchors.topMargin: 12
+            anchors {
+                left: parent.left
+                top: parent.top
+                topMargin: 12
+            }
             model: appModel
             delegate: appDelegate
             cellWidth: width
@@ -119,9 +123,11 @@ Item {
         color: latte.Flamingo
         border.color: latte.Yellow
         border.width: 1
-        anchors.left: barRect.right
-        anchors.leftMargin: -width / 2
-        anchors.bottom: barRect.bottom
+        anchors {
+            left: barRect.right
+            leftMargin: -width / 2
+            bottom: barRect.bottom
+        }
         Image {
             id: expandButtonIcon
             width: 24

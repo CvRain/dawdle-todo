@@ -35,9 +35,12 @@ Item {
             color: latteTheme.DefaultText
             font.pixelSize: 14
             font.bold: true
-            anchors.fill: parent
-            anchors.left: checkButton.right
-            anchors.leftMargin: 25
+            anchors {
+                fill: parent
+                left: checkButton.right
+                leftMargin: 25
+            }
+
             horizontalAlignment: Text.AlignLeft
             verticalAlignment: Text.AlignVCenter
 
