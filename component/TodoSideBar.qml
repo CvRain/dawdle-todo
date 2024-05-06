@@ -35,7 +35,7 @@ Item {
                 icon: "qrc:/img/home.svg"
             }
             ListElement {
-                name: "Profile"
+                name: "New"
                 icon: "qrc:/img/home.svg"
             }
             ListElement {
@@ -51,7 +51,7 @@ Item {
                 icon: "qrc:/img/home.svg"
             }
             ListElement {
-                name: "Sign Out"
+                name: "Exit"
                 icon: "qrc:/img/home.svg"
             }
         }
@@ -97,7 +97,7 @@ Item {
             }
         }
 
-        GridView {
+        ListView {
             id: appGrid
             width: 160
             height: parent.height
@@ -108,8 +108,8 @@ Item {
             }
             model: appModel
             delegate: appDelegate
-            cellWidth: width
-            cellHeight: 60
+            // cellWidth: width
+            // cellHeight: 60
             clip: true
         }
     }

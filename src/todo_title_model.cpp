@@ -4,7 +4,11 @@ namespace Model {
     TodoTitleModel::TodoTitleModel(QObject *object) : QAbstractListModel(object) {
         //TODO
         //link core lib
-        //init load taskgroup
+        //init load task group
+        todo_items.push_back(TodoTitleItem{"1","1"});
+        todo_items.push_back(TodoTitleItem{"1","1"});
+        todo_items.push_back(TodoTitleItem{"1","1"});
+        todo_items.push_back(TodoTitleItem{"1","1"});
     }
 
     int TodoTitleModel::rowCount(const QModelIndex &parent) const {

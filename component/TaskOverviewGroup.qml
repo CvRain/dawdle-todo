@@ -59,11 +59,11 @@ Item {
                             radius: 15
                         }
 
-                        function onClicked(mouse) {
+                        onClicked: {
                             removeAnimation.start()
                         }
 
-                        NumberAnimation {
+                        PropertyAnimation {
                             id: removeAnimation
                             target: swipeDel.contentItem
                             property: "opacity"

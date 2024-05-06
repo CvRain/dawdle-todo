@@ -125,7 +125,6 @@ Item {
             width: parent.width - 20
             anchors.bottom: parent.bottom
             anchors.horizontalCenter: parent.horizontalCenter
-
             background: Rectangle {
                 color: latte.Rosewater
                 border.color: latte.Flamingo

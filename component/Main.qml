@@ -23,16 +23,17 @@ Window {
         distWindow: root
     }
 
-    TodoSideBar {
+    ExpandableList {
         id: todoSideBar
         z: 10
         height: parent.height - windowTitle.height
+        width: 200
         anchors.left: parent.left
         anchors.leftMargin: 0
         anchors.top: windowTitle.bottom
         anchors.topMargin: 0
-        minWidth: 48
-        maxWidth: 160
+        // minWidth: 48
+        // maxWidth: 160
     }
 
     StackView {
@@ -78,7 +79,7 @@ Window {
         }
 
         Component.onCompleted: {
-            popup.visible = true
+            popup.visible = false
         }
     }
 

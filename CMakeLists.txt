@@ -35,6 +35,7 @@ set(UI
     component/TaskOverviewGroup.qml
     component/TaskDetailBase.qml
     component/TaskCreationPopup.qml
+    component/ExpandableList.qml
 
 )
 
