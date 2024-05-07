@@ -22,7 +22,9 @@ set(SRC src/main.cpp
         src/main_window.cpp
         src/main_window.hpp
         src/todo_title_model.cpp
-        src/todo_title_model.hpp)
+        src/todo_title_model.hpp
+        src/two_level_list_model.cpp
+        src/two_level_list_model.hpp)
 
 set(UI
     component/Main.qml
@@ -36,6 +38,7 @@ set(UI
     component/TaskDetailBase.qml
     component/TaskCreationPopup.qml
     component/ExpandableList.qml
+    component/ExpandableItem.qml
 
 )
 

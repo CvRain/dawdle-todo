@@ -10,6 +10,7 @@
 #include "random_value.hpp"
 #include "main_window.hpp"
 #include "todo_title_model.hpp"
+#include "two_level_list_model.hpp"
 
 template<typename T>
 concept is_widget = std::is_base_of_v<QQuickItem, T>
@@ -28,6 +29,7 @@ int main(int argc, char *argv[]) {
     qmlRegisterType<Theme::Catppuccin::Latte>("Theme.Catppunccin.Latte", 1, 0, "Latte");
     qmlRegisterType<Tools::Debug::RandomValue>("Tools.Debug", 1, 0, "RandomValue");
     qmlRegisterType<Model::TodoTitleModel>("Model.TodoTitle",1,0,"TodoTitle");
+    qmlRegisterType<Model::TwoLevelListModel>("Model.TwoLevelList",1,0,"TwoLevelList");
 
     const QUrl url(u"qrc:/dawdle_todo/component/Main.qml"_qs);
     QObject::connect(

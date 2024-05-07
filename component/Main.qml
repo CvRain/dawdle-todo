@@ -27,7 +27,7 @@ Window {
         id: todoSideBar
         z: 10
         height: parent.height - windowTitle.height
-        width: 200
+        width: 400
         anchors.left: parent.left
         anchors.leftMargin: 0
         anchors.top: windowTitle.bottom

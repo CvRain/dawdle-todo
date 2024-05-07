@@ -1,82 +1,67 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import Model.TwoLevelList
 
 Item {
-    width: 400
+    id: root
+    width: 300
     height: 400
+
+    TwoLevelList {
+        id: backend
+    }
 
     ListView {
         id: listView
-        width: parent.width
-        height: parent.height
+        anchors.fill: parent
+        model: backend.model // Assuming backend has a model property
+        delegate: Item {
+            id: delegate
+            width: parent.width
+            height: level1Label.height + (expanded ? level2ListView.height : 0)
 
-        model: myModel
+            Rectangle {
+                id: level1Rect
+                width: parent.width
+                height: level1Label.height
+                color: "lightgray"
+                border.color: "black"
+                border.width: 1
 
-        delegate: Rectangle {
-            width: listView.width
-            height: 50
+                Label {
+                    id: level1Label
+                    anchors.left: parent.left
+                    anchors.right: expandButton.left
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: level1
+                }
 
-            color: index % 2 === 0 ? "lightgray" : "white"
-
-            Text {
-                anchors.centerIn: parent
-                text: model.name
-            }
-
-            MouseArea {
-                anchors.fill: parent
-
-                onClicked: {
-                    // Perform an action when the item is clicked
-                    console.log("Clicked:", model.name)
+                Button {
+                    id: expandButton
+                    anchors.right: parent.right
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: expanded ? "-" : "+"
+                    onClicked: expanded = !expanded
                 }
             }
-        }
 
-        section.property: "category"
-        section.criteria: ViewSection.FullString
-
-        section.delegate: Rectangle {
-            width: listView.width
-            height: 30
-            color: "gray"
-
-            Text {
-                anchors.centerIn: parent
-                text: section
-
-                font.bold: true
-                font.pointSize: 14
+            ListView {
+                id: level2ListView
+                anchors.top: level1Rect.bottom
+                width: parent.width
+                height: contentHeight
+                visible: expanded
+                model: level2 // Assuming level2 is a property of the backend model
+                delegate: Label {
+                    width: parent.width
+                    text: styleData.value
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.verticalCenter: parent.verticalCenter
+                }
             }
-        }
-    }
 
-    ListModel {
-        id: myModel
-
-        ListElement {
-            name: "Item 1"
-            category: "Category 1"
-        }
-        ListElement {
-            name: "Item 2"
-            category: "Category 1"
-        }
-        ListElement {
-            name: "Item 3"
-            category: "Category 2"
-        }
-        ListElement {
-            name: "Item 4"
-            category: "Category 2"
-        }
-        ListElement {
-            name: "Item 5"
-            category: "Category 2"
-        }
-        ListElement {
-            name: "Item 6"
-            category: "Category 2"
+            property bool expanded: false
         }
     }
 }
