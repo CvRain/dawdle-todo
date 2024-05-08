@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls
-import Theme.Catppunccin.Latte
+import Theme.Catppuccin.Latte
 import Model.TodoTitle
 
 Item {

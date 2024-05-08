@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
 
     QQmlApplicationEngine engine;
 
-    qmlRegisterType<Theme::Catppuccin::Latte>("Theme.Catppunccin.Latte", 1, 0, "Latte");
+    qmlRegisterType<Theme::Catppuccin::Latte>("Theme.Catppuccin.Latte", 1, 0, "Latte");
     qmlRegisterType<Tools::Debug::RandomValue>("Tools.Debug", 1, 0, "RandomValue");
     qmlRegisterType<Model::TodoTitleModel>("Model.TodoTitle",1,0,"TodoTitle");
     qmlRegisterType<Model::TwoLevelListModel>("Model.TwoLevelList",1,0,"TwoLevelList");

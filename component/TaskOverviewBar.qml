@@ -1,5 +1,5 @@
 import QtQuick
-import Theme.Catppunccin.Latte
+import Theme.Catppuccin.Latte
 import QtQuick.Controls
 
 Item {

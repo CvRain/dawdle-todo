@@ -1,6 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls
-import Theme.Catppunccin.Latte
+import Theme.Catppuccin.Latte
 
 Menu {
     property Window sourceWindow
