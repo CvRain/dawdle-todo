@@ -37,9 +37,8 @@ set(UI
     component/TaskOverviewGroup.qml
     component/TaskDetailBase.qml
     component/TaskCreationPopup.qml
-    component/ExpandableList.qml
-    component/ExpandableItem.qml
-
+    component/HomePageMenu.qml
+    component/HomeMenuItem.qml
 )
 
 set(RES res/res.qrc)

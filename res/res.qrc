@@ -1,15 +1,34 @@
 <RCC>
     <qresource prefix="/img">
-        <file>upload.svg</file>
-        <file>add.svg</file>
-        <file>delete.svg</file>
-        <file>home.svg</file>
-        <file>max.svg</file>
-        <file>min.svg</file>
-        <file>refresh.svg</file>
-        <file>exit.svg</file>
-        <file>toggle-right.svg</file>
-        <file>toggle-left.svg</file>
-        <file>menu.svg</file>
+        <file>icon/upload.svg</file>
+        <file>icon/toggle-right.svg</file>
+        <file>icon/toggle-left.svg</file>
+        <file>icon/refresh.svg</file>
+        <file>icon/min.svg</file>
+        <file>icon/menu.svg</file>
+        <file>icon/max.svg</file>
+        <file>icon/home.svg</file>
+        <file>icon/exit.svg</file>
+        <file>icon/delete.svg</file>
+        <file>icon/arrow-double-right.svg</file>
+        <file>icon/arrow-double-left.svg</file>
+        <file>icon/add.svg</file>
+    </qresource>
+    <qresource prefix="/font">
+        <file>3270-nerd-font/3270NerdFontPropo-SemiCondensed.ttf</file>
+        <file>3270-nerd-font/3270NerdFontPropo-Regular.ttf</file>
+        <file>3270-nerd-font/3270NerdFontPropo-Condensed.ttf</file>
+        <file>3270-nerd-font/3270NerdFontMono-SemiCondensed.ttf</file>
+        <file>3270-nerd-font/3270NerdFontMono-Regular.ttf</file>
+        <file>3270-nerd-font/3270NerdFontMono-Condensed.ttf</file>
+        <file>3270-nerd-font/3270NerdFont-SemiCondensed.ttf</file>
+        <file>3270-nerd-font/3270NerdFont-Regular.ttf</file>
+        <file>3270-nerd-font/3270NerdFont-Condensed.ttf</file>
+        <file>CascadiaCode/CaskaydiaCoveNerdFontMono-Regular.ttf</file>
+        <file>CascadiaCode/CaskaydiaCoveNerdFontMono-Italic.ttf</file>
+        <file>CascadiaCode/CaskaydiaCoveNerdFontMono-BoldItalic.ttf</file>
+        <file>CascadiaCode/CaskaydiaCoveNerdFontMono-Bold.ttf</file>
+        <file>CascadiaCode/CaskaydiaCoveNerdFont-LightItalic.ttf</file>
+        <file>CascadiaCode/CaskaydiaCoveNerdFont-Light.ttf</file>
     </qresource>
 </RCC>

@@ -33,7 +33,7 @@ Item {
                 id: iconContainer
                 height: titleBar.height * 0.6
                 width: titleBar.height * 0.6
-                iconPath: "qrc:/img/home.svg"
+                iconPath: "qrc:/img/icon/home.svg"
                 anchors.verticalCenter: parent.verticalCenter
                 onIconClicked: titleIconClicked()
             }
@@ -72,7 +72,7 @@ Item {
                 id: exitWindow
                 width: titleBar.height * 0.4
                 height: titleBar.height * 0.4
-                iconPath: "qrc:/img/exit.svg"
+                iconPath: "qrc:/img/icon/exit.svg"
                 //anchors.verticalCenter: parent.verticalCenter
                 onIconClicked: closeButtonClicked()
             }
@@ -81,7 +81,7 @@ Item {
                 id: maxWindow
                 width: titleBar.height * 0.4
                 height: titleBar.height * 0.4
-                iconPath: "qrc:/img/max.svg"
+                iconPath: "qrc:/img/icon/max.svg"
                 //anchors.verticalCenter: parent.verticalCenter
                 onIconClicked: maxButtonClicked()
             }
@@ -90,7 +90,7 @@ Item {
                 id: minWindow
                 width: titleBar.height * 0.4
                 height: titleBar.height * 0.4
-                iconPath: "qrc:/img/min.svg"
+                iconPath: "qrc:/img/icon/min.svg"
                 //anchors.verticalCenter: parent.verticalCenter
                 onIconClicked: minButtonClicked()
             }

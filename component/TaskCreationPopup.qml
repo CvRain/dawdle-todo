@@ -10,6 +10,11 @@ Item {
     property string todoName: ""
     property string todoType: ""
 
+    FontLoader {
+        id: nerdFont
+        source: "qrc:/font/CascadiaCode/CaskaydiaCoveNerdFontMono-Regular.ttf"
+    }
+
     Rectangle {
         id: todoDialog
         anchors.fill: parent
@@ -24,9 +29,14 @@ Item {
             verticalAlignment: Text.AlignVCenter
             width: parent.width * 0.8
             height: 25
-            font.pixelSize: 16
-            font.bold: true
+            font {
+                pixelSize: 16
+                bold: true
+                family: nerdFont.name
+            }
+
             color: latte.DefaultText
+            focus: true
 
             anchors {
                 top: parent.top
@@ -76,6 +86,66 @@ Item {
                 } else {
                     underline.width = nameInput.contentWidth + 20
                 }
+                nameAvailabilityTimer.restart()
+            }
+        }
+
+        Text {
+            id: nameAvailabilityText
+            width: parent.width * 0.8
+            height: 20
+            font.pixelSize: 12
+            horizontalAlignment: Text.AlignHCenter
+            anchors {
+                top: nameInput.bottom
+                topMargin: 5
+                horizontalCenter: parent.horizontalCenter
+            }
+
+            SequentialAnimation {
+                id: animation
+                NumberAnimation {
+                    target: nameAvailabilityText
+                    property: "opacity"
+                    from: 0
+                    to: 1
+                    duration: 200
+                    easing.type: Easing.InOutQuad
+                }
+                NumberAnimation {
+                    target: nameAvailabilityText
+                    property: "scale"
+                    from: 0.8
+                    to: 1
+                    duration: 200
+                    easing.type: Easing.InOutQuad
+                }
+            }
+
+            onTextChanged: {
+                animation.start()
+            }
+
+            Timer {
+                id: nameAvailabilityTimer
+                interval: 500
+                onTriggered: {
+                    if (nameInput.text === "") {
+                        nameAvailabilityText.text = "Please enter a name"
+                        nameAvailabilityText.color = latte.Peach
+                    } else if (nameInput.text === "text1"
+                               || nameInput.text === "text2") {
+                        nameAvailabilityText.text = "Group name is exists"
+                        nameAvailabilityText.color = latte.Rosewater
+                    } else {
+                        nameAvailabilityText.text = "Name is available"
+                        nameAvailabilityText.color = latte.Teal
+                    }
+                }
+            }
+
+            Component.onCompleted: {
+                nameAvailabilityTimer.start()
             }
         }
 
@@ -83,8 +153,8 @@ Item {
             id: typeComboBox
             width: parent.width - 20
             height: 25
-            anchors.top: nameInput.bottom
-            anchors.topMargin: 15
+            anchors.top: nameAvailabilityText.bottom
+            anchors.topMargin: 10
             anchors.horizontalCenter: parent.horizontalCenter
 
             model: ["once", "cycle", "daily"]
@@ -96,8 +166,20 @@ Item {
                 font.bold: true
                 background: Rectangle {
                     anchors.fill: parent
-                    color: latte.Crust
-                    border.color: latte.Mantle
+                    color: latte.Mantle
+                    border.color: latte.Base
+                }
+                font {
+                    pixelSize: 12
+                    bold: true
+                    family: nerdFont.name
+                }
+                contentItem: Text {
+                    text: parent.text
+                    font: parent.font
+                    color: latte.DefaultText // 设置按钮文字颜色
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
                 }
             }
             background: Rectangle {
@@ -130,15 +212,28 @@ Item {
                 border.color: latte.Flamingo
                 radius: 15
             }
+            font {
+                pixelSize: 14
+                bold: true
+                family: nerdFont.name
+            }
 
             onClicked: {
-                if (nameInput.displayText.length > 0
-                        && nameInput.error === "") {
-                    todoCreated(nameInput.text, todoType)
-                    console.log(nameInput.displayText)
+                if (nameInput.text !== "") {
+                    todoDialog.todoCreated(nameInput.text,
+                                           typeComboBox.currentText)
+                    console.log("Task Name: " + nameInput.text + ", Task Type: "
+                                + typeComboBox.currentText)
                 } else {
-                    console.log("123")
+                    console.log("Task name cannot be empty.")
                 }
+            }
+            contentItem: Text {
+                text: parent.text
+                font: parent.font
+                color: latte.Base
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
             }
         }
 

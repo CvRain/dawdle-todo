@@ -7,7 +7,7 @@ Item {
     width: 64
     height: 64
 
-    property string iconPath: "qrc:/img/home.svg"
+    property string iconPath: "qrc:/img/icon/home.svg"
     property color hoverColor: "gray"
     property color pressedColor: latteTheme.Subtext0
 

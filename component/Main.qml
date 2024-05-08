@@ -7,49 +7,69 @@ import Model.TodoTitle
 Window {
     id: root
     objectName: "mainWindow"
-    width: 740
-    height: 440
+    width: 400
+    height: 640
     visible: true
     title: qsTr("dawdle-todo")
     flags: Qt.FramelessWindowHint | Qt.Window
     color: latte.Base
+
+    MouseArea {
+        id: mouseRegion
+        anchors.fill: parent
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
+    }
+
+    Connections {
+        target: mouseRegion
+
+        function onClicked(mouse) {
+            if (mouse.button === Qt.RightButton) {
+                contentMenu.popup()
+            }
+        }
+    }
+
+    HomePageMenu {
+        id: contentMenu
+        width: 80
+        height: 100
+        sourceWindow: root
+    }
+
+    Connections {
+        target: contentMenu
+        function onInvokeNewTodo() {
+            taskCreationPopup.open()
+            contentMenu.close()
+        }
+    }
 
     WindowTitle {
         id: windowTitle
         width: parent.width
         height: 40
         anchors.top: parent.top
-        anchors.topMargin: 0
         distWindow: root
-    }
-
-    ExpandableList {
-        id: todoSideBar
-        z: 10
-        height: parent.height - windowTitle.height
-        width: 400
-        anchors.left: parent.left
-        anchors.leftMargin: 0
-        anchors.top: windowTitle.bottom
-        anchors.topMargin: 0
-        // minWidth: 48
-        // maxWidth: 160
     }
 
     StackView {
         id: pagesView
-        width: parent.width - todoSideBar.width
-        height: parent.height - windowTitle.height
         anchors.top: windowTitle.bottom
         anchors.topMargin: 10
-        anchors.left: todoSideBar.right
-        anchors.leftMargin: 5
+        anchors.horizontalCenter: parent.horizontalCenter
+        width: parent.width - 20
+        height: parent.height - windowTitle.height
+
         initialItem: taskOverview
     }
 
     Component {
         id: taskOverview
-        TaskOverviewGroup {}
+        TaskOverviewGroup {
+            width: parent.width
+            height: parent.height - windowTitle.height
+        }
     }
 
     Component {
@@ -61,7 +81,7 @@ Window {
     }
 
     Popup {
-        id: popup
+        id: taskCreationPopup
         anchors.centerIn: parent
         width: 300
         height: 200
@@ -76,10 +96,6 @@ Window {
             anchors.fill: parent
             width: parent.width
             height: parent.height
-        }
-
-        Component.onCompleted: {
-            popup.visible = false
         }
     }
 

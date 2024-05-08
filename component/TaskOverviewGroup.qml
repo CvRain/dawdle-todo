@@ -1,10 +1,12 @@
-import QtQuick 2.0
+import QtQuick
 import QtQuick.Controls
 import Theme.Catppunccin.Latte
 import Model.TodoTitle
 
 Item {
     id: root
+    width: 600
+    height: 400
 
     signal itemDelete
     signal itemClicked
@@ -13,6 +15,8 @@ Item {
         id: taskGroupdBackground
         color: latte.Base
         anchors.fill: parent
+        width: parent.width
+        height: parent.height
 
         ListView {
             id: taskListView
@@ -25,7 +29,7 @@ Item {
 
             delegate: Item {
                 width: taskListView.width
-                height: 50
+                height: 45
 
                 SwipeDelegate {
                     id: swipeDel
