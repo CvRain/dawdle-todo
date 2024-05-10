@@ -8,7 +8,7 @@
       "title": "",
       "describe": "",
       "is_finish": false,
-      "privilege": "" //只会在privilege模式有效
+      "weight": "" //只会在property模式有效
     }
   ]
 }

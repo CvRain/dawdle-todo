@@ -11,29 +11,13 @@ Window {
     height: 640
     visible: true
     title: qsTr("dawdle-todo")
-    flags: Qt.FramelessWindowHint | Qt.Window
+    flags: Qt.FramelessWindowHint
     color: latte.Base
-
-    MouseArea {
-        id: mouseRegion
-        anchors.fill: parent
-        acceptedButtons: Qt.LeftButton | Qt.RightButton
-    }
-
-    Connections {
-        target: mouseRegion
-
-        function onClicked(mouse) {
-            if (mouse.button === Qt.RightButton) {
-                contentMenu.popup()
-            }
-        }
-    }
 
     HomePageMenu {
         id: contentMenu
-        width: 80
-        height: 100
+        width: 100
+        height: 120
         sourceWindow: root
     }
 
@@ -51,6 +35,29 @@ Window {
         height: 40
         anchors.top: parent.top
         distWindow: root
+        z: 10
+    }
+
+    MouseArea {
+        id: mouseRegion
+        anchors {
+            top: windowTitle.bottom
+            bottom: root.bottom
+            right: root.right
+            left: root.left
+        }
+
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
+    }
+
+    Connections {
+        target: mouseRegion
+
+        function onClicked(mouse) {
+            if (mouse.button === Qt.RightButton) {
+                contentMenu.popup()
+            }
+        }
     }
 
     StackView {

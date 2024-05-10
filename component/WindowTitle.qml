@@ -23,6 +23,14 @@ Item {
         height: parent.height
         color: latteTheme.Surface0
 
+        MouseArea {
+            id: dragArea
+            anchors.fill: parent
+            property int mouseXOffset: 0
+            property int mouseYOffset: 0
+            property bool dragging: false
+        }
+
         Row {
             id: leftPart
             width: parent.width / 2
@@ -34,7 +42,10 @@ Item {
                 height: titleBar.height * 0.6
                 width: titleBar.height * 0.6
                 iconPath: "qrc:/img/icon/home.svg"
-                anchors.verticalCenter: parent.verticalCenter
+                anchors {
+                    verticalCenter: parent.verticalCenter
+                }
+
                 onIconClicked: titleIconClicked()
             }
 
@@ -48,13 +59,6 @@ Item {
                 verticalAlignment: Text.AlignVCenter
                 clip: true
                 horizontalAlignment: Text.AlignLeft
-                MouseArea {
-                    id: dragArea
-                    anchors.fill: parent
-                    property int mouseXOffset: 0
-                    property int mouseYOffset: 0
-                    property bool dragging: false
-                }
             }
         }
 
@@ -130,7 +134,7 @@ Item {
             if (distWindow.Maximized) {
                 distWindow.Maximized = false
                 distWindow.showNormal()
-                distWindow.setGeometry(0, 0, 600, 400)
+                //distWindow.setGeometry(0, 0, 600, 400)
             } else {
                 distWindow.showMaximized()
             }
@@ -148,7 +152,6 @@ Item {
 
     Connections {
         target: dragArea
-
         function onPressed(mouse) {
             // 记录点击时鼠标位置相对于窗口的位置
             dragArea.mouseXOffset = mouse.x

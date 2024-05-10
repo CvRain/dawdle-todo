@@ -9,7 +9,6 @@
 #include <QObject>
 
 #include <memory>
-#include <wayland-client.h>
 
 namespace Widgets{
     class MainWindow : public QObject{

@@ -7,11 +7,6 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_TOOLCHAIN_FILE /mnt/Workspace/DevKit/vcpkg/scripts/buildsystems/vcpkg.cmake)
-
-# if(WIN32)
-#     set(CMAKE_PREFIX_PATH D:/DevKit/Qt/6.5.3/mingw_64)
-# endif()
 
 find_package(Qt6 6.2 REQUIRED COMPONENTS Quick)
 
@@ -29,7 +24,8 @@ set(SRC src/main.cpp
         src/todo_manager.cpp
         src/todo_manager.hpp
         src/singleton_database.cpp
-        src/singleton_database.hpp)
+        src/singleton_database.hpp
+        src/todo_structure.h)
 
 set(UI
     component/Main.qml
@@ -72,7 +68,7 @@ set_target_properties(appdawdle_todo PROPERTIES
 )
 
 target_link_libraries(appdawdle_todo
-    PRIVATE Qt6::Quick leveldb::leveldb JsonCpp::JsonCpp
+    PRIVATE Qt6::Quick  JsonCpp::JsonCpp leveldb::leveldb
 )
 
 include(GNUInstallDirs)

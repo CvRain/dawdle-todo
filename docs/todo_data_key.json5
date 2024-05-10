@@ -1,5 +1,5 @@
 {
   "group-name": "group name",
   "group-id": "xxxxxx-xxxx-xxxx",  //六位时间戳—四位随机数—存储组个数
-  "category": "" //可以是cycle, daily, once, privilege之一
+  "category": "" //可以是cycle, daily, once, property之一
 }
