@@ -6,6 +6,9 @@
 #include <QAbstractListModel>
 #include <QHash>
 
+#include "todo_structure.h"
+#include "todo_manager.hpp"
+
 namespace Model {
     class TodoTitleModel : public QAbstractListModel {
         Q_OBJECT
@@ -14,24 +17,21 @@ namespace Model {
         explicit TodoTitleModel(QObject *object = nullptr);
 
         enum {
-            TodoThemeRole = Qt::UserRole + 1,
-            TodoDescribeRole
+            TodoGroupName = Qt::UserRole + 1,
+            TodoGroupId,
+            TodoGroupCategory
         };
 
-        [[nodiscard]] int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+        [[nodiscard]] int rowCount(const QModelIndex &parent) const override;
 
-        [[nodiscard]] QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+        [[nodiscard]] QVariant data(const QModelIndex &index, int role) const override;
 
         [[nodiscard]] QHash<int, QByteArray>  roleNames() const override;
 
         Q_INVOKABLE void remove(int index);
 
     private:
-        struct TodoTitleItem {
-            QString theme;
-            QString describe;
-        };
-        QList <TodoTitleItem> todo_items;
+        QList <TodoStructure::TodoGroupInfo> todo_items;
     };
 
 } // Model

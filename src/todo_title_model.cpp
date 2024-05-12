@@ -3,12 +3,12 @@
 namespace Model {
     TodoTitleModel::TodoTitleModel(QObject *object) : QAbstractListModel(object) {
         //TODO
-        //link core lib
         //init load task group
-        todo_items.push_back(TodoTitleItem{"1","1"});
-        todo_items.push_back(TodoTitleItem{"1","1"});
-        todo_items.push_back(TodoTitleItem{"1","1"});
-        todo_items.push_back(TodoTitleItem{"1","1"});
+        todo_items.push_back(TodoStructure::TodoGroupInfo{
+            .group_name = "test",
+            .group_id = "123",
+            .category = TodoStructure::TodoCategoryToString(TodoStructure::TodoCategory::Cycle),
+        });
     }
 
     int TodoTitleModel::rowCount(const QModelIndex &parent) const {
@@ -24,18 +24,21 @@ namespace Model {
             return {};
 
         const auto &item = todo_items.at(index.row());
-        if (role == TodoThemeRole) {
-            return QVariant{item.theme};
-        } else if (role == TodoDescribeRole) {
-            return QVariant{item.describe};
+        if (role == TodoGroupId) {
+            return QVariant{item.group_id.data()};
+        } else if (role == TodoGroupCategory) {
+            return QVariant{item.category.data()};
+        }else if(role == TodoGroupName){
+            return QVariant{item.group_name.data()};
         }
         return {};
     }
 
     QHash<int, QByteArray> TodoTitleModel::roleNames() const {
         QHash<int, QByteArray> roles;
-        roles[TodoThemeRole] = "theme";
-        roles[TodoDescribeRole] = "describe";
+        roles[TodoGroupId] = "group_id";
+        roles[TodoGroupCategory] = "group_category";
+        roles[TodoGroupName] = "group_name";
         return roles;
     }
 

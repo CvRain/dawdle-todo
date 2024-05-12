@@ -13,19 +13,17 @@ find_package(Qt6 6.2 REQUIRED COMPONENTS Quick)
 
 set(SRC src/main.cpp
     src/catppuccin_latte.h
-        src/random_value.hpp
-        src/random_value.cpp
         src/main_window.cpp
         src/main_window.hpp
         src/todo_title_model.cpp
         src/todo_title_model.hpp
-        src/two_level_list_model.cpp
-        src/two_level_list_model.hpp
         src/todo_manager.cpp
         src/todo_manager.hpp
         src/singleton_database.cpp
         src/singleton_database.hpp
-        src/todo_structure.h)
+        src/todo_structure.h
+        src/simple_id.cpp
+        src/simple_id.hpp)
 
 set(UI
     component/Main.qml

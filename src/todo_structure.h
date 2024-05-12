@@ -15,13 +15,13 @@ namespace TodoStructure {
         Once,
         Property
     };
-    struct TodoInfoValue {
+    struct TodoGroupInfo {
         std::string group_name;
-        std::string group_value;
+        std::string group_id;
         std::string category;
     };
 
-    std::map<TodoCategory, std::string> TodoCategoryAsMap(){
+    inline std::map<TodoCategory, std::string> TodoCategoryAsMap(){
         std::map<TodoCategory, std::string> category_map{};
         category_map[TodoCategory::Cycle] = "cycle";
         category_map[TodoCategory::Daily] = "daily";
@@ -30,7 +30,7 @@ namespace TodoStructure {
         return category_map;
     }
 
-    std::string TodoCategoryToString(TodoCategory category){
+    inline std::string TodoCategoryToString(TodoCategory category){
         static const auto& category_map = TodoCategoryAsMap(); // 只计算一次
         auto it = category_map.find(category);
         if (it != category_map.end()){

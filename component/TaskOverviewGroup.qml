@@ -46,8 +46,7 @@ Item {
                         TaskOverviewBar {
                             width: swipeDel.width
                             height: swipeDel.height
-                            todoTitle: model.theme
-                            todoDescribe: model.describe
+                            todoTitle: model.group_name
                             anchors.centerIn: parent
                         }
                     }

@@ -21,6 +21,7 @@ public:
     leveldb::Status put(const std::string_view& key, const std::string_view& value);
     leveldb::Status remove(const std::string_view& key);
     leveldb::Status update(const std::string_view& key, const std::string_view& value);
+    uint size();
     SingletonDatabase(const SingletonDatabase&) = delete;
     SingletonDatabase& operator=(const SingletonDatabase&) = delete;
 private:

@@ -40,12 +40,9 @@ Window {
 
     MouseArea {
         id: mouseRegion
-        anchors {
-            top: windowTitle.bottom
-            bottom: root.bottom
-            right: root.right
-            left: root.left
-        }
+        anchors.top: windowTitle.bottom
+        width: parent.width
+        height: parent.height - windowTitle.height
 
         acceptedButtons: Qt.LeftButton | Qt.RightButton
     }

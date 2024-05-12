@@ -77,3 +77,7 @@ leveldb::Status SingletonDatabase::update(const std::string_view &key, const std
     batch.Put(key.data(), value.data());
     return database->Write(leveldb::WriteOptions(), &batch);
 }
+
+uint SingletonDatabase::size() {
+    return get_all_key().size();
+}

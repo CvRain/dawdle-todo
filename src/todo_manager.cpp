@@ -5,12 +5,21 @@
 #include "todo_manager.hpp"
 #include <json/json.h>
 
-TodoStructure::TodoInfoValue TodoManager::todo_head_serialization(const std::string_view &json_string) {
+TodoManager::TodoManager(QObject *object) : QObject(object) {
+
+}
+
+TodoStructure::TodoGroupInfo TodoManager::todo_head_serialization(const std::string_view &json_string) {
     
 
-    return TodoStructure::TodoInfoValue();
+    return TodoStructure::TodoGroupInfo();
 }
 
-std::string TodoManager::todo_head_deserialization(const TodoStructure::TodoInfoValue &todo_info_value) {
+std::string TodoManager::todo_head_deserialization(const TodoStructure::TodoGroupInfo &todo_info_value) {
     return std::string();
 }
+
+void TodoManager::new_todo_group(const QString &group_text, const QString &category_text) {
+
+}
+

@@ -2,7 +2,6 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Theme.Catppuccin.Latte
-import Tools.Debug
 
 Item {
     property string titleText: "dawdle todo"
@@ -103,10 +102,6 @@ Item {
 
     Latte {
         id: latteTheme
-    }
-
-    RandomValue {
-        id: randomValue
     }
 
     Connections {
