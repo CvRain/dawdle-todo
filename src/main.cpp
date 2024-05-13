@@ -9,6 +9,7 @@
 #include "catppuccin_latte.h"
 #include "main_window.hpp"
 #include "todo_title_model.hpp"
+#include "singleton_database.hpp"
 
 template<typename T>
 concept is_widget = std::is_base_of_v<QQuickItem, T>
@@ -21,11 +22,13 @@ T *get_widget_object(QQmlApplicationEngine &engine, const QString &widget_name);
 int main(int argc, char *argv[]) {
     const QGuiApplication app(argc, argv);
 
+    SingletonDatabase::get_instance().initialize();
 
-    QQmlApplicationEngine engine;
-
+    qmlRegisterType<Controller::TodoManager>("Controller.TodoManager",1,0, "TodoController");
     qmlRegisterType<Theme::Catppuccin::Latte>("Theme.Catppuccin.Latte", 1, 0, "Latte");
     qmlRegisterType<Model::TodoTitleModel>("Model.TodoTitle",1,0,"TodoTitle");
+
+    QQmlApplicationEngine engine;
 
     const QUrl url(u"qrc:/dawdle_todo/component/Main.qml"_qs);
     QObject::connect(

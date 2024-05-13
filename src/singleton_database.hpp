@@ -27,7 +27,7 @@ public:
 private:
     SingletonDatabase() = default;
     ~SingletonDatabase() = default;
-    std::unique_ptr<leveldb::DB> database;
+    leveldb::DB *database;
 };
 
 

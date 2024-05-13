@@ -3,6 +3,7 @@
   "name": "dawdle-todo",
   "dependencies": [
     "leveldb",
-    "jsoncpp"
+    "jsoncpp",
+    "spdlog"
   ]
 }

@@ -7,35 +7,50 @@
 #include <filesystem>
 #include <iostream>
 #include <leveldb/write_batch.h>
+#include <spdlog/spdlog.h>
 
 SingletonDatabase &SingletonDatabase::get_instance() {
     static SingletonDatabase instance{};
+    spdlog::info("get database singleton instance {}");
     return instance;
 }
 
 void SingletonDatabase::initialize(const std::string_view &db_path) {
     //检查db_path所在的文件夹是否存在，没有则新建
     if (!std::filesystem::exists(db_path)) {
+        spdlog::info("create database folder {}", db_path.data());
         std::filesystem::create_directories(db_path);
     }
     //连接数据库，没有数据库则创建
     leveldb::Options options;
     options.create_if_missing = true;
-    leveldb::DB *db = database.get();
-    const auto status = leveldb::DB::Open(options, db_path.data(), &db);
+    const auto status = leveldb::DB::Open(options, db_path.data(), &database);
     //check status
     if (!status.ok()) {
         throw std::runtime_error(status.ToString());
     }
+    spdlog::info("success to link database");
 }
 
 std::vector<std::string> SingletonDatabase::get_all_key() {
-    auto iter = database->NewIterator(leveldb::ReadOptions());
-    std::vector<std::string> keys;
-    for (iter->SeekToFirst(); iter->Valid(); iter->Next()) {
-        keys.push_back(iter->key().ToString());
+    spdlog::info("get all data keys");
+    try {
+        const auto iter = database->NewIterator(leveldb::ReadOptions());
+        if(iter == nullptr){
+            return {};
+        }
+        if (!iter->status().ok()) {
+            throw std::runtime_error(iter->status().ToString());
+        }
+        std::vector<std::string> keys;
+        for (iter->SeekToFirst(); iter->Valid(); iter->Next()) {
+            keys.push_back(iter->key().ToString());
+        }
+        return keys;
+    }catch(const std::exception& exception) {
+        spdlog::error("get all key error: {}", exception.what());
     }
-    return keys;
+    return {};
 }
 
 std::vector<std::string> SingletonDatabase::get_all_value() {
@@ -58,6 +73,7 @@ std::optional<std::string> SingletonDatabase::get_value(const std::string_view &
 }
 
 leveldb::Status SingletonDatabase::put(const std::string_view &key, const std::string_view &value) {
+    spdlog::info("put key: {} value: {}", key.data(), value.data());
     const auto status = database->Put(leveldb::WriteOptions(), key.data(), value.data());
     return status;
 }

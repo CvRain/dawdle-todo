@@ -9,18 +9,19 @@
 #include <QString>
 #include <string>
 #include <string_view>
-#include "singleton_database.hpp"
 #include "todo_structure.h"
 
-class TodoManager : public QObject{
+namespace Controller{
+    class TodoManager : public QObject{
+    public:
     Q_OBJECT
-public:
-    explicit TodoManager(QObject *object = nullptr);
-    Q_INVOKABLE void new_todo_group(const QString& group_text, const QString& category_text);
-private:
-    TodoStructure::TodoGroupInfo todo_head_serialization(const std::string_view& json_string);
-    std::string todo_head_deserialization(const TodoStructure::TodoGroupInfo& todo_info_value);
-};
+        explicit TodoManager(QObject *parent = nullptr);
+        Q_INVOKABLE void new_todo_group(const QString& group_text, const QString& category_text);
+    private:
+        static TodoStructure::TodoGroupInfo todo_head_serialization(const std::string_view& json_string);
+        static std::string todo_head_deserialization(const TodoStructure::TodoGroupInfo& todo_info_value);
+    };
+}
 
 
 #endif //DAWDLE_TODO_TODO_MANAGER_HPP

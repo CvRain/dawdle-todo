@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls
 import Theme.Catppuccin.Latte
+import Controller.TodoManager
 
 Item {
     id: root
@@ -224,6 +225,8 @@ Item {
                                            typeComboBox.currentText)
                     console.log("Task Name: " + nameInput.text + ", Task Type: "
                                 + typeComboBox.currentText)
+                    todoManager.new_todo_group(nameInput.text,
+                                               typeComboBox.currentText)
                 } else {
                     console.log("Task name cannot be empty.")
                 }
@@ -244,5 +247,9 @@ Item {
 
     Latte {
         id: latte
+    }
+
+    TodoController {
+        id: todoManager
     }
 }

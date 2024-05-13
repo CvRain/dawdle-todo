@@ -17,22 +17,24 @@ namespace Tool::Id {
 
     //根据时间戳和size创建一个长度为size的随机字符串, 字符包括0~9 a-Z
     std::string SimpleId::random_string(uint32_t size) {
-        const auto local_time = local_timestamp();
-        std::seed_seq seed{local_time};
-        std::mt19937 generator{seed};
-        std::uniform_int_distribution<int> distribution(0, 'Z'-'0');
-        std::string random_str;
-        random_str.reserve(size);
-        for (uint32_t i = 0; i < size; ++i) {
-            random_str.push_back(static_cast<char>(distribution(generator)));
+        // 使用时间戳作为种子
+        std::random_device rd;
+        std::mt19937 gen(rd());
+
+        // 生成随机字符
+        std::string str(size, 0);
+        std::uniform_int_distribution<> dis('a', 'z');
+        for (char& c : str) {
+            c = static_cast<char>(dis(gen));
         }
-        return random_str;
+        return str;
     }
+
 
     //时间戳—四位随机数—存储组个数
     std::string SimpleId::generate_id() {
         const auto time_str = local_timestamp_string();
-        const auto random_str = random_string(4);
+        const auto random_str = random_string(8);
         const auto count = std::to_string(SingletonDatabase::get_instance().size() + 1);
         return time_str + random_str + count;
     }

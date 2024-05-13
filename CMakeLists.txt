@@ -23,7 +23,9 @@ set(SRC src/main.cpp
         src/singleton_database.hpp
         src/todo_structure.h
         src/simple_id.cpp
-        src/simple_id.hpp)
+        src/simple_id.hpp
+        src/test_object.cpp
+        src/test_object.hpp)
 
 set(UI
     component/Main.qml
@@ -44,7 +46,7 @@ set(RES res/res.qrc)
 
 find_package(leveldb CONFIG REQUIRED)
 find_package(jsoncpp CONFIG REQUIRED)
-
+find_package(spdlog CONFIG REQUIRED)
 
 qt_add_executable(appdawdle_todo
     ${RES}
@@ -66,7 +68,7 @@ set_target_properties(appdawdle_todo PROPERTIES
 )
 
 target_link_libraries(appdawdle_todo
-    PRIVATE Qt6::Quick  JsonCpp::JsonCpp leveldb::leveldb
+    PRIVATE Qt6::Quick  JsonCpp::JsonCpp leveldb::leveldb spdlog::spdlog_header_only
 )
 
 include(GNUInstallDirs)

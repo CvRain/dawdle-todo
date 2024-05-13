@@ -9,6 +9,7 @@ namespace Theme::Catppuccin {
     Q_OBJECT
 
     public:
+        explicit Latte(QObject *parent = nullptr) : QObject(parent){};
         Q_PROPERTY(QString LeadWhite MEMBER lead_white CONSTANT);
         Q_PROPERTY(QString Flamingo MEMBER flamingo CONSTANT);
         Q_PROPERTY(QString Rosewater MEMBER rosewater CONSTANT);
