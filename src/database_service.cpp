@@ -2,38 +2,19 @@
 // Created by cvrain on 24-5-8.
 //
 
-#include "singleton_database.hpp"
+#include "database_service.hpp"
 
 #include <filesystem>
 #include <iostream>
 #include <leveldb/write_batch.h>
 #include <spdlog/spdlog.h>
 
-SingletonDatabase &SingletonDatabase::get_instance() {
-    static SingletonDatabase instance{};
-    spdlog::info("get database singleton instance {}");
-    return instance;
-}
+std::once_flag LevelDatabase::flag;
+std::unique_ptr<leveldb::DB> LevelDatabase::database = nullptr;
+std::mutex LevelDatabase::mutex;
 
-void SingletonDatabase::initialize(const std::string_view &db_path) {
-    //检查db_path所在的文件夹是否存在，没有则新建
-    if (!std::filesystem::exists(db_path)) {
-        spdlog::info("create database folder {}", db_path.data());
-        std::filesystem::create_directories(db_path);
-    }
-    //连接数据库，没有数据库则创建
-    leveldb::Options options;
-    options.create_if_missing = true;
-    const auto status = leveldb::DB::Open(options, db_path.data(), &database);
-    //check status
-    if (!status.ok()) {
-        throw std::runtime_error(status.ToString());
-    }
-    spdlog::info("success to link database");
-}
-
-std::vector<std::string> SingletonDatabase::get_all_key() {
-    spdlog::info("enter SingletonDatabase::get_all_key()");
+std::vector<std::string> LevelDatabase::get_all_key() {
+    spdlog::info("enter LevelDatabase::get_all_key()");
     try {
         const auto iter = database->NewIterator(leveldb::ReadOptions());
         if(iter == nullptr){
@@ -55,7 +36,7 @@ std::vector<std::string> SingletonDatabase::get_all_key() {
     return {};
 }
 
-std::vector<std::string> SingletonDatabase::get_all_value() {
+std::vector<std::string> LevelDatabase::get_all_value() {
     auto iter = database->NewIterator(leveldb::ReadOptions());
     std::vector<std::string> values;
     for (iter->SeekToFirst(); iter->Valid(); iter->Next()) {
@@ -64,7 +45,7 @@ std::vector<std::string> SingletonDatabase::get_all_value() {
     return values;
 }
 
-std::optional<std::string> SingletonDatabase::get_value(const std::string_view &key) {
+std::optional<std::string> LevelDatabase::get_value(const std::string_view &key) {
     std::string value;
     const auto status = database->Get(leveldb::ReadOptions(), key.data(), &value);
     if (status.ok()) {
@@ -74,18 +55,21 @@ std::optional<std::string> SingletonDatabase::get_value(const std::string_view &
     }
 }
 
-leveldb::Status SingletonDatabase::put(const std::string_view &key, const std::string_view &value) {
+leveldb::Status LevelDatabase::put(const std::string_view &key, const std::string_view &value) {
     spdlog::info("put key: {} value: {}", key.data(), value.data());
+    if(key.empty()){
+        return {};
+    }
     const auto status = database->Put(leveldb::WriteOptions(), key.data(), value.data());
     return status;
 }
 
-leveldb::Status SingletonDatabase::remove(const std::string_view &key) {
+leveldb::Status LevelDatabase::remove(const std::string_view &key) {
     const auto result = database->Delete(leveldb::WriteOptions(), key.data());
     return result;
 }
 
-leveldb::Status SingletonDatabase::update(const std::string_view &key, const std::string_view &value) {
+leveldb::Status LevelDatabase::update(const std::string_view &key, const std::string_view &value) {
     auto find_value = get_value(key);
     if (!find_value.has_value()) {
         return {};
@@ -96,6 +80,34 @@ leveldb::Status SingletonDatabase::update(const std::string_view &key, const std
     return database->Write(leveldb::WriteOptions(), &batch);
 }
 
-uint SingletonDatabase::size() {
+uint LevelDatabase::size() {
     return get_all_key().size();
+}
+
+LevelDatabase &LevelDatabase::get_instance(const std::string_view &db_path) {
+    static LevelDatabase instance(db_path);
+    return instance;
+}
+
+LevelDatabase::LevelDatabase(const std::string_view& db_path) {
+    std::call_once(flag, [&]() {
+        std::lock_guard<std::mutex> lock(mutex);
+        if (!std::filesystem::exists(db_path)) {
+            spdlog::info("create database folder {}", db_path.data());
+            std::filesystem::create_directories(db_path);
+        }
+        leveldb::Options options;
+        options.create_if_missing = true;
+        leveldb::DB* db_ptr = nullptr;
+        const auto status = leveldb::DB::Open(options, db_path.data(), &db_ptr);
+        if (!status.ok()) {
+            throw std::runtime_error(status.ToString());
+        }
+        database.reset(db_ptr);
+        spdlog::info("success to link database");
+    });
+}
+
+LevelDatabase::~LevelDatabase() {
+    database.reset();
 }

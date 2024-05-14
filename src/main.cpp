@@ -11,7 +11,6 @@
 #include "catppuccin_latte.h"
 #include "main_window.hpp"
 #include "todo_title_model.hpp"
-#include "singleton_database.hpp"
 
 template<typename T>
 concept is_widget = std::is_base_of_v<QQuickItem, T>
@@ -32,8 +31,6 @@ void signal_handler(int signal) {
 int main(int argc, char *argv[]) {
     signal(SIGSEGV, signal_handler);
     const QGuiApplication app(argc, argv);
-
-    SingletonDatabase::get_instance().initialize();
 
     QQmlApplicationEngine engine;
 

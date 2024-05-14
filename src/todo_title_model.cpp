@@ -3,12 +3,13 @@
 
 namespace Model {
     TodoTitleModel::TodoTitleModel(QObject *object) : QAbstractListModel(object) {
+        spdlog::info("TodoTitleModel::TodoTitleModel");
         const auto data = todo_manager.get_all_todo_group();
         if(data.empty()){
-            spdlog::info("group info not data");
+            spdlog::info("group info without data");
         }
         for(const auto& it : data){
-            spdlog::info("fetch group: {}", it.group_name);
+            spdlog::info("add group to list model: {}--{}", it.group_name, it.group_id);
             todo_items.push_back(it);
         }
     }

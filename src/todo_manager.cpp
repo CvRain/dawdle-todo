@@ -16,7 +16,6 @@ namespace Controller {
     TodoManager::todo_head_serialization(const std::string_view &json_string) {
         Json::Value root;
         Json::Reader reader;
-        spdlog::info("load {}", json_string);
         TodoStructure::TodoGroupInfo todo_info_value{};
         if (!reader.parse(json_string.data(), root)) {
             spdlog::error("json parse error: {}", reader.getFormattedErrorMessages());
@@ -57,8 +56,9 @@ namespace Controller {
                 .category = category_text.toStdString()
         };
         spdlog::info("generate id: {}", todo_head.group_id);
-        const auto json_todo_head = todo_head_deserialization(todo_head);
-        database_instance.put(json_todo_head, std::string{});
+        if(const auto json_todo_head = todo_head_deserialization(todo_head); !json_todo_head.empty()){
+            database_instance.put(json_todo_head, "");
+        }
     }
 
     std::vector<TodoStructure::TodoGroupInfo> TodoManager::get_all_todo_group() {

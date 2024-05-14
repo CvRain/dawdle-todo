@@ -2,19 +2,19 @@
 // Created by cvrain on 24-5-8.
 //
 
-#ifndef DAWDLE_TODO_SINGLETON_DATABASE_HPP
-#define DAWDLE_TODO_SINGLETON_DATABASE_HPP
+#ifndef DAWDLE_TODO_DATABASE_SERVICE_HPP
+#define DAWDLE_TODO_DATABASE_SERVICE_HPP
 
 #include <string>
 #include <memory>
 #include <vector>
+#include <mutex>
 #include <optional>
 #include <leveldb/db.h>
 
-class SingletonDatabase {
+class LevelDatabase {
 public:
-    [[nodiscard]] static SingletonDatabase& get_instance();
-    void initialize(const std::string_view& db_path = "./db/todo_db");
+    static LevelDatabase& get_instance(const std::string_view& db_path = "./db/todo_db");
     std::vector<std::string> get_all_key();
     std::vector<std::string> get_all_value();
     std::optional<std::string> get_value(const std::string_view& key);
@@ -22,13 +22,17 @@ public:
     leveldb::Status remove(const std::string_view& key);
     leveldb::Status update(const std::string_view& key, const std::string_view& value);
     uint size();
-    SingletonDatabase(const SingletonDatabase&) = delete;
-    SingletonDatabase& operator=(const SingletonDatabase&) = delete;
+
+    LevelDatabase(const LevelDatabase&) = delete;
+    LevelDatabase& operator=(const LevelDatabase&) = delete;
 private:
-    SingletonDatabase() = default;
-    ~SingletonDatabase() = default;
-    leveldb::DB *database;
+    explicit LevelDatabase(const std::string_view& db_path);
+    ~LevelDatabase();
+
+    static std::once_flag flag;
+    static std::unique_ptr<leveldb::DB> database;
+    static std::mutex mutex;
 };
 
 
-#endif //DAWDLE_TODO_SINGLETON_DATABASE_HPP
+#endif //DAWDLE_TODO_DATABASE_SERVICE_HPP

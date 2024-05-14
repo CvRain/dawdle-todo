@@ -19,8 +19,8 @@ set(SRC src/main.cpp
         src/todo_title_model.hpp
         src/todo_manager.cpp
         src/todo_manager.hpp
-        src/singleton_database.cpp
-        src/singleton_database.hpp
+        src/database_service.cpp
+        src/database_service.hpp
         src/todo_structure.h
         src/simple_id.cpp
         src/simple_id.hpp

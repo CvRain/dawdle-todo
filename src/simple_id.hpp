@@ -9,8 +9,9 @@
 #include <ctime>
 #include <string>
 #include <random>
+#include <memory>
 
-#include "singleton_database.hpp"
+#include "database_service.hpp"
 
 namespace Tool::Id {
     class SimpleId {
