@@ -1,14 +1,16 @@
 #include "todo_title_model.hpp"
+#include <spdlog/spdlog.h>
 
 namespace Model {
     TodoTitleModel::TodoTitleModel(QObject *object) : QAbstractListModel(object) {
-        //TODO
-        //init load task group
-        todo_items.push_back(TodoStructure::TodoGroupInfo{
-            .group_name = "test",
-            .group_id = "123",
-            .category = TodoStructure::TodoCategoryToString(TodoStructure::TodoCategory::Cycle),
-        });
+        const auto data = todo_manager.get_all_todo_group();
+        if(data.empty()){
+            spdlog::info("group info not data");
+        }
+        for(const auto& it : data){
+            spdlog::info("fetch group: {}", it.group_name);
+            todo_items.push_back(it);
+        }
     }
 
     int TodoTitleModel::rowCount(const QModelIndex &parent) const {

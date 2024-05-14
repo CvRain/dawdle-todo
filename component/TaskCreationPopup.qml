@@ -221,12 +221,9 @@ Item {
 
             onClicked: {
                 if (nameInput.text !== "") {
-                    todoDialog.todoCreated(nameInput.text,
-                                           typeComboBox.currentText)
-                    console.log("Task Name: " + nameInput.text + ", Task Type: "
-                                + typeComboBox.currentText)
-                    todoManager.new_todo_group(nameInput.text,
-                                               typeComboBox.currentText)
+                    todoDialog.todoCreated(nameInput.text,typeComboBox.currentText)
+                    console.log("Task Name: " + nameInput.text + ", Task Type: " + typeComboBox.currentText)
+                    todoManager.new_todo_group(nameInput.text, typeComboBox.currentText)
                 } else {
                     console.log("Task name cannot be empty.")
                 }
@@ -249,7 +246,7 @@ Item {
         id: latte
     }
 
-    TodoController {
-        id: todoManager
-    }
+     TodoController {
+         id: todoManager
+     }
 }

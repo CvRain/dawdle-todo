@@ -33,10 +33,11 @@ void SingletonDatabase::initialize(const std::string_view &db_path) {
 }
 
 std::vector<std::string> SingletonDatabase::get_all_key() {
-    spdlog::info("get all data keys");
+    spdlog::info("enter SingletonDatabase::get_all_key()");
     try {
         const auto iter = database->NewIterator(leveldb::ReadOptions());
         if(iter == nullptr){
+            spdlog::info("iter is nullptr");
             return {};
         }
         if (!iter->status().ok()) {
@@ -44,6 +45,7 @@ std::vector<std::string> SingletonDatabase::get_all_key() {
         }
         std::vector<std::string> keys;
         for (iter->SeekToFirst(); iter->Valid(); iter->Next()) {
+            spdlog::info("key: {}", iter->key().ToString());
             keys.push_back(iter->key().ToString());
         }
         return keys;

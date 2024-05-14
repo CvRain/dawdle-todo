@@ -8,6 +8,7 @@
 
 #include "todo_structure.h"
 #include "todo_manager.hpp"
+#include "todo_manager.hpp"
 
 namespace Model {
     class TodoTitleModel : public QAbstractListModel {
@@ -32,6 +33,7 @@ namespace Model {
 
     private:
         QList <TodoStructure::TodoGroupInfo> todo_items;
+        Controller::TodoManager todo_manager{};
     };
 
 } // Model

@@ -5,6 +5,8 @@
 
 #include <algorithm>
 #include <exception>
+#include <spdlog/spdlog.h>
+#include <csignal>
 
 #include "catppuccin_latte.h"
 #include "main_window.hpp"
@@ -19,16 +21,25 @@ concept is_widget = std::is_base_of_v<QQuickItem, T>
 template<is_widget T>
 T *get_widget_object(QQmlApplicationEngine &engine, const QString &widget_name);
 
+//捕获 interrupted by signal 11:SIGSEGV
+void signal_handler(int signal) {
+    if (signal == SIGSEGV) {
+        spdlog::error("interrupted by signal 11:SIGSEGV");
+        exit(1);
+    }
+}
+
 int main(int argc, char *argv[]) {
+    signal(SIGSEGV, signal_handler);
     const QGuiApplication app(argc, argv);
 
     SingletonDatabase::get_instance().initialize();
 
+    QQmlApplicationEngine engine;
+
     qmlRegisterType<Controller::TodoManager>("Controller.TodoManager",1,0, "TodoController");
     qmlRegisterType<Theme::Catppuccin::Latte>("Theme.Catppuccin.Latte", 1, 0, "Latte");
     qmlRegisterType<Model::TodoTitleModel>("Model.TodoTitle",1,0,"TodoTitle");
-
-    QQmlApplicationEngine engine;
 
     const QUrl url(u"qrc:/dawdle_todo/component/Main.qml"_qs);
     QObject::connect(
