@@ -7,25 +7,38 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS ON)
+set(CMAKE_CXX_SCAN_FOR_MODULES ON)
+
+if (LINUX)
+    set(DUCK_DB_PATH ${CMAKE_SOURCE_DIR}/third_party/libduckdb-linux-amd64)
+elseif (WINDOWS)
+    set(DUCK_DB_PATH ${CMAKE_SOURCE_DIR}/third_party/libduckdb-windows-amd64)
+endif ()
+include_directories(${DUCK_DB_PATH})
 
 find_package(Qt6 6.2 REQUIRED COMPONENTS Quick)
 
+set(MODULES
+)
 
-set(SRC src/main.cpp
-    src/catppuccin_latte.h
+set(SRC ${MODULES}
+        src/main.cpp
+        src/catppuccin_latte.h
         src/main_window.cpp
         src/main_window.hpp
         src/todo_title_model.cpp
         src/todo_title_model.hpp
         src/todo_manager.cpp
         src/todo_manager.hpp
-        src/database_service.cpp
-        src/database_service.hpp
+        src/level_database_service.cpp
+        src/level_database_service.hpp
         src/todo_structure.h
         src/simple_id.cpp
         src/simple_id.hpp
-        src/test_object.cpp
-        src/test_object.hpp)
+        src/duck_service.hpp
+        src/duck_service.cpp
+)
 
 set(UI
     component/Main.qml
@@ -67,9 +80,17 @@ set_target_properties(appdawdle_todo PROPERTIES
     WIN32_EXECUTABLE TRUE
 )
 
+target_sources(appdawdle_todo PRIVATE FILE_SET cxx_modules TYPE CXX_MODULES FILES ${MODULES})
+
 target_link_libraries(appdawdle_todo
     PRIVATE Qt6::Quick  JsonCpp::JsonCpp leveldb::leveldb spdlog::spdlog_header_only
 )
+
+if (LINUX)
+    target_link_libraries(appdawdle_todo PRIVATE ${DUCK_DB_PATH}/libduckdb.so)
+elseif (WINDOW)
+    target_link_libraries(appdawdle_todo PRIVATE ${DUCK_DB_PATH}/libduckdb.dll)
+endif ()
 
 include(GNUInstallDirs)
 install(TARGETS appdawdle_todo

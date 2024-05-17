@@ -11,7 +11,7 @@
 #include <random>
 #include <memory>
 
-#include "database_service.hpp"
+#include "level_database_service.hpp"
 
 namespace Tool::Id {
     class SimpleId {

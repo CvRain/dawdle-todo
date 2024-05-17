@@ -2,8 +2,8 @@
 // Created by cvrain on 24-5-8.
 //
 
-#ifndef DAWDLE_TODO_DATABASE_SERVICE_HPP
-#define DAWDLE_TODO_DATABASE_SERVICE_HPP
+#ifndef DAWDLE_TODO_LEVEL_DATABASE_SERVICE_HPP
+#define DAWDLE_TODO_LEVEL_DATABASE_SERVICE_HPP
 
 #include <string>
 #include <memory>
@@ -35,4 +35,4 @@ private:
 };
 
 
-#endif //DAWDLE_TODO_DATABASE_SERVICE_HPP
+#endif //DAWDLE_TODO_LEVEL_DATABASE_SERVICE_HPP
