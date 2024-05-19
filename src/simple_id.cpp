@@ -35,7 +35,7 @@ namespace Tool::Id {
     std::string SimpleId::generate_id() {
         const auto time_str = local_timestamp_string();
         const auto random_str = random_string(8);
-        const auto count = std::to_string(LevelDatabase::get_instance().size() + 1);
+        const auto count = std::to_string(Service::DuckDatabase::get_instance().get_group_count() + 1);
         return time_str + random_str + count;
     }
 } // Tool

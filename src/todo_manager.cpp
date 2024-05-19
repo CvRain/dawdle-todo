@@ -4,12 +4,14 @@
 
 #include "todo_manager.hpp"
 #include "simple_id.hpp"
+#include "duck_service.hpp"
 #include <json/json.h>
 #include <spdlog/spdlog.h>
 
 namespace Controller {
     TodoManager::TodoManager(QObject *object) : QObject(object) {
         spdlog::info("todo manager created");
+        auto& db_instance = Service::DuckDatabase::get_instance();
     }
 
     std::optional<TodoStructure::TodoGroupInfo>
@@ -48,32 +50,6 @@ namespace Controller {
     }
 
     void TodoManager::new_todo_group(const QString &group_text, const QString &category_text) {
-        spdlog::info("new todo group: {} {}", group_text.toLocal8Bit().toStdString(),
-                     category_text.toLocal8Bit().toStdString());
-        const auto todo_head = TodoStructure::TodoGroupInfo{
-                .group_name = group_text.toStdString(),
-                .group_id = Tool::Id::SimpleId::generate_id(),
-                .category = category_text.toStdString()
-        };
-        spdlog::info("generate id: {}", todo_head.group_id);
-        if(const auto json_todo_head = todo_head_deserialization(todo_head); !json_todo_head.empty()){
-            database_instance.put(json_todo_head, "");
-        }
-    }
 
-    std::vector<TodoStructure::TodoGroupInfo> TodoManager::get_all_todo_group() {
-        spdlog::info("enter TodoManager::get_all_todo_group()");
-        const auto group_data = database_instance.get_all_key();
-        std::vector<TodoStructure::TodoGroupInfo> info_groups{database_instance.size()};
-        for (const auto &group_data_value: group_data) {
-            const auto todo_head = todo_head_serialization(group_data_value);
-            if (!todo_head.has_value()) {
-                break;
-            }
-            spdlog::info("load json: {}", group_data_value);
-            info_groups.emplace_back(todo_head.value());
-        }
-        return info_groups;
     }
-
 }

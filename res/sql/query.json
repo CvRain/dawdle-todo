@@ -1,0 +1,16 @@
+{
+  "create": {
+    "table_todo_group" : "create table todo_group (id varchar primary key,name varchar(255) not null,times integer, create_time timestamp,finish_time timestamp);",
+    "table_todo_item": "create table todo_item(id varchar primary key,belong_id varchar,title varchar,description varchar,is_finish integer,weight smallint)"
+  },
+  "retrieve": {
+    "todo_group_all": "select * from todo_group;",
+    "todo_group_count" : "select count(todo_group.id) from todo_group;"
+  },
+  "update": {
+
+  },
+  "delete": {
+
+  }
+}

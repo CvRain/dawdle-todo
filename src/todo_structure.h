@@ -30,14 +30,12 @@ namespace TodoStructure {
         return category_map;
     }
 
-    inline std::string TodoCategoryToString(TodoCategory category){
-        static const auto& category_map = TodoCategoryAsMap(); // 只计算一次
-        auto it = category_map.find(category);
-        if (it != category_map.end()){
-            return it->second;
-        }
-        return "unknown";
-    }
+    struct QueryStructure{
+        std::string create_table_todo_group;
+        std::string create_table_todo_item;
+        std::string todo_group_all;
+        std::string todo_group_count;
+    };
 }
 
 #endif //DAWDLE_TODO_TODO_STRUCTURE_H

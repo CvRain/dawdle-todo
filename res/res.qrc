@@ -31,4 +31,7 @@
         <file>CascadiaCode/CaskaydiaCoveNerdFont-LightItalic.ttf</file>
         <file>CascadiaCode/CaskaydiaCoveNerdFont-Light.ttf</file>
     </qresource>
+    <qresource prefix="/sql">
+        <file>sql/query.json</file>
+    </qresource>
 </RCC>

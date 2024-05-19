@@ -4,7 +4,9 @@
 namespace Model {
     TodoTitleModel::TodoTitleModel(QObject *object) : QAbstractListModel(object) {
         spdlog::info("TodoTitleModel::TodoTitleModel");
-        const auto data = todo_manager.get_all_todo_group();
+        //todo
+        //const auto data = todo_manager.get_all_todo_group();
+        const auto data = QList <TodoStructure::TodoGroupInfo>{};
         if(data.empty()){
             spdlog::info("group info without data");
         }
