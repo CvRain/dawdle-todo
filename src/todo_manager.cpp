@@ -52,4 +52,8 @@ namespace Controller {
     void TodoManager::new_todo_group(const QString &group_text, const QString &category_text) {
 
     }
+
+    void TodoManager::delete_todo_group(const QString &group_id) {
+        Service::DuckDatabase::get_instance().delete_one_group(group_id.toLocal8Bit().toStdString());
+    }
 }

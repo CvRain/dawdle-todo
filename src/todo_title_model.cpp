@@ -1,12 +1,11 @@
 #include "todo_title_model.hpp"
 #include <spdlog/spdlog.h>
+#include "duck_service.hpp"
 
 namespace Model {
     TodoTitleModel::TodoTitleModel(QObject *object) : QAbstractListModel(object) {
         spdlog::info("TodoTitleModel::TodoTitleModel");
-        //todo
-        //const auto data = todo_manager.get_all_todo_group();
-        const auto data = QList <TodoStructure::TodoGroupInfo>{};
+        const auto data = Service::DuckDatabase::get_instance().get_group_info();
         if(data.empty()){
             spdlog::info("group info without data");
         }
@@ -35,6 +34,8 @@ namespace Model {
             return QVariant{item.category.data()};
         }else if(role == TodoGroupName){
             return QVariant{item.group_name.data()};
+        }else if(role == TodoGroupFinishTime){
+            return QVariant{item.finish_time.data()};
         }
         return {};
     }
@@ -44,6 +45,7 @@ namespace Model {
         roles[TodoGroupId] = "group_id";
         roles[TodoGroupCategory] = "group_category";
         roles[TodoGroupName] = "group_name";
+        roles[TodoGroupFinishTime] = "group_finish_time";
         return roles;
     }
 

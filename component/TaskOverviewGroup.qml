@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import Theme.Catppuccin.Latte
 import Model.TodoTitle
+import Controller.TodoManager
 
 Item {
     id: root
@@ -73,6 +74,8 @@ Item {
                             to: 0
                             duration: 200 // milliseconds
                             onStopped: {
+                                //console.log(model.group_id)
+                                controller.delete_todo_group(model.group_id)
                                 todoTitleModel.remove(index)
                             }
                         }
@@ -84,5 +87,9 @@ Item {
 
     Latte {
         id: latte
+    }
+
+    TodoController {
+        id: controller
     }
 }

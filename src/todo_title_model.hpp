@@ -20,7 +20,8 @@ namespace Model {
         enum {
             TodoGroupName = Qt::UserRole + 1,
             TodoGroupId,
-            TodoGroupCategory
+            TodoGroupCategory,
+            TodoGroupFinishTime
         };
 
         [[nodiscard]] int rowCount(const QModelIndex &parent) const override;

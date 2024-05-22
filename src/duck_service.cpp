@@ -59,4 +59,39 @@ namespace Service {
         spdlog::info("get group count:{}",count);
         return static_cast<int>(count);
     }
+
+    std::vector<TodoStructure::TodoGroupInfo> DuckDatabase::get_group_info() {
+        const auto result = connection.Query(query_reader->get_query_structure().todo_group_overview);
+        if(!result){
+            spdlog::error("get group info error");
+            return {};
+        }
+        const auto row_count = result->Collection().Count();
+        const auto column_count = result->types.size();
+        auto data = std::vector<TodoStructure::TodoGroupInfo>{};
+        for(duckdb::idx_t row = 0; row < row_count; ++row){
+            auto group_info = TodoStructure::TodoGroupInfo{
+              .group_id = result->GetValue(0, row).GetValue<std::string>(),
+              .group_name = result->GetValue(1, row).GetValue<std::string>(),
+              .finish_time = result->GetValue(2, row).GetValue<std::string>(),
+              .category = result->GetValue(3, row).GetValue<std::string>(),
+            };
+
+            spdlog::info("get group info: id::{} name::{} category::{}",group_info.group_id, group_info.group_name, group_info.category);
+
+            data.emplace_back(group_info);
+        }
+        return data;
+    }
+
+    void DuckDatabase::delete_one_group(const std::string_view &group_id) {
+        if(const auto query_str = query_reader->get_query_structure().get_delete_group_query(group_id); !query_str.empty()){
+            const auto result = connection.Query(query_str);
+            if(result){
+                spdlog::info("delete group {} success", group_id);
+            }else{
+                spdlog::error("delete group {} error", group_id);
+            }
+        }
+    }
 }
