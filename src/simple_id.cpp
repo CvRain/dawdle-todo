@@ -30,12 +30,22 @@ namespace Tool::Id {
         return str;
     }
 
+    //两位当前时间的秒数
+    std::string SimpleId::local_time_second() {
+        const auto time = std::chrono::system_clock::now();
+        const auto time_t = std::chrono::system_clock::to_time_t(time);
+        const auto tm = *std::localtime(&time_t);
+        const auto second = tm.tm_sec;
+        return std::to_string(second);
+    }
 
-    //时间戳—四位随机数—存储组个数
+    //时间戳—四位随机数—当前时间秒数
     std::string SimpleId::generate_id() {
         const auto time_str = local_timestamp_string();
         const auto random_str = random_string(8);
-        const auto count = std::to_string(Service::DuckDatabase::get_instance().get_group_count() + 1);
+        const auto count = local_time_second();
         return time_str + random_str + count;
     }
+
+
 } // Tool

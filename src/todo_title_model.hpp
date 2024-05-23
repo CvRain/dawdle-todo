@@ -5,6 +5,7 @@
 #include <QString>
 #include <QAbstractListModel>
 #include <QHash>
+#include <QTimer>
 
 #include "todo_structure.h"
 #include "todo_manager.hpp"
@@ -12,10 +13,12 @@
 
 namespace Model {
     class TodoTitleModel : public QAbstractListModel {
-        Q_OBJECT
+    Q_OBJECT
 
     public:
         explicit TodoTitleModel(QObject *object = nullptr);
+
+        ~TodoTitleModel() override;
 
         enum {
             TodoGroupName = Qt::UserRole + 1,
@@ -28,13 +31,22 @@ namespace Model {
 
         [[nodiscard]] QVariant data(const QModelIndex &index, int role) const override;
 
-        [[nodiscard]] QHash<int, QByteArray>  roleNames() const override;
+        [[nodiscard]] QHash<int, QByteArray> roleNames() const override;
+
+        void addItem(const TodoStructure::TodoGroupInfo &item);
 
         Q_INVOKABLE void remove(int index);
 
+        void refreshItems();
+
+    public slots:
+
+        void updateItem(int index, const TodoStructure::TodoGroupInfo &item);
+
     private:
-        QList <TodoStructure::TodoGroupInfo> todo_items;
+        QList<TodoStructure::TodoGroupInfo> todo_items;
         Controller::TodoManager todo_manager{};
+        QTimer *update_time;
     };
 
 } // Model

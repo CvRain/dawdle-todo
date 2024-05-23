@@ -11,7 +11,7 @@
 namespace Controller {
     TodoManager::TodoManager(QObject *object) : QObject(object) {
         spdlog::info("todo manager created");
-        auto& db_instance = Service::DuckDatabase::get_instance();
+        auto &db_instance = Service::DuckDatabase::get_instance();
     }
 
     std::optional<TodoStructure::TodoGroupInfo>
@@ -50,10 +50,15 @@ namespace Controller {
     }
 
     void TodoManager::new_todo_group(const QString &group_text, const QString &category_text) {
-
+        spdlog::info("TodoManager::new_todo_group");
+        Service::DuckDatabase::get_instance().
+                add_one_group(
+                group_text.toLocal8Bit().toStdString(),
+                category_text.toLocal8Bit().toStdString());
     }
 
     void TodoManager::delete_todo_group(const QString &group_id) {
+        spdlog::info("TodoManager::delete_todo_group");
         Service::DuckDatabase::get_instance().delete_one_group(group_id.toLocal8Bit().toStdString());
     }
 }

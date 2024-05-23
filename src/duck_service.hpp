@@ -27,6 +27,8 @@ namespace Service {
 
         void delete_one_group(const std::string_view& group_id);
 
+        void add_one_group(const std::string_view& group_name, const std::string_view& group_category);
+
     private:
         explicit DuckDatabase(const std::string_view &db_path = "./db/duck.db");
 

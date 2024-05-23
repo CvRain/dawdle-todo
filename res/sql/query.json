@@ -2,7 +2,7 @@
   "create": {
     "table_todo_group" : "create table todo_group (id varchar primary key,name varchar(255) not null,times integer,category varchar, create_time timestamp,finish_time timestamp);",
     "table_todo_item": "create table todo_item(id varchar primary key,belong_id varchar,title varchar,description varchar,is_finish integer,weight smallint)",
-    "new_todo_group": "insert into todo_group(id, name, times, category, create_time, finish_time) values ('{}', '{}', {}, '{}', '{}', '{}');"
+    "new_todo_group": "insert into todo_group(id, name, times, category, create_time, finish_time) values ('{}', '{}', {}, '{}', '{}', '2021-01-01 00:00:00');"
   },
   "retrieve": {
     "todo_group_all": "select * from todo_group;",

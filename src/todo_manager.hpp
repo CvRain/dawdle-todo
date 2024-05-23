@@ -19,7 +19,7 @@ namespace Controller {
     public:
         explicit TodoManager(QObject *parent = nullptr);
 
-        Q_INVOKABLE void new_todo_group(const QString &group_text, const QString &category_text);
+        Q_INVOKABLE static void new_todo_group(const QString &group_text, const QString &category_text);
         Q_INVOKABLE static void delete_todo_group(const QString &group_id);
 
     private:

@@ -12,7 +12,7 @@ set(CMAKE_CXX_SCAN_FOR_MODULES ON)
 
 if (LINUX)
     set(DUCK_DB_PATH ${CMAKE_SOURCE_DIR}/third_party/libduckdb-linux-amd64)
-elseif (WINDOWS)
+elseif (WIN32)
     set(DUCK_DB_PATH ${CMAKE_SOURCE_DIR}/third_party/libduckdb-windows-amd64)
 endif ()
 include_directories(${DUCK_DB_PATH})
@@ -59,14 +59,14 @@ find_package(leveldb CONFIG REQUIRED)
 find_package(jsoncpp CONFIG REQUIRED)
 find_package(spdlog CONFIG REQUIRED)
 
-add_executable(appdawdle_todo
-        ${RES}
-        ${SRC}
-)
-#qt_add_executable(appdawdle_todo
+#add_executable(appdawdle_todo
 #        ${RES}
 #        ${SRC}
 #)
+qt_add_executable(appdawdle_todo
+        ${RES}
+        ${SRC}
+)
 
 qt_add_qml_module(appdawdle_todo
         URI dawdle_todo
@@ -88,7 +88,7 @@ target_link_libraries(appdawdle_todo
 
 if (LINUX)
     target_link_libraries(appdawdle_todo PRIVATE ${DUCK_DB_PATH}/libduckdb.so)
-elseif (WINDOW)
+elseif (WIN32)
     target_link_libraries(appdawdle_todo PRIVATE ${DUCK_DB_PATH}/libduckdb.dll)
 endif ()
 
