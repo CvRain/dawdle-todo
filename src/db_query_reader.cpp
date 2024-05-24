@@ -41,6 +41,7 @@ void DbQueryReader::init_query_structure(const std::string &json_string) {
     }
     query_structure.create_table_todo_group = root["create"]["table_todo_group"].asString();
     query_structure.create_table_todo_item = root["create"]["table_todo_item"].asString();
+    query_structure.new_todo_group= root["create"]["new_todo_group"].asString();
     query_structure.todo_group_all = root["retrieve"]["todo_group_all"].asString();
     query_structure.todo_group_count = root["retrieve"]["todo_group_count"].asString();
     query_structure.todo_group_overview = root["retrieve"]["todo_group_overview"].asString();

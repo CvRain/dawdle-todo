@@ -3,6 +3,11 @@
 //
 
 #include "simple_id.hpp"
+#include <chrono>
+#include <ctime>
+#include <random>
+#include <iomanip>
+#include <sstream>
 
 namespace Tool::Id {
     uint32_t SimpleId::local_timestamp() {
@@ -45,6 +50,17 @@ namespace Tool::Id {
         const auto random_str = random_string(8);
         const auto count = local_time_second();
         return time_str + random_str + count;
+    }
+
+    std::string SimpleId::local_timestamp_format_string() {
+        //生成yyyy-MM-dd HH:mm:ss格式的当前时间
+        auto now = std::chrono::system_clock::now();
+        std::time_t now_c = std::chrono::system_clock::to_time_t(now);
+
+        std::stringstream ss;
+        ss << std::put_time(std::localtime(&now_c), "%Y-%m-%d %H:%M:%S");
+
+        return ss.str();
     }
 
 

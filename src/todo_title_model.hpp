@@ -7,7 +7,7 @@
 #include <QHash>
 #include <QTimer>
 
-#include "todo_structure.h"
+#include "todo_structure.hpp"
 #include "todo_manager.hpp"
 #include "todo_manager.hpp"
 

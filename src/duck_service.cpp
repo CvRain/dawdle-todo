@@ -3,6 +3,7 @@
 //
 
 #include "duck_service.hpp"
+#include <filesystem>
 
 namespace Service {
     std::once_flag DuckDatabase::flag{};
@@ -96,8 +97,10 @@ namespace Service {
     }
 
     void DuckDatabase::add_one_group(const std::string_view &group_name, const std::string_view &group_category) {
+        spdlog::info("DuckDatabase::add_one_group");
         spdlog::info("add group {}", group_name);
         if(const auto query_str = query_reader->get_query_structure().get_new_group_query(group_name, group_category); !query_str.empty()){
+            spdlog::info("{}", query_str);
             const auto result = connection.Query(query_str);
             if(result){
                 spdlog::info("add group {} success", group_name);

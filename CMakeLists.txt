@@ -29,13 +29,14 @@ set(SRC ${MODULES}
         src/todo_title_model.hpp
         src/todo_manager.cpp
         src/todo_manager.hpp
-        src/todo_structure.h
+        src/todo_structure.hpp
         src/simple_id.cpp
         src/simple_id.hpp
         src/duck_service.hpp
         src/duck_service.cpp
         src/db_query_reader.cpp
         src/db_query_reader.hpp
+        src/todo_structure.cpp
 )
 
 set(UI
@@ -89,7 +90,7 @@ target_link_libraries(appdawdle_todo
 if (LINUX)
     target_link_libraries(appdawdle_todo PRIVATE ${DUCK_DB_PATH}/libduckdb.so)
 elseif (WIN32)
-    target_link_libraries(appdawdle_todo PRIVATE ${DUCK_DB_PATH}/libduckdb.dll)
+    target_link_libraries(appdawdle_todo PRIVATE ${DUCK_DB_PATH}/libduckdb.lib)
 endif ()
 
 include(GNUInstallDirs)

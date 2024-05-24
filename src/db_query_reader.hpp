@@ -6,7 +6,7 @@
 #define DAWDLE_TODO_DB_QUERY_READER_HPP
 
 #include <QFile>
-#include "todo_structure.h"
+#include "todo_structure.hpp"
 
 class DbQueryReader {
 public:

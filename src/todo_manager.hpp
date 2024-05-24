@@ -9,8 +9,7 @@
 #include <QString>
 #include <string>
 #include <string_view>
-#include "todo_structure.h"
-#include "duck_service.hpp"
+#include "todo_structure.hpp"
 
 namespace Controller {
     class TodoManager : public QObject {

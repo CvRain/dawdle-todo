@@ -1,6 +1,5 @@
 #pragma once
 
-#include <filesystem>
 #include <mutex>
 #include <spdlog/spdlog.h>
 #include <duckdb.hpp>
