@@ -16,16 +16,30 @@ namespace Controller {
     Q_OBJECT
 
     public:
-        explicit TodoManager(QObject *parent = nullptr);
+        static TodoManager &get_instance();
 
-        Q_INVOKABLE static void new_todo_group(const QString &group_text, const QString &category_text);
+        TodoManager(const TodoManager &) = delete;
+
+        TodoManager &operator=(const TodoManager &) = delete;
+
+        Q_INVOKABLE void new_todo_group(const QString &group_text, const QString &category_text);
+
         Q_INVOKABLE static void delete_todo_group(const QString &group_id);
 
+    signals:
+
+        void newGroupAdded(const TodoStructure::TodoGroupInfo &groupInfo);
+
     private:
+        explicit TodoManager(QObject *parent = nullptr);
+
+        ~TodoManager() = default;
+
         static std::optional<TodoStructure::TodoGroupInfo> todo_head_serialization(const std::string_view &json_string);
 
         static std::string todo_head_deserialization(const TodoStructure::TodoGroupInfo &todo_info_value);
 
+        static TodoManager* instance;
     };
 }
 

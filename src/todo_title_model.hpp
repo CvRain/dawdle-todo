@@ -9,7 +9,8 @@
 
 #include "todo_structure.hpp"
 #include "todo_manager.hpp"
-#include "todo_manager.hpp"
+
+#include <memory>
 
 namespace Model {
     class TodoTitleModel : public QAbstractListModel {
@@ -33,19 +34,18 @@ namespace Model {
 
         [[nodiscard]] QHash<int, QByteArray> roleNames() const override;
 
-        void addItem(const TodoStructure::TodoGroupInfo &item);
-
         Q_INVOKABLE void remove(int index);
 
         void refreshItems();
 
+        void connectToTodoManager(Controller::TodoManager* todoManager);
+
     public slots:
-
         void updateItem(int index, const TodoStructure::TodoGroupInfo &item);
-
+        void handleNewGroup(const TodoStructure::TodoGroupInfo& groupInfo);
     private:
         QList<TodoStructure::TodoGroupInfo> todo_items;
-        Controller::TodoManager todo_manager{};
+        Controller::TodoManager* todo_manager;
         QTimer *update_time;
     };
 

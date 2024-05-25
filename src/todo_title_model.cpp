@@ -4,12 +4,13 @@
 
 namespace Model {
     TodoTitleModel::TodoTitleModel(QObject *object)
-    : QAbstractListModel(object),update_time(new QTimer(this)) {
+    : QAbstractListModel(object),update_time(new QTimer(this)),todo_manager(&Controller::TodoManager::get_instance()) {
         spdlog::info("TodoTitleModel::TodoTitleModel");
         refreshItems();
         //初始化update_time， 30s刷新一次列表
         connect(update_time, &QTimer::timeout, this, &TodoTitleModel::refreshItems);
         update_time->start(30000);
+        connectToTodoManager(todo_manager);
     }
 
     int TodoTitleModel::rowCount(const QModelIndex &parent) const {
@@ -56,12 +57,6 @@ namespace Model {
         endRemoveRows(); // 结束删除操作
     }
 
-//    void TodoTitleModel::addItem(const TodoStructure::TodoGroupInfo &item) {
-//        beginInsertRows(QModelIndex(), rowCount(), rowCount());
-//        todo_items.append(item);
-//        endInsertRows();
-//    }
-
     void TodoTitleModel::updateItem(int index, const TodoStructure::TodoGroupInfo &item) {
         if (index < 0 || index >= todo_items.size())
             return;
@@ -72,7 +67,10 @@ namespace Model {
 
     void TodoTitleModel::refreshItems() {
         spdlog::info("TodoTitleModel::refreshItems");
+
+        beginResetModel();
         const auto data = Service::DuckDatabase::get_instance().get_group_info();
+        todo_items.clear();
         if(data.empty()){
             spdlog::info("group info without data");
         }
@@ -80,11 +78,23 @@ namespace Model {
             spdlog::info("add group to list model: {}--{}", it.group_name, it.group_id);
             todo_items.push_back(it);
         }
+        endResetModel();
     }
 
     TodoTitleModel::~TodoTitleModel() {
         delete update_time;
         update_time = nullptr;
+    }
+
+    void TodoTitleModel::connectToTodoManager(Controller::TodoManager *todoManager) {
+        connect(todoManager, &Controller::TodoManager::newGroupAdded, this, &TodoTitleModel::handleNewGroup);
+    }
+
+    void TodoTitleModel::handleNewGroup(const TodoStructure::TodoGroupInfo &groupInfo) {
+        int newRow = todo_items.size();
+        beginInsertRows(QModelIndex(), newRow, newRow);
+        todo_items.append(groupInfo);
+        endInsertRows();
     }
 
 } // Model

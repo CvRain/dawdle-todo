@@ -9,8 +9,17 @@
 #include <spdlog/spdlog.h>
 
 namespace Controller {
+    TodoManager* TodoManager::instance = nullptr;
+
+    TodoManager &TodoManager::get_instance() {
+        if (!instance) {
+            instance = new TodoManager();
+        }
+        return *instance;
+    }
+
     TodoManager::TodoManager(QObject *object) : QObject(object) {
-        spdlog::info("todo manager created");
+        spdlog::info("todo manager created::{}", (typeid(*this)).name());
         auto &db_instance = Service::DuckDatabase::get_instance();
     }
 
@@ -51,10 +60,13 @@ namespace Controller {
 
     void TodoManager::new_todo_group(const QString &group_text, const QString &category_text) {
         spdlog::info("TodoManager::new_todo_group");
-        Service::DuckDatabase::get_instance().
-                add_one_group(
-                group_text.toLocal8Bit().toStdString(),
-                category_text.toLocal8Bit().toStdString());
+        TodoStructure::TodoGroupInfo newGroup;
+        newGroup.group_name = group_text.toLocal8Bit().toStdString();
+        newGroup.category = category_text.toLocal8Bit().toStdString();
+
+        Service::DuckDatabase::get_instance().add_one_group(newGroup.group_name, newGroup.category);
+
+        emit newGroupAdded(newGroup);
     }
 
     void TodoManager::delete_todo_group(const QString &group_id) {

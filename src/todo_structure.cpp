@@ -17,7 +17,6 @@ namespace TodoStructure{
     std::string QueryStructure::get_new_group_query(const std::string_view& group_name, const std::string_view& category) const {
         spdlog::info("QueryStructure::get_new_group_query");
 
-        std::string query_str = "insert into todo_group(id, name, times, category, create_time, finish_time) values ('{}', '{}', 0, '{}', '{}', '2021-01-01 00:00:00');";
         const auto id = Tool::Id::SimpleId::generate_id();
         spdlog::info("Generate new id:{}", id);
 
@@ -25,7 +24,7 @@ namespace TodoStructure{
         spdlog::info("Generate new create_time:{}", create_time);
 
         size_t pos = 0;
-        std::string result = query_str;
+        std::string result = new_todo_group;
         result.replace(result.find("{}"), 2, id);
         pos = result.find("{}", pos + id.length());
         result.replace(pos, 2, std::string(group_name));

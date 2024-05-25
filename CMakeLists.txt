@@ -37,6 +37,8 @@ set(SRC ${MODULES}
         src/db_query_reader.cpp
         src/db_query_reader.hpp
         src/todo_structure.cpp
+        src/todo_manager_provider.cpp
+        src/todo_manager_provider.hpp
 )
 
 set(UI

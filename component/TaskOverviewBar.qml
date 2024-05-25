@@ -1,7 +1,7 @@
 import QtQuick
 import Theme.Catppuccin.Latte
 import QtQuick.Controls
-import Controller.TodoManager
+import TodoManagerProvider
 
 Item {
     id: root
@@ -68,7 +68,7 @@ Item {
         id: latteTheme
     }
 
-    TodoController {
+    TodoManagerProvider {
         id: controller
     }
 }

@@ -1,7 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls
 import Theme.Catppuccin.Latte
-import Controller.TodoManager
+import TodoManagerProvider
 
 Item {
     id: root
@@ -221,10 +221,12 @@ Item {
 
             onClicked: {
                 if (nameInput.text !== "") {
-                    todoDialog.todoCreated(nameInput.text,typeComboBox.currentText)
+                    todoDialog.todoCreated(nameInput.text,
+                                           typeComboBox.currentText)
                     //console.log("Task Name: " + nameInput.text + ", Task Type: " + typeComboBox.currentText)
                     //console.log("invoke insert data");
-                    todoManager.new_todo_group(nameInput.text, typeComboBox.currentText)
+                    todoManager.todoManager().new_todo_group(
+                                nameInput.text, typeComboBox.currentText)
                 } else {
                     console.log("Task name cannot be empty.")
                 }
@@ -247,7 +249,7 @@ Item {
         id: latte
     }
 
-     TodoController {
-         id: todoManager
-     }
+    TodoManagerProvider {
+        id: todoManager
+    }
 }
