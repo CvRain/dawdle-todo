@@ -61,10 +61,12 @@ namespace Controller {
     void TodoManager::new_todo_group(const QString &group_text, const QString &category_text) {
         spdlog::info("TodoManager::new_todo_group");
         TodoStructure::TodoGroupInfo newGroup;
+        newGroup.group_id = Tool::Id::SimpleId::generate_id();
         newGroup.group_name = group_text.toLocal8Bit().toStdString();
         newGroup.category = category_text.toLocal8Bit().toStdString();
+        newGroup.finish_time = "1970-01-01 00:00:00";
 
-        Service::DuckDatabase::get_instance().add_one_group(newGroup.group_name, newGroup.category);
+        Service::DuckDatabase::get_instance().add_one_group(newGroup);
 
         emit newGroupAdded(newGroup);
     }

@@ -11,6 +11,7 @@
 #include "todo_manager.hpp"
 
 #include <memory>
+#include <map>
 
 namespace Model {
     class TodoTitleModel : public QAbstractListModel {
@@ -21,7 +22,7 @@ namespace Model {
 
         ~TodoTitleModel() override;
 
-        enum {
+        enum TodoGroupPart {
             TodoGroupName = Qt::UserRole + 1,
             TodoGroupId,
             TodoGroupCategory,
@@ -38,14 +39,15 @@ namespace Model {
 
         void refreshItems();
 
-        void connectToTodoManager(Controller::TodoManager* todoManager);
+        void connectToTodoManager(Controller::TodoManager *todoManager) const;
 
     public slots:
-        void updateItem(int index, const TodoStructure::TodoGroupInfo &item);
-        void handleNewGroup(const TodoStructure::TodoGroupInfo& groupInfo);
+
+        void handleNewGroup(const TodoStructure::TodoGroupInfo &groupInfo);
+
     private:
         QList<TodoStructure::TodoGroupInfo> todo_items;
-        Controller::TodoManager* todo_manager;
+        Controller::TodoManager *todo_manager;
         QTimer *update_time;
     };
 

@@ -49,6 +49,13 @@ Item {
                             height: swipeDel.height
                             todoTitle: model.group_name
                             anchors.centerIn: parent
+
+                            MouseArea {
+                                anchors.fill: parent
+                                onClicked: {
+                                    console.log(model.group_id)
+                                }
+                            }
                         }
                     }
 

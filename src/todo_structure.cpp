@@ -27,14 +27,41 @@ namespace TodoStructure{
         std::string result = new_todo_group;
         result.replace(result.find("{}"), 2, id);
         pos = result.find("{}", pos + id.length());
+
         result.replace(pos, 2, std::string(group_name));
         pos = result.find("{}", pos + group_name.length());
+
         result.replace(pos, 2, std::string(category));
         pos = result.find("{}", pos + category.length());
+
         result.replace(pos, 2, create_time);
 
-        spdlog::info("{}", result);
         return result;
     }
 
+    std::string QueryStructure::get_new_group_query(const TodoGroupInfo &group_info) const {
+        spdlog::info("QueryStructure::get_new_group_query");
+
+        const auto id = [&](){
+            if(group_info.group_id.empty()){
+                spdlog::info("Generate new id");
+                return Tool::Id::SimpleId::generate_id();
+            }
+            return group_info.group_id;
+        }();
+        const auto name = group_info.group_name;
+
+        const auto category = group_info.category;
+
+        size_t pos = 0;
+        std::string result = new_todo_group;
+        result.replace(result.find("{}"), 2, id);
+        pos = result.find("{}", pos + id.length());
+        result.replace(pos, 2, std::string(name));
+        pos = result.find("{}", pos + name.length());
+        result.replace(pos, 2, std::string(category));
+        pos = result.find("{}", pos + category.length());
+        result.replace(pos, 2, Tool::Id::SimpleId::local_timestamp_format_string());
+        return result;
+    }
 }

@@ -23,15 +23,6 @@ namespace TodoStructure {
         std::string category;
     };
 
-    inline std::map<TodoCategory, std::string> TodoCategoryAsMap(){
-        std::map<TodoCategory, std::string> category_map{};
-        category_map[TodoCategory::Cycle] = "cycle";
-        category_map[TodoCategory::Daily] = "daily";
-        category_map[TodoCategory::Once] = "once";
-        category_map[TodoCategory::Property] = "property";
-        return category_map;
-    }
-
     class QueryStructure{
     public:
         std::string create_table_todo_group;
@@ -44,6 +35,7 @@ namespace TodoStructure {
 
         [[nodiscard]] std::string get_delete_group_query(const std::string_view& group_id) const;
         [[nodiscard]] std::string get_new_group_query(const std::string_view& group_name, const std::string_view& category) const;
+        [[nodiscard]] std::string get_new_group_query(const TodoStructure::TodoGroupInfo &group_info) const;
     };
 }
 
