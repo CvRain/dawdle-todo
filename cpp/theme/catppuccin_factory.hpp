@@ -7,27 +7,31 @@
 
 #include <QObject>
 #include <QString>
+#include <QtQml>
+
+#include <map>
 
 #include "catppuccin_latte.hpp"
 #include "catppuccin_mocha.hpp"
 
 namespace Theme {
-    enum class CatppuccinPaletteType : int {
-        Latte,
-        Frappe,
-        Macchiato,
-        Mocha,
-    };
-
     class CatppuccinFactory : public QObject {
     Q_OBJECT
 
     public:
         explicit CatppuccinFactory(QObject *parent);
 
-        ~CatppuccinFactory();
+        ~CatppuccinFactory() override;
 
-        Q_INVOKABLE void check_theme(int paletteType);
+        enum class CatppuccinPaletteType : int {
+            Latte,
+            Frappe,
+            Macchiato,
+            Mocha,
+        };
+        Q_ENUM(CatppuccinPaletteType);
+
+        Q_INVOKABLE void check_theme(CatppuccinFactory::CatppuccinPaletteType paletteType);
 
         Q_INVOKABLE QString rosewater();
 
@@ -82,7 +86,15 @@ namespace Theme {
         Q_INVOKABLE QString crust();
 
     private:
+        void instantiation_latte();
+        void instantiation_mocha();
+        void instantiation_frappe();
+        void instantiation_macchiato();
+
+    private:
+        CatppuccinPaletteType current_palette_type;
         CatppuccinBasic *catppuccin_theme;
+        std::map<CatppuccinPaletteType, void (CatppuccinFactory::*)()> instantiation_map;
     };
 }
 #endif //DAWDLE_TODO_CATPPUCCIN_FACTORY_HPP

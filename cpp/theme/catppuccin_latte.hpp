@@ -8,7 +8,7 @@
 #include "catppuccin_basic.hpp"
 
 namespace Theme{
-    class CatppuccinLatte: public CatppuccinBasic{
+    class CatppuccinLatte final: public CatppuccinBasic{
     public:
         explicit CatppuccinLatte();
     };
