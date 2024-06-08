@@ -7,94 +7,42 @@
 
 #include <QObject>
 #include <QString>
-#include <QtQml>
+
 
 #include <map>
 
-#include "catppuccin_latte.hpp"
-#include "catppuccin_mocha.hpp"
+#include "model/catppuccin_palette_type.hpp"
+#include "catppuccin_basic.hpp"
 
 namespace Theme {
     class CatppuccinFactory : public QObject {
     Q_OBJECT
 
     public:
-        explicit CatppuccinFactory(QObject *parent);
+        using PaletteType = Model::CatppuccinPaletteType::PaletteType;
 
-        ~CatppuccinFactory() override;
+        static Theme::CatppuccinFactory &get_instance(QObject *parent = nullptr);
 
-        enum class CatppuccinPaletteType : int {
-            Latte,
-            Frappe,
-            Macchiato,
-            Mocha,
-        };
-        Q_ENUM(CatppuccinPaletteType);
+        Theme::CatppuccinBasic *get_theme();
 
-        Q_INVOKABLE void check_theme(CatppuccinFactory::CatppuccinPaletteType paletteType);
-
-        Q_INVOKABLE QString rosewater();
-
-        Q_INVOKABLE QString flamingo();
-
-        Q_INVOKABLE QString pink();
-
-        Q_INVOKABLE QString mauve();
-
-        Q_INVOKABLE QString red();
-
-        Q_INVOKABLE QString maroon();
-
-        Q_INVOKABLE QString peach();
-
-        Q_INVOKABLE QString yellow();
-
-        Q_INVOKABLE QString green();
-
-        Q_INVOKABLE QString teal();
-
-        Q_INVOKABLE QString sky();
-
-        Q_INVOKABLE QString sapphire();
-
-        Q_INVOKABLE QString blue();
-
-        Q_INVOKABLE QString lavender();
-
-        Q_INVOKABLE QString text();
-
-        Q_INVOKABLE QString subtext1();
-
-        Q_INVOKABLE QString subtext0();
-
-        Q_INVOKABLE QString overlay2();
-
-        Q_INVOKABLE QString overlay1();
-
-        Q_INVOKABLE QString overlay0();
-
-        Q_INVOKABLE QString surface2();
-
-        Q_INVOKABLE QString surface1();
-
-        Q_INVOKABLE QString surface0();
-
-        Q_INVOKABLE QString base();
-
-        Q_INVOKABLE QString mantle();
-
-        Q_INVOKABLE QString crust();
+        Q_INVOKABLE void check_theme(Model::CatppuccinPaletteType::PaletteType paletteType);
 
     private:
+        explicit CatppuccinFactory(QObject *parent = nullptr);
+
         void instantiation_latte();
+
         void instantiation_mocha();
+
         void instantiation_frappe();
+
         void instantiation_macchiato();
 
     private:
-        CatppuccinPaletteType current_palette_type;
+        static CatppuccinFactory *instance;
+        PaletteType current_palette_type;
         CatppuccinBasic *catppuccin_theme;
-        std::map<CatppuccinPaletteType, void (CatppuccinFactory::*)()> instantiation_map;
+        std::map<PaletteType, void (CatppuccinFactory::*)()> instantiation_map;
     };
 }
 #endif //DAWDLE_TODO_CATPPUCCIN_FACTORY_HPP

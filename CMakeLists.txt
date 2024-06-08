@@ -3,13 +3,39 @@ cmake_minimum_required(VERSION 3.16)
 project(dawdle_todo VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD 20)
 
 find_package(Qt6 6.5 REQUIRED COMPONENTS Quick)
 
 qt_standard_project_setup(REQUIRES 6.5)
 
-set(CPP_MODEL
+set(QML_COMPENTS
 
+)
+
+set(QML_MODELS
+
+)
+
+set(QML_UTILS
+        qml/utils/ThemeSwitcher.qml
+)
+
+set(QML_VIEWS
+        qml/views/Main.qml
+)
+
+set(UI ${QML_COMPONENTS}
+        ${QML_MODELS}
+        ${QML_UTILS}
+        ${QML_VIEWS}
+)
+
+include_directories(cpp)
+
+set(CPP_MODEL
+        cpp/model/catppuccin_palette_type.hpp
+        cpp/model/catppuccin_palette_type.cpp
 )
 
 set(CPP_THEME
@@ -20,6 +46,10 @@ set(CPP_THEME
         cpp/theme/catppuccin_latte.hpp
         cpp/theme/catppuccin_mocha.cpp
         cpp/theme/catppuccin_mocha.hpp
+        cpp/theme/catppuccin_provider.cpp
+        cpp/theme/catppuccin_provider.hpp
+
+
 )
 
 qt_add_executable(appdawdle_todo
@@ -31,8 +61,7 @@ qt_add_executable(appdawdle_todo
 qt_add_qml_module(appdawdle_todo
         URI dawdle_todo
         VERSION 1.0
-        QML_FILES
-        Main.qml
+        QML_FILES ${UI}
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
@@ -56,3 +85,5 @@ install(TARGETS appdawdle_todo
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
+
+target_compile_features(appdawdle_todo PRIVATE cxx_std_20)

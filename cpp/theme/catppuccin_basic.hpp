@@ -8,7 +8,12 @@
 #include <QString>
 
 namespace Theme {
-    using ColorGroup = struct {
+    class CatppuccinBasic {
+    public:
+        CatppuccinBasic() = default;
+        ~CatppuccinBasic() = default;
+
+    public:
         QString rosewater;
         QString flamingo;
         QString pink;
@@ -35,16 +40,6 @@ namespace Theme {
         QString base;
         QString mantle;
         QString crust;
-    };
-
-    class CatppuccinBasic {
-    public:
-        virtual ColorGroup get_color_group(){
-            return colorGroup;
-        };
-
-    protected:
-        ColorGroup colorGroup;
     };
 }
 #endif //DAWDLE_TODO_CATPPUCCIN_BASIC_HPP
