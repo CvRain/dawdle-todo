@@ -85,7 +85,6 @@ Item {
             colorAnimation.to = pressedColor
             colorAnimation.start()
             iconClicked()
-            console.log("TitleButton::clicked")
         }
     }
 

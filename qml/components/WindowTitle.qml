@@ -14,18 +14,11 @@ Item {
     signal closeButtonClicked
     signal minButtonClicked
     signal maxButtonClicked
+    signal themeButtonClicked(bool isDark)
 
     id: root
     width: 450
     height: 40
-
-    function switchTheme(isLight) {
-        if (isLight) {
-            catppuccinTheme.switch_theme(CatppuccinType.Latte)
-        } else {
-            catppuccinTheme.switch_theme(CatppuccinType.Mocha)
-        }
-    }
 
     Rectangle {
         id: titleBar
@@ -33,21 +26,37 @@ Item {
         height: parent.height
         color: catppuccinTheme.crust()
 
-        CatppuccinTheme {
-            id: catppuccinTheme
-
-            onThemeChanged: {
-                console.log("titlebar -> catppuccinTheme.crust()")
-                titleBar.color = catppuccinTheme.crust()
-            }
-        }
-
         MouseArea {
             id: dragArea
             anchors.fill: parent
             property int mouseXOffset: 0
             property int mouseYOffset: 0
             property bool dragging: false
+
+            Connections {
+                target: dragArea
+                function onPressed(mouse) {
+                    // 记录点击时鼠标位置相对于窗口的位置
+                    dragArea.mouseXOffset = mouse.x
+                    dragArea.mouseYOffset = mouse.y
+                    dragArea.dragging = true
+                    // console.log(mouse.x)
+                    // console.log(mouse.y)
+                }
+                function onPositionChanged(mouse) {
+                    // 如果鼠标已按下，则根据鼠标的移动来移动窗口
+                    if (dragArea.dragging) {
+                        distWindow.x += mouse.x - dragArea.mouseXOffset
+                        distWindow.y += mouse.y - dragArea.mouseYOffset
+                        // console.log(mouse.x)
+                        // console.log(mouse.y)
+                    }
+                }
+                function onReleased() {
+                    // 鼠标释放后停止拖动
+                    dragArea.dragging = false
+                }
+            }
         }
 
         Row {
@@ -64,8 +73,15 @@ Item {
                 anchors {
                     verticalCenter: parent.verticalCenter
                 }
-
+                hoverColor: catppuccinTheme.overlay2()
                 onIconClicked: titleIconClicked()
+
+                Connections {
+                    target: iconContainer
+                    function titleIconClicked() {
+                        titleIconClicked()
+                    }
+                }
             }
 
             Text {
@@ -73,17 +89,20 @@ Item {
                 text: titleText
                 font.weight: Font.Bold
                 width: parent.width / 2
-                height: parent.height
-                color: catppuccinTheme.subtext0()
+                height: parent.heighte
+                color: catppuccinTheme.subtext1()
                 verticalAlignment: Text.AlignVCenter
                 clip: true
                 horizontalAlignment: Text.AlignLeft
+                anchors {
+                    verticalCenter: parent.verticalCenter
+                }
             }
         }
 
         RowLayout {
             id: rightPart
-            width: titleBar.height * 0.4 * 3
+            width: titleBar.height * 0.4 * 4
             height: parent.height
             spacing: 5
             anchors.right: titleBar.right
@@ -93,11 +112,20 @@ Item {
 
             TitleButton {
                 id: exitWindow
-                width: titleBar.height * 0.4
-                height: titleBar.height * 0.4
+                width: titleBar.height * 0.39
+                height: titleBar.height * 0.39
                 iconPath: "qrc:/res/icons/exit.svg"
-                //anchors.verticalCenter: parent.verticalCenter
+                hoverColor: catppuccinTheme.overlay2()
                 onIconClicked: closeButtonClicked()
+
+                Connections {
+                    target: exitWindow
+                    function onIconClicked() {
+                        console.log("WindowTitle::CloseButton::clicked")
+                        closeButtonClicked()
+                        distWindow.close()
+                    }
+                }
             }
 
             TitleButton {
@@ -105,8 +133,23 @@ Item {
                 width: titleBar.height * 0.4
                 height: titleBar.height * 0.4
                 iconPath: "qrc:/res/icons/max.svg"
-                //anchors.verticalCenter: parent.verticalCenter
+                hoverColor: catppuccinTheme.overlay2()
                 onIconClicked: maxButtonClicked()
+
+                Connections {
+                    target: maxWindow
+                    function onIconClicked() {
+                        console.log("WindowTitle::MaxButton::clicked")
+                        maxButtonClicked()
+                        if (distWindow.Maximized) {
+                            distWindow.Maximized = false
+                            distWindow.showNormal()
+                            //distWindow.setGeometry(0, 0, 600, 400)
+                        } else {
+                            distWindow.showMaximized()
+                        }
+                    }
+                }
             }
 
             TitleButton {
@@ -114,75 +157,60 @@ Item {
                 width: titleBar.height * 0.4
                 height: titleBar.height * 0.4
                 iconPath: "qrc:/res/icons/min.svg"
-                //anchors.verticalCenter: parent.verticalCenter
+                hoverColor: catppuccinTheme.overlay2()
                 onIconClicked: minButtonClicked()
+
+                Connections {
+                    target: minWindow
+                    function onIconClicked() {
+                        console.log("WindowTitle::MinButton::clicked")
+                        minButtonClicked()
+                        distWindow.showMinimized()
+                    }
+                }
+            }
+
+            TitleButton {
+                id: themeButton
+                width: titleBar.height * 0.45
+                height: titleBar.height * 0.45
+                iconPath: "qrc:/res/icons/theme-dark.svg"
+                hoverColor: catppuccinTheme.overlay2()
+                property bool isDarkMode: true
+                onIconClicked: {
+                    isDarkMode = !isDarkMode
+                    iconPath = isDarkMode ? "qrc:/res/icons/theme-dark.svg" : "qrc:/res/icons/theme-light.svg"
+                    themeButtonClicked(isDarkMode)
+                    switchTheme(isDarkMode)
+                }
+
+                function switchTheme(isDarkMode) {
+                    if (isDarkMode) {
+                        catppuccinTheme.switch_theme(CatppuccinType.Latte)
+                    } else {
+                        catppuccinTheme.switch_theme(CatppuccinType.Mocha)
+                    }
+                }
             }
         }
     }
 
-    Connections {
-        target: iconContainer
-        function titleIconClicked() {
-            console.log(randomValue.generate_string(10))
-            titleIconClicked()
+    CatppuccinTheme {
+        id: catppuccinTheme
+
+        onThemeChanged: {
+            colorAnimation.target = titleBar
+            colorAnimation.from = titleBar.color
+            colorAnimation.to = catppuccinTheme.crust()
+            colorAnimation.start()
         }
     }
 
-    Connections {
-        target: exitWindow
-        function onIconClicked() {
-            console.log("WindowTitle::CloseButton::clicked")
-            closeButtonClicked()
-            distWindow.close()
-        }
-    }
-
-    Connections {
-        target: maxWindow
-        function onIconClicked() {
-            console.log("WindowTitle::MaxButton::clicked")
-            maxButtonClicked()
-            if (distWindow.Maximized) {
-                distWindow.Maximized = false
-                distWindow.showNormal()
-                //distWindow.setGeometry(0, 0, 600, 400)
-            } else {
-                distWindow.showMaximized()
-            }
-        }
-    }
-
-    Connections {
-        target: minWindow
-        function onIconClicked() {
-            console.log("WindowTitle::MinButton::clicked")
-            minButtonClicked()
-            distWindow.showMinimized()
-        }
-    }
-
-    Connections {
-        target: dragArea
-        function onPressed(mouse) {
-            // 记录点击时鼠标位置相对于窗口的位置
-            dragArea.mouseXOffset = mouse.x
-            dragArea.mouseYOffset = mouse.y
-            dragArea.dragging = true
-            // console.log(mouse.x)
-            // console.log(mouse.y)
-        }
-        function onPositionChanged(mouse) {
-            // 如果鼠标已按下，则根据鼠标的移动来移动窗口
-            if (dragArea.dragging) {
-                distWindow.x += mouse.x - dragArea.mouseXOffset
-                distWindow.y += mouse.y - dragArea.mouseYOffset
-                // console.log(mouse.x)
-                // console.log(mouse.y)
-            }
-        }
-        function onReleased() {
-            // 鼠标释放后停止拖动
-            dragArea.dragging = false
-        }
+    ColorAnimation {
+        id: colorAnimation
+        target: titleBar
+        duration: 400
+        properties: "color"
+        easing.type: Easing.InOutQuad
     }
 }

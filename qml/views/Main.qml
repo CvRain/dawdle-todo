@@ -22,6 +22,17 @@ Window {
         anchors.top: parent.top
         distWindow: root
         z: 10
+
+        Connections {
+            target: windowTitle
+            function onThemeButtonClicked(isDark) {
+                if (isDark) {
+                    catppuccinTheme.switch_theme(CatppuccinType.Latte)
+                } else {
+                    catppuccinTheme.switch_theme(CatppuccinType.Mocha)
+                }
+            }
+        }
     }
 
     // MouseArea {
@@ -32,21 +43,6 @@ Window {
 
     //     acceptedButtons: Qt.LeftButton | Qt.RightButton
     // }
-    Switch {
-        id: switchButton
-        anchors.top: windowTitle.bottom
-        anchors.right: windowTitle.right
-        anchors.topMargin: 10
-        anchors.rightMargin: 10
-        onClicked: {
-            if (!switchButton.checked) {
-                catppuccinTheme.switch_theme(CatppuccinType.Latte)
-            } else {
-                catppuccinTheme.switch_theme(CatppuccinType.Mocha)
-            }
-            windowTitle.switchTheme(!switchButton.checked)
-        }
-    }
 
     // Connections {
     //     target: mouseRegion
