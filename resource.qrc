@@ -1,0 +1,23 @@
+<RCC>
+    <qresource prefix="/">
+        <file>res/icons/upload.svg</file>
+        <file>res/icons/toggle-right.svg</file>
+        <file>res/icons/toggle-left.svg</file>
+        <file>res/icons/refresh.svg</file>
+        <file>res/icons/min.svg</file>
+        <file>res/icons/menu.svg</file>
+        <file>res/icons/max.svg</file>
+        <file>res/icons/home.svg</file>
+        <file>res/icons/exit.svg</file>
+        <file>res/icons/delete.svg</file>
+        <file>res/icons/arrow-double-right.svg</file>
+        <file>res/icons/arrow-double-left.svg</file>
+        <file>res/icons/add.svg</file>
+        <file>res/fonts/CascadiaCode/CaskaydiaCoveNerdFontMono-Regular.ttf</file>
+        <file>res/fonts/CascadiaCode/CaskaydiaCoveNerdFontMono-Italic.ttf</file>
+        <file>res/fonts/CascadiaCode/CaskaydiaCoveNerdFontMono-BoldItalic.ttf</file>
+        <file>res/fonts/CascadiaCode/CaskaydiaCoveNerdFontMono-Bold.ttf</file>
+        <file>res/fonts/CascadiaCode/CaskaydiaCoveNerdFont-LightItalic.ttf</file>
+        <file>res/fonts/CascadiaCode/CaskaydiaCoveNerdFont-Light.ttf</file>
+    </qresource>
+</RCC>

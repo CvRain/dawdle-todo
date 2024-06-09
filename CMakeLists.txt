@@ -2,15 +2,21 @@ cmake_minimum_required(VERSION 3.16)
 
 project(dawdle_todo VERSION 0.1 LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS ON)
+set(CMAKE_CXX_SCAN_FOR_MODULES ON)
 
 find_package(Qt6 6.5 REQUIRED COMPONENTS Quick)
 
 qt_standard_project_setup(REQUIRES 6.5)
 
-set(QML_COMPENTS
-
+set(QML_COMPONENTS
+    qml/components/TitleButton.qml
+    qml/components/WindowTitle.qml
 )
 
 set(QML_MODELS
@@ -18,7 +24,6 @@ set(QML_MODELS
 )
 
 set(QML_UTILS
-        qml/utils/ThemeSwitcher.qml
 )
 
 set(QML_VIEWS
@@ -56,12 +61,14 @@ qt_add_executable(appdawdle_todo
         main.cpp
         ${CPP_MODEL}
         ${CPP_THEME}
+        resource.qrc
 )
 
 qt_add_qml_module(appdawdle_todo
         URI dawdle_todo
         VERSION 1.0
         QML_FILES ${UI}
+        RESOURCES resource.qrc
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
