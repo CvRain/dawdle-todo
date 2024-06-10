@@ -74,7 +74,7 @@ namespace Theme {
         Q_INVOKABLE QString crust();
 
     signals:
-        void themeChanged();
+        virtual void themeChanged();
 
     private:
         CatppuccinFactory *instance;

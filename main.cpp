@@ -4,12 +4,16 @@
 #include "model/catppuccin_palette_type.hpp"
 #include "theme/catppuccin_provider.hpp"
 
+#include <spdlog/spdlog.h>
 
 int main(int argc, char *argv[]) {
     QGuiApplication app(argc, argv);
 
     qmlRegisterType<Theme::CatppuccinProvider>("Theme.Catppuccin.Theme", 1, 0, "CatppuccinTheme");
+    spdlog::info("Register qml type: Theme::CatppuccinProvider");
+
     qmlRegisterType<Model::CatppuccinPaletteType>("Theme.Catppuccin.Palette", 1, 0, "CatppuccinType");
+    spdlog::info("Register qml type: Model::CatppuccinPaletteType");
 
     QQmlApplicationEngine engine;
 
@@ -26,6 +30,7 @@ int main(int argc, char *argv[]) {
             Qt::QueuedConnection
     );
     engine.loadFromModule("dawdle_todo", "Main");
+    spdlog::info("Load qml from module: dawdle_todo");
 
     return QGuiApplication::exec();
 }

@@ -3,6 +3,7 @@
   "name": "dawdle-todo",
   "dependencies": [
     "jsoncpp",
-    "spdlog"
+    "spdlog",
+    "sqlite-orm"
   ]
 }

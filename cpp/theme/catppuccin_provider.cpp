@@ -3,11 +3,12 @@
 //
 
 #include "catppuccin_provider.hpp"
+#include <spdlog/spdlog.h>
 
 namespace Theme {
     CatppuccinProvider::CatppuccinProvider(QObject *parent)
     : QObject(parent), instance(&CatppuccinFactory::get_instance()) {
-
+        spdlog::debug("CatppuccinProvider::CatppuccinProvider");
     }
 
     QString CatppuccinProvider::rosewater() {
@@ -115,6 +116,7 @@ namespace Theme {
     }
 
     void CatppuccinProvider::switch_theme(PaletteType paletteType) {
+        spdlog::debug("CatppuccinProvider::switch_theme");
         instance->check_theme(paletteType);
         emit themeChanged();
     }

@@ -11,12 +11,15 @@ set(CMAKE_CXX_EXTENSIONS ON)
 set(CMAKE_CXX_SCAN_FOR_MODULES ON)
 
 find_package(Qt6 6.5 REQUIRED COMPONENTS Quick)
+find_package(jsoncpp CONFIG REQUIRED)
+find_package(spdlog CONFIG REQUIRED)
+find_package(SqliteOrm CONFIG REQUIRED)
 
 qt_standard_project_setup(REQUIRES 6.5)
 
 set(QML_COMPONENTS
-    qml/components/TitleButton.qml
-    qml/components/WindowTitle.qml
+        qml/components/TitleButton.qml
+        qml/components/WindowTitle.qml
 )
 
 set(QML_MODELS
@@ -84,6 +87,9 @@ set_target_properties(appdawdle_todo PROPERTIES
 
 target_link_libraries(appdawdle_todo
         PRIVATE Qt6::Quick
+        sqlite_orm::sqlite_orm
+        spdlog::spdlog_header_only
+        JsonCpp::JsonCpp
 )
 
 include(GNUInstallDirs)
