@@ -41,9 +41,20 @@ set(UI ${QML_COMPONENTS}
 
 include_directories(cpp)
 
+set(CPP_UTIL
+    cpp/utils/simple_id.cpp
+    cpp/utils/simple_id.hpp
+)
+
+set(CPP_SERVICE
+        cpp/services/database_service.cpp
+        cpp/services/database_service.hpp
+)
+
 set(CPP_MODEL
         cpp/model/catppuccin_palette_type.hpp
         cpp/model/catppuccin_palette_type.cpp
+        cpp/model/todo_group.hpp
 )
 
 set(CPP_THEME
@@ -56,14 +67,13 @@ set(CPP_THEME
         cpp/theme/catppuccin_mocha.hpp
         cpp/theme/catppuccin_provider.cpp
         cpp/theme/catppuccin_provider.hpp
-
-
 )
+
+set(CPP_SOURCE ${CPP_MODEL} ${CPP_THEME} ${CPP_SERVICE} ${CPP_UTIL})
 
 qt_add_executable(appdawdle_todo
         main.cpp
-        ${CPP_MODEL}
-        ${CPP_THEME}
+        ${CPP_SOURCE}
         resource.qrc
 )
 
