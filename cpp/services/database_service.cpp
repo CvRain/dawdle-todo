@@ -29,7 +29,14 @@ namespace Service {
     }
 
     void DatabaseService::add_one(const Model::TodoGroup &todo_group) {
-        storage->replace(todo_group);
+        try {
+            const auto insert_id = storage->insert(todo_group);
+            spdlog::info("insert id: {}", insert_id);
+        }catch (const std::system_error& exception){
+            spdlog::error("DatabaseService::add_one::error: {}", exception.what());
+        }catch(...){
+            spdlog::error("DatabaseService::add_one::unknown exception");
+        }
     }
 
     void DatabaseService::print_all() {

@@ -7,16 +7,23 @@
 
 #include <string>
 #include <string_view>
+#include <filesystem>
 #include <sqlite_orm/sqlite_orm.h>
 
 #include <model/todo_group.hpp>
 
 namespace Service {
-    inline auto init_storage(const std::string_view &db_path) {
+    inline auto init_storage(const std::string_view &db_path = "./db/dawdle.sqlite") {
         using namespace sqlite_orm;
+        //check directory is existed or create one
+        if (!std::filesystem::exists(db_path)) {
+            std::filesystem::create_directories(db_path.substr(0, db_path.find_last_of('/')));
+        }
+
+        //init sqlite database
         auto storage = make_storage(db_path.data(),
-                                    make_table("COMPANY",
-                                               make_column("id", &Model::TodoGroup::id, primary_key()),
+                                    make_table("todo_group",
+                                               make_column("id", &Model::TodoGroup::id),
                                                make_column("name", &Model::TodoGroup::name),
                                                make_column("times", &Model::TodoGroup::times),
                                                make_column("category", &Model::TodoGroup::category),
@@ -25,7 +32,7 @@ namespace Service {
         return storage;
     }
     using Storage = decltype(init_storage(""));
-
+    using StoragePtr =  std::unique_ptr<Storage>;
 
     //singleton database service
     class DatabaseService final {
@@ -47,7 +54,7 @@ namespace Service {
 
     private:
         static DatabaseService *instance;
-        std::unique_ptr<Storage> storage;
+        StoragePtr storage;
     };
 
 } // Service

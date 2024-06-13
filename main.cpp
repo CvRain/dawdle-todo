@@ -12,8 +12,8 @@
 int main(int argc, char *argv[]) {
     QGuiApplication app(argc, argv);
 
-    Service::DatabaseService::get_instance().add_one(Model::create_todo_group("test", Model::TodoCategory::Cycle));
-    Service::DatabaseService::get_instance().add_one(Model::create_todo_group("test2", Model::TodoCategory::Cycle));
+//    Service::DatabaseService::get_instance().add_one(Model::create_todo_group("test", Model::TodoCategory::Cycle));
+//    Service::DatabaseService::get_instance().add_one(Model::create_todo_group("test2", Model::TodoCategory::Cycle));
     Service::DatabaseService::get_instance().print_all();
 
     qmlRegisterType<Theme::CatppuccinProvider>("Theme.Catppuccin.Theme", 1, 0, "CatppuccinTheme");
