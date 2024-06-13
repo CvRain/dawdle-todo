@@ -16,7 +16,7 @@ namespace Util {
         static std::string local_timestamp_format_string();
         static std::string random_string(uint32_t size);
         static std::string local_time_second();
-        static std::string generate_id();
+        static std::string generate();
     };
 
 } // Util

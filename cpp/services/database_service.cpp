@@ -11,7 +11,7 @@ namespace Service {
 
     DatabaseService::DatabaseService(const std::string_view &db_path) {
         spdlog::info("DatabaseService::DatabaseService()");
-        storage = std::make_unique<Storage>(init_storage(db_path.data()));
+        storage = std::make_shared<Storage>(init_storage(db_path.data()));
         storage->sync_schema();
     }
 
@@ -28,21 +28,9 @@ namespace Service {
         instance = nullptr;
     }
 
-    void DatabaseService::add_one(const Model::TodoGroup &todo_group) {
-        try {
-            const auto insert_id = storage->insert(todo_group);
-            spdlog::info("insert id: {}", insert_id);
-        }catch (const std::system_error& exception){
-            spdlog::error("DatabaseService::add_one::error: {}", exception.what());
-        }catch(...){
-            spdlog::error("DatabaseService::add_one::unknown exception");
-        }
-    }
-
-    void DatabaseService::print_all() {
-        for(auto& one_group : storage->iterate<Model::TodoGroup>()){
-            spdlog::info(storage->dump(one_group));
-        }
+    std::shared_ptr<Storage> DatabaseService::get_storage() {
+        spdlog::info("DatabaseService::get_storage");
+        return storage;
     }
 
 

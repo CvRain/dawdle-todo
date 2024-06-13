@@ -29,7 +29,7 @@ namespace Util {
         // 生成随机字符
         std::string str(size, 0);
         std::uniform_int_distribution<> dis('a', 'z');
-        for (char& c : str) {
+        for (char &c: str) {
             c = static_cast<char>(dis(gen));
         }
         return str;
@@ -45,7 +45,7 @@ namespace Util {
     }
 
     //时间戳—四位随机数—当前时间秒数
-    std::string SimpleId::generate_id() {
+    std::string SimpleId::generate() {
         const auto time_str = local_timestamp_string();
         const auto random_str = random_string(8);
         const auto count = local_time_second();
@@ -62,6 +62,4 @@ namespace Util {
 
         return ss.str();
     }
-
-
 } // Utils

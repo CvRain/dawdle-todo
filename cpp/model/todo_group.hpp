@@ -42,7 +42,7 @@ namespace Model{
 
     inline TodoGroup create_todo_group(const std::string_view& name, TodoCategory category, const std::string_view & create_time = ""){
         const auto todo_group = TodoGroup{
-            .id = Util::SimpleId::generate_id(),
+            .id = Util::SimpleId::generate(),
             .name = name.data(),
             .times = 0,
             .category = todo_category_to_string(category).data(),

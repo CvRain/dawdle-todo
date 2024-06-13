@@ -6,14 +6,15 @@
 #define DAWDLE_TODO_DATABASE_SERVICE_HPP
 
 #include <string>
+#include <optional>
 #include <string_view>
 #include <filesystem>
 #include <sqlite_orm/sqlite_orm.h>
 
-#include <model/todo_group.hpp>
+#include "model/todo_group.hpp"
 
 namespace Service {
-    inline auto init_storage(const std::string_view &db_path = "./db/dawdle.sqlite") {
+    inline auto init_storage(const std::string_view &db_path = "./db/dawdle.db") {
         using namespace sqlite_orm;
         //check directory is existed or create one
         if (!std::filesystem::exists(db_path)) {
@@ -31,24 +32,23 @@ namespace Service {
                                                make_column("finish_time", &Model::TodoGroup::finish_time)));
         return storage;
     }
+
     using Storage = decltype(init_storage(""));
-    using StoragePtr =  std::unique_ptr<Storage>;
+    using StoragePtr = std::shared_ptr<Storage>;
 
     //singleton database service
     class DatabaseService final {
     public:
-        static DatabaseService &get_instance(const std::string_view& db_path = "./db/dawdle.sqlite");
+        static DatabaseService &get_instance(const std::string_view &db_path = "./db/dawdle.db");
 
         DatabaseService(const DatabaseService &) = delete;
 
         DatabaseService &operator=(const DatabaseService &) = delete;
 
-        void add_one(const Model::TodoGroup &todo_group);
-
-        void print_all();
+        [[nodiscard]] StoragePtr get_storage();
 
     private:
-        explicit DatabaseService(const std::string_view& db_path = "./db/dawdle.sqlite");
+        explicit DatabaseService(const std::string_view &db_path = "./db/dawdle.db");
 
         ~DatabaseService();
 

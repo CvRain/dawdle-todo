@@ -49,6 +49,8 @@ set(CPP_UTIL
 set(CPP_SERVICE
         cpp/services/database_service.cpp
         cpp/services/database_service.hpp
+        cpp/services/todo_group_table.cpp
+        cpp/services/todo_group_table.hpp
 )
 
 set(CPP_MODEL
