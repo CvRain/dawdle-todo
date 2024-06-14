@@ -35,24 +35,6 @@ Window {
         }
     }
 
-    // MouseArea {
-    //     id: mouseRegion
-    //     anchors.top: windowTitle.bottom
-    //     width: parent.width
-    //     height: parent.height - windowTitle.height
-
-    //     acceptedButtons: Qt.LeftButton | Qt.RightButton
-    // }
-
-    // Connections {
-    //     target: mouseRegion
-
-    //     function onClicked(mouse) {
-    //         if (mouse.button === Qt.RightButton) {
-    //             contentMenu.popup()
-    //         }
-    //     }
-    // }
     CatppuccinTheme {
         id: catppuccinTheme
         onThemeChanged: {

@@ -19,6 +19,8 @@ namespace Service {
     public:
         static std::string add_one(const Model::TodoGroup &todo_group);
         static void print_all();
+        static std::optional<Model::TodoGroup> get_one(const std::string_view& todo_name);
+        static bool update_one(const Model::TodoGroup updated_group);
     };
 }
 

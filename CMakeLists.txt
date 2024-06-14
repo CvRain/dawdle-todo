@@ -20,6 +20,7 @@ qt_standard_project_setup(REQUIRES 6.5)
 set(QML_COMPONENTS
         qml/components/TitleButton.qml
         qml/components/WindowTitle.qml
+        qml/components/RoundedRectangle.qml
 )
 
 set(QML_MODELS
@@ -74,7 +75,7 @@ set(CPP_THEME
 set(CPP_SOURCE ${CPP_MODEL} ${CPP_THEME} ${CPP_SERVICE} ${CPP_UTIL})
 
 qt_add_executable(appdawdle_todo
-        main.cpp
+        cpp/main.cpp
         ${CPP_SOURCE}
         resource.qrc
 )
