@@ -1,7 +1,9 @@
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Layouts
 import Theme.Catppuccin.Theme
 import Theme.Catppuccin.Palette
+import Utils.PanelManager
 
 //import "../utils"
 import "../components"
@@ -13,7 +15,11 @@ Window {
     visible: true
     color: catppuccinTheme.base()
     title: qsTr("dawdle-todo")
-    flags: Qt.FramelessWindowHint
+    flags: Qt.FramelessWindowHint | Qt.Window
+
+    PanelManager {
+        id: panelManager
+    }
 
     WindowTitle {
         id: windowTitle
@@ -33,6 +39,25 @@ Window {
                 }
             }
         }
+    }
+
+    ColumnLayout {
+        width: 200
+        height: 300
+        anchors.centerIn: parent
+        Button {
+            text: "TimeDisplay"
+            onClicked: panelManager.open_panel(
+                           "TimeDisplay", ":/qml/views/TimeDisplayPanel.qml")
+        }
+        Button {
+            text: "WeatherPanel"
+            onClicked: panelManager.open_panel("WeatherPanel",
+                                               ":/qml/views/WeatherPanel.qml")
+        }
+        Item {
+            Layout.fillHeight: true
+        } // Spacer
     }
 
     CatppuccinTheme {
