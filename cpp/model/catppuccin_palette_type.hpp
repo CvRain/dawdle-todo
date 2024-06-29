@@ -14,20 +14,13 @@
 namespace Model {
     Q_NAMESPACE
 
-    class CatppuccinPaletteType : public QObject {
+    class CatppuccinColor : public QObject {
     Q_OBJECT
 
     public:
-        explicit CatppuccinPaletteType(QObject *parent = nullptr);
+        explicit CatppuccinColor(QObject *parent = nullptr);
 
-        enum class PaletteType {
-            Latte,
-            Frappe,
-            Macchiato,
-            Mocha,
-        };
-
-        enum class CatppuccinColor {
+        enum class Color : int {
             Rosewater,
             Flamingo,
             Pink,
@@ -55,14 +48,29 @@ namespace Model {
             Mantle,
             Crust,
         };
+        Q_ENUM(Color)
+    };
+
+    class CatppuccinPaletteType : public QObject {
+    Q_OBJECT
+
+    public:
+        explicit CatppuccinPaletteType(QObject *parent = nullptr);
+
+        enum class PaletteType : int {
+            Latte,
+            Frappe,
+            Macchiato,
+            Mocha,
+        };
+
 
         Q_ENUM(PaletteType)
 
-        Q_ENUM(CatppuccinColor)
+        Q_INVOKABLE QString color_name(Model::CatppuccinColor::Color color);
 
-        Q_INVOKABLE QString color_name(CatppuccinColor color);
     private:
-        std::map<CatppuccinColor, QString> color_name_to_string;
+        std::map<Model::CatppuccinColor::Color, QString> color_name_to_string;
     };
 
 } // Model

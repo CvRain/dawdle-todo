@@ -42,6 +42,7 @@ Item {
                     dragArea.dragging = true
                     // console.log(mouse.x)
                     // console.log(mouse.y)
+                    distWindow.startSystemMove()
                 }
                 function onPositionChanged(mouse) {
                     // 如果鼠标已按下，则根据鼠标的移动来移动窗口

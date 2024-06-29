@@ -3,17 +3,18 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Theme.Catppuccin.Theme
 import Theme.Catppuccin.Palette
+import Theme.Catppuccin.Color
 import Utils.PanelManager
 
 //import "../utils"
 import "../components"
 
-Window {
+MoveableWindow {
     id: root
     width: 400
     height: 640
     visible: true
-    color: catppuccinTheme.base()
+    bgColor: CatppuccinColor.Base
     title: qsTr("dawdle-todo")
     flags: Qt.FramelessWindowHint | Qt.Window
 
@@ -33,9 +34,9 @@ Window {
             target: windowTitle
             function onThemeButtonClicked(isDark) {
                 if (isDark) {
-                    catppuccinTheme.switch_theme(CatppuccinType.Latte)
+                    theme.switch_theme(CatppuccinType.Latte)
                 } else {
-                    catppuccinTheme.switch_theme(CatppuccinType.Mocha)
+                    theme.switch_theme(CatppuccinType.Mocha)
                 }
             }
         }
@@ -58,23 +59,5 @@ Window {
         Item {
             Layout.fillHeight: true
         } // Spacer
-    }
-
-    CatppuccinTheme {
-        id: catppuccinTheme
-        onThemeChanged: {
-            colorAnimation.target = root
-            colorAnimation.from = root.color
-            colorAnimation.to = catppuccinTheme.base()
-            colorAnimation.start()
-        }
-    }
-
-    ColorAnimation {
-        id: colorAnimation
-        target: root
-        duration: 400
-        properties: "color"
-        easing.type: Easing.InOutCirc
     }
 }

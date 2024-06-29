@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/views/WeatherPanel.qml</file>
+        <file>qml/views/TimeDisplayPanel.qml</file>
+        <file>qml/views/Main.qml</file>
+        <file>qml/components/WindowTitle.qml</file>
+        <file>qml/components/TitleButton.qml</file>
+        <file>qml/components/RoundedRectangle.qml</file>
+        <file>qml/components/MoveableWindow.qml</file>
+    </qresource>
+</RCC>

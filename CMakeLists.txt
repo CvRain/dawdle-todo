@@ -10,7 +10,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS ON)
 set(CMAKE_CXX_SCAN_FOR_MODULES ON)
 
-find_package(Qt6 6.5 REQUIRED COMPONENTS Quick)
+find_package(Qt6 6.7 REQUIRED COMPONENTS Quick)
 find_package(jsoncpp CONFIG REQUIRED)
 find_package(spdlog CONFIG REQUIRED)
 find_package(SqliteOrm CONFIG REQUIRED)
@@ -21,6 +21,7 @@ set(QML_COMPONENTS
         qml/components/TitleButton.qml
         qml/components/WindowTitle.qml
         qml/components/RoundedRectangle.qml
+        qml/components/MoveableWindow.qml
 )
 
 set(QML_MODELS
@@ -32,6 +33,8 @@ set(QML_UTILS
 
 set(QML_VIEWS
         qml/views/Main.qml
+        qml/views/TimeDisplayPanel.qml
+        qml/views/WeatherPanel.qml
 )
 
 set(UI ${QML_COMPONENTS}
@@ -45,6 +48,8 @@ include_directories(cpp)
 set(CPP_UTIL
     cpp/utils/simple_id.cpp
     cpp/utils/simple_id.hpp
+        cpp/utils/panel_manager.cpp
+        cpp/utils/panel_manager.hpp
 )
 
 set(CPP_SERVICE
@@ -74,17 +79,19 @@ set(CPP_THEME
 
 set(CPP_SOURCE ${CPP_MODEL} ${CPP_THEME} ${CPP_SERVICE} ${CPP_UTIL})
 
+set(RESOURCE_FILES resource.qrc qml.qrc)
+
 qt_add_executable(appdawdle_todo
         cpp/main.cpp
         ${CPP_SOURCE}
-        resource.qrc
+        ${RESOURCE_FILES}
 )
 
 qt_add_qml_module(appdawdle_todo
         URI dawdle_todo
         VERSION 1.0
         QML_FILES ${UI}
-        RESOURCES resource.qrc
+        RESOURCES ${RESOURCE_FILES}
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
