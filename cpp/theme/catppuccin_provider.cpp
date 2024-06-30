@@ -160,4 +160,10 @@ namespace Theme {
         spdlog::debug("CatppuccinProvider::get_color::{}", get_color.toLocal8Bit().toStdString());
         return get_color;
     }
+
+    QColor CatppuccinProvider::alpha(QString color, double real){
+        QColor tempColor{color};
+        tempColor.setAlpha(real);
+        return tempColor;
+    }
 } // Theme

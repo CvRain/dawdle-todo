@@ -16,6 +16,5 @@
         <file>res/fonts/CascadiaCode/CaskaydiaCoveNerdFont-Light.ttf</file>
         <file>res/icons/theme-dark.svg</file>
         <file>res/icons/theme-light.svg</file>
-        <file>qml/views/WeatherPanel.qml</file>
     </qresource>
 </RCC>

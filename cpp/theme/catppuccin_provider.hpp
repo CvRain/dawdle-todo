@@ -6,6 +6,7 @@
 #define DAWDLE_TODO_CATPPUCCIN_PROVIDER_HPP
 
 #include <QObject>
+#include <QColor>
 #include <map>
 
 #include "catppuccin_factory.hpp"
@@ -23,6 +24,8 @@ namespace Theme {
         Q_INVOKABLE void switch_theme(Model::CatppuccinPaletteType::PaletteType paletteType);
 
         Q_INVOKABLE QString get_color(Model::CatppuccinColor::Color catppuccinColor);
+
+        Q_INVOKABLE static QColor alpha(QString color, double alpha);
 
         Q_INVOKABLE QString rosewater();
 
