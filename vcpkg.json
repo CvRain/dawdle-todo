@@ -1,9 +1,0 @@
-{
-  "version": "1.0.0",
-  "name": "dawdle-todo",
-  "dependencies": [
-    "leveldb",
-    "jsoncpp",
-    "spdlog"
-  ]
-}
