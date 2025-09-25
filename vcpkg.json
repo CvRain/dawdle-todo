@@ -1,0 +1,7 @@
+{
+  "name": "dawdle-todo",
+  "version": "1.0.0",
+  "dependencies": [
+    "sqlitecpp"
+  ]
+}
