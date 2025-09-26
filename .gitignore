@@ -82,6 +82,9 @@ CMakeLists.txt.user*
 /build*/
 
 .idea
+.vscode
+.vs
 cmake-build
 cmake-build*
 CMakeLists.txt.*
+vcpkg_installed
