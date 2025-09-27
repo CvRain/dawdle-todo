@@ -15,6 +15,9 @@ public:
     [[nodiscard]] static int exec();
 private:
     void init();
+
+    static void listQrcFiles(const QString &dirPath);
+
     void init_database();
     QGuiApplication app;
     QQmlApplicationEngine engine;
