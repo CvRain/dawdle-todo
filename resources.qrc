@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/font">
+        <file alias="ComicShannsMonoNerdFontMono-Bold.otf">public/fonts/ComicShannsMono/ComicShannsMonoNerdFontMono-Bold.otf</file>
+        <file alias="ComicShannsMonoNerdFontMono-Regular.otf">public/fonts/ComicShannsMono/ComicShannsMonoNerdFontMono-Regular.otf</file>
+        <file alias="SarasaFixedSC-Blod.ttf">public/fonts/SarasaFixedSC/SarasaFixedSC-Bold.ttf</file>
+        <file alias="SarasaFixedSC-Regular.ttf">public/fonts/SarasaFixedSC/SarasaFixedSC-Regular.ttf</file>
+    </qresource>
+</RCC>

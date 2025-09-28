@@ -1,19 +1,23 @@
 import QtQuick
+import QtQuick.Controls
 import QtQuick.Layouts
-import DawdleTodo.src.app.Components 1.0
+import DawdleTodo 1.0
 
-Window {
-    width: 640
+ApplicationWindow {
+    id: mainWindow
     height: 480
+    title: "Hello DawdleTodo"
     visible: true
-    title: qsTr("Hello DawdleTodo")
+    width: 640
 
-    TitleBar{
+    TitleBar {
         id: titleBar
+        title: mainWindow.title
+        height: 46
         width: parent.width
-        height: 48
     }
 
-
-
+    ColumnLayout{
+        id: mainContainer
+    }
 }
