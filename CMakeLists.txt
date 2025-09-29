@@ -8,7 +8,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 set(QT_QML_GENERATE_QMLLS_INI ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Quick Core Qml)
+find_package(Qt6 REQUIRED COMPONENTS Quick Core Qml Quick3D)
 find_package(SQLiteCpp CONFIG REQUIRED)
 find_package(unofficial-sqlite3 CONFIG REQUIRED)
 
@@ -35,6 +35,7 @@ target_include_directories(appDawdleTodo PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
 set(QML_COMPONENTS src/app/Components/TitleBar.qml
         src/app/Components/CustomFont.qml
         src/app/Components/TitleButton.qml
+        src/app/Components/Cake.qml
 )
 
 set(QML_ICONS
@@ -76,7 +77,7 @@ set_target_properties(appDawdleTodo PROPERTIES
 )
 
 target_link_libraries(appDawdleTodo
-        PRIVATE Qt6::Quick Qt6::Core Qt6::Qml
+        PRIVATE Qt6::Quick Qt6::Core Qt6::Qml Qt6::Quick3D
 )
 
 target_link_libraries(appDawdleTodo PRIVATE SQLiteCpp unofficial::sqlite3::sqlite3)
