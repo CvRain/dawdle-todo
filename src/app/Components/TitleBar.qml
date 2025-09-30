@@ -64,6 +64,8 @@ Item {
 
             IconMinimize {
                 anchors.fill: parent
+                width: parent.width
+                height: parent.height
             }
 
             onClicked: {
@@ -83,6 +85,8 @@ Item {
 
             IconMaximize {
                 anchors.fill: parent
+                width: parent.width
+                height: parent.height
             }
 
             onClicked: {
@@ -102,6 +106,8 @@ Item {
 
             IconClose {
                 anchors.fill: parent
+                width: parent.width
+                height: parent.height
             }
 
             onClicked: {
