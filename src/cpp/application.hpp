@@ -7,21 +7,20 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
-#include <SQLiteCpp/SQLiteCpp.h>
+#include "saveService.hpp"
 
 class Application {
 public:
     explicit Application(int argc, char** argv);
     [[nodiscard]] static int exec();
 private:
-    void init();
+    void init() const;
 
     static void listQrcFiles(const QString &dirPath);
 
-    void init_database();
     QGuiApplication app;
     QQmlApplicationEngine engine;
-    SQLite::Database db;
+    std::shared_ptr<SaveService> saveService;
 };
 
 

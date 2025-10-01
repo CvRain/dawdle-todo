@@ -24,7 +24,9 @@ endif ()
 
 set(CPP_FILES src/cpp/main.cpp
         src/cpp/application.cpp
-        src/cpp/application.hpp)
+        src/cpp/application.hpp
+        src/cpp/saveService.cpp
+        src/cpp/saveService.hpp)
 
 qt_add_executable(appDawdleTodo
         ${CPP_FILES}
@@ -56,6 +58,12 @@ set(SOURCE_FONTS
         public/fonts/SarasaFixedSC/SarasaFixedSC-Regular.ttf
 )
 
+set(SQL_SOURCES
+        src/sql/create_groups.sql
+        src/sql/create_todos.sql
+        src/sql/create_recurrence_details.sql
+)
+
 set_source_files_properties(src/app/Components/CustomFont.qml
         PROPERTIES QT_QML_SINGLETON_TYPE TRUE)
 
@@ -63,7 +71,7 @@ qt_add_qml_module(appDawdleTodo
         URI DawdleTodo
         VERSION 1.0
         QML_FILES ${APP_QML_FILES}
-        RESOURCES ${SOURCE_FONTS}
+        RESOURCES ${SOURCE_FONTS} ${SQL_SOURCES}
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
