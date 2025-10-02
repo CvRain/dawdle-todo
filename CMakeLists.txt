@@ -26,13 +26,21 @@ set(CPP_FILES src/cpp/main.cpp
         src/cpp/application.cpp
         src/cpp/application.hpp
         src/cpp/saveService.cpp
-        src/cpp/saveService.hpp)
+        src/cpp/saveService.hpp
+        src/cpp/models/group.cpp
+        src/cpp/models/group.hpp
+        src/cpp/models/recurrenceDetail.cpp
+        src/cpp/models/recurrenceDetail.hpp
+        src/cpp/models/todo.cpp
+        src/cpp/models/todo.hpp)
 
 qt_add_executable(appDawdleTodo
         ${CPP_FILES}
 )
 
-target_include_directories(appDawdleTodo PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/cpp)
+target_include_directories(appDawdleTodo PRIVATE
+        src/cpp
+        src/cpp/models)
 
 set(QML_COMPONENTS src/app/Components/TitleBar.qml
         src/app/Components/CustomFont.qml

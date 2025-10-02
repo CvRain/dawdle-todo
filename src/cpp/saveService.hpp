@@ -7,14 +7,14 @@
 
 #include <QString>
 #include <SQLiteCpp/SQLiteCpp.h>
-
+#include <optional>
 
 class SaveService
 {
 public:
     explicit SaveService(const QString& savePath = "./todo.db3");
 private:
-    static QString readSqlSource(const QString& sourcePath);
+    static std::optional<QString> readSqlSource(const QString& sourcePath);
     SQLite::Database db;
 
 };
